@@ -1,5 +1,7 @@
 # Flashcard Learning
 
+👉 **[Try it live](https://hamzaae1.github.io/ai-ml-flashcards/)**
+
 A single self-contained HTML file with **1,721 flashcards** from three AI/ML books:
 
 - 📘 *AI Engineering* — Chip Huyen (2025)
@@ -10,9 +12,9 @@ No backend, no install, works offline. Progress saves per browser in `localStora
 
 ## Use it
 
-Open [`index.html`](./index.html) in any browser. That's it.
+Open the **[live app](https://hamzaae1.github.io/ai-ml-flashcards/)** in any browser. That's it.
 
-Or [download](./index.html) the file and double-click — no internet needed after that.
+To use offline: clone or download this repo, then double-click `index.html`. No internet needed after that.
 
 ## Add your own book
 
