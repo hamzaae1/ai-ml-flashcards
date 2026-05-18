@@ -1,0 +1,166 @@
+[
+  {
+    "question": "What is the ultimate goal of NLP research, and why did Alan Turing choose a linguistic task for his famous test?",
+    "answer": "The ultimate goal of NLP research is to build machines that can master written and spoken language. Turing chose a linguistic task because mastering language is arguably Homo sapiens's greatest cognitive ability, making it a meaningful test of machine intelligence."
+  },
+  {
+    "question": "What is a char-RNN and what makes it impressive for language modeling?",
+    "answer": "A char-RNN is a recurrent neural network trained to predict the next character in a sentence. It's impressive because by learning this simple task, it automatically learns words, grammar, proper punctuation, and more complex language patterns without explicit instruction."
+  },
+  {
+    "question": "How do you prepare a dataset for training a char-RNN using TensorFlow?",
+    "answer": "Use tf.keras.layers.TextVectorization with split='character' to encode text character-by-character. Create windows where each input sequence is paired with the same sequence shifted by one character as the target. Use functions like to_dataset() to convert the long sequence into input/target window pairs."
+  },
+  {
+    "question": "What is the purpose of the Embedding layer in a char-RNN model?",
+    "answer": "The Embedding layer converts character IDs into dense vector representations (embeddings). It takes 2D input of shape [batch size, window length] and outputs 3D tensors of shape [batch size, window length, embedding size], providing learnable representations for each character."
+  },
+  {
+    "question": "What is greedy decoding and why might it be problematic for text generation?",
+    "answer": "Greedy decoding always selects the character with the highest predicted probability. This often leads to repetitive text because the model gets stuck in loops, always choosing the same most likely next character."
+  },
+  {
+    "question": "How does temperature control text generation diversity?",
+    "answer": "Temperature controls diversity by dividing logits before applying softmax. Low temperature (close to 0) favors high-probability characters for precise text. High temperature gives all characters more equal probability for creative, diverse text."
+  },
+  {
+    "question": "What is a stateful RNN and how does it differ from a stateless RNN?",
+    "answer": "A stateful RNN preserves its hidden state between training batches, allowing it to learn long-term patterns despite short backpropagation sequences. A stateless RNN starts with zero hidden states at each batch. Stateful RNNs require sequential, non-overlapping input sequences."
+  },
+  {
+    "question": "What is the 'sentiment neuron' discovery and why is it significant?",
+    "answer": "Researchers found that a char-RNN trained only to predict the next character spontaneously developed a neuron that acted as an excellent sentiment classifier. This showed that language models can learn higher-level tasks without explicit labels, foreshadowing unsupervised pretraining in NLP."
+  },
+  {
+    "question": "What is masking in RNNs and why is it necessary for variable-length sequences?",
+    "answer": "Masking tells RNN layers to ignore padding tokens in variable-length sequences. Without masking, RNNs forget sequence content when processing many padding tokens. Set mask_zero=True in Embedding layers to automatically propagate masks through the network."
+  },
+  {
+    "question": "What are the main tokenization challenges for different languages mentioned in the text?",
+    "answer": "Chinese doesn't use spaces between words, Vietnamese uses spaces within words, German attaches multiple words without spaces, and even English has ambiguous cases like 'San Francisco' or '#ILoveDeepLearning' that shouldn't be split."
+  },
+  {
+    "question": "What is Byte Pair Encoding (BPE) and how does it work?",
+    "answer": "BPE is a subword tokenization technique that starts by splitting text into individual characters, then repeatedly merges the most frequent adjacent character pairs until reaching the desired vocabulary size. This allows models to handle rare words by understanding subword components."
+  },
+  {
+    "question": "What is teacher forcing in sequence-to-sequence models?",
+    "answer": "Teacher forcing feeds the decoder the correct target word from the previous time step during training, rather than its own prediction. This significantly speeds up training and improves performance by providing ground truth context."
+  },
+  {
+    "question": "What are the four main RNN architectures for different input/output patterns?",
+    "answer": "1) Sequence-to-sequence (e.g., time series forecasting), 2) Sequence-to-vector (e.g., sentiment analysis), 3) Vector-to-sequence (e.g., image captioning), and 4) Encoder-decoder (e.g., machine translation)."
+  },
+  {
+    "question": "What is a bidirectional RNN and when should you use it?",
+    "answer": "A bidirectional RNN processes sequences in both forward and backward directions, then combines outputs. Use it for tasks like text classification or in encoders where you can look at future context, but not in decoders which must remain causal."
+  },
+  {
+    "question": "What is beam search and how does it improve sequence generation?",
+    "answer": "Beam search keeps track of the k most promising partial sequences (beam width k) and extends them at each step, keeping only the top k overall. This allows the model to reconsider earlier decisions and often produces better translations than greedy decoding."
+  },
+  {
+    "question": "What problem do attention mechanisms solve in encoder-decoder models?",
+    "answer": "Attention mechanisms solve the bottleneck problem where all encoder information must pass through a single final hidden state. They allow the decoder to directly access all encoder outputs, creating shorter paths from input words to their translations."
+  },
+  {
+    "question": "How does Bahdanau attention work?",
+    "answer": "Bahdanau attention concatenates each encoder output with the decoder's previous hidden state, passes this through a dense layer to compute alignment scores, applies softmax to get attention weights, then computes a weighted sum of encoder outputs for the decoder."
+  },
+  {
+    "question": "What is the key difference between Bahdanau and Luong attention?",
+    "answer": "Luong attention uses dot products to compute similarity scores between decoder hidden states and encoder outputs, making it more efficient. Bahdanau attention concatenates the vectors and uses a feedforward network to compute alignment scores."
+  },
+  {
+    "question": "What is the core innovation of the Transformer architecture?",
+    "answer": "Transformers use only attention mechanisms without any recurrent or convolutional layers. This eliminates vanishing gradient problems, enables better parallelization, can be trained in fewer steps, and better captures long-range patterns than RNNs."
+  },
+  {
+    "question": "What are positional encodings and why are they necessary in Transformers?",
+    "answer": "Positional encodings are vectors added to word embeddings to give the model information about word positions, since Transformers ignore sequential order. They can be learned embeddings or fixed sine/cosine functions that encode both absolute and relative positions."
+  },
+  {
+    "question": "What is the purpose of multi-head attention?",
+    "answer": "Multi-head attention applies multiple attention mechanisms in parallel, each focusing on different aspects of the input (e.g., one head for verbs, another for tense). This allows the model to attend to different types of information simultaneously before combining the results."
+  },
+  {
+    "question": "How does masked multi-head attention work in the decoder?",
+    "answer": "Masked multi-head attention prevents the decoder from attending to future tokens by applying a causal mask. When processing token i, it can only attend to tokens 1 through i, ensuring the model remains causal during training."
+  },
+  {
+    "question": "What are the two main pretraining tasks in BERT?",
+    "answer": "1) Masked Language Model (MLM): 15% of words are masked and the model predicts them. 2) Next Sentence Prediction (NSP): The model predicts whether two sentences are consecutive (though NSP was later found less important and dropped in many models)."
+  },
+  {
+    "question": "What is the key architectural difference between GPT and BERT?",
+    "answer": "GPT uses only masked multi-head attention layers (like the transformer decoder) and is autoregressive, predicting the next token. BERT uses non-masked multi-head attention (like the transformer encoder) and is bidirectional, able to see context from both directions."
+  },
+  {
+    "question": "What is distillation in the context of language models?",
+    "answer": "Distillation transfers knowledge from a large 'teacher' model to a smaller 'student' model by training the student to match the teacher's predicted probabilities. This often works better than training the student from scratch and produces more efficient models."
+  },
+  {
+    "question": "What is chain-of-thought prompting?",
+    "answer": "Chain-of-thought prompting includes step-by-step reasoning in example answers, encouraging models to show their work. Instead of just 'A: 11', examples show 'A: Roger started with 5 balls. 2 cans of 3 each is 6 balls. 5 + 6 = 11.' This improves accuracy and interpretability."
+  },
+  {
+    "question": "How do Vision Transformers (ViTs) process images?",
+    "answer": "ViTs split images into 16x16 pixel patches, flatten each patch into a 768-dimensional vector (16×16×3), pass through a linear layer, add positional embeddings, then process the sequence of patch embeddings like word tokens in a standard transformer."
+  },
+  {
+    "question": "What is an inductive bias and how do CNNs and Transformers differ in this regard?",
+    "answer": "Inductive bias is an implicit assumption made by a model's architecture. CNNs assume patterns learned in one location are useful elsewhere (translation invariance). Transformers have fewer inductive biases, so they need more training data but can be more flexible."
+  },
+  {
+    "question": "What problem does the Perceiver architecture solve?",
+    "answer": "The Perceiver solves the quadratic computational complexity of self-attention by using cross-attention with a fixed-size latent representation as queries and the full input as keys/values. This makes complexity linear in input size rather than quadratic."
+  },
+  {
+    "question": "What is DINO and how does it achieve self-supervised learning?",
+    "answer": "DINO is a vision transformer trained using self-distillation where a student network learns to match a teacher network's predictions on differently augmented versions of the same image. The teacher's weights are an exponential moving average of the student's weights."
+  },
+  {
+    "question": "How does the Hugging Face pipeline API work?",
+    "answer": "The pipeline API provides a simple interface: specify a task like 'sentiment-analysis' and it downloads a default pretrained model. You can also specify custom models. It handles tokenization, inference, and post-processing automatically."
+  },
+  {
+    "question": "What are some sources of bias in AI models mentioned in the text?",
+    "answer": "Bias comes from training data (e.g., negative sentences about Iraq in news), model architecture, loss functions, optimizers, and deployment methods. Even unbiased models can be used in biased ways, like biased survey questions."
+  },
+  {
+    "question": "How can you use pretrained transformers for fine-tuning?",
+    "answer": "Load models using classes like TFAutoModelForSequenceClassification and AutoTokenizer. The models output logits, so use SparseCategoricalCrossentropy(from_logits=True) loss. During training, use the .data attribute of tokenizer outputs to get regular dictionaries instead of BatchEncoding objects."
+  },
+  {
+    "question": "What is the significance of multimodal models like CLIP and DALL-E?",
+    "answer": "Multimodal models can understand and generate across different modalities (text, images, audio). CLIP learns to match text descriptions with images, enabling zero-shot image classification. DALL-E generates images from text descriptions, showing powerful cross-modal capabilities."
+  },
+  {
+    "question": "What makes attention mechanisms interpretable?",
+    "answer": "Attention mechanisms show which parts of the input the model focuses on when producing outputs. This provides explainability - you can see what the model was 'looking at' when making decisions, helping debug mistakes and understand model behavior."
+  },
+  {
+    "question": "Why can't convolutional layers handle masking in sequence models?",
+    "answer": "Convolutional layers don't support masking because it's not obvious how they would handle variable-length sequences with padding. The convolution operation expects regular, dense input patterns, unlike recurrent layers that can simply skip or ignore masked time steps."
+  },
+  {
+    "question": "What is the key insight behind treating attention as a differentiable memory retrieval mechanism?",
+    "answer": "Attention works like a dictionary lookup where queries don't exactly match keys, so similarity scores and softmax create weights for a weighted average of values. This allows soft, differentiable retrieval from memory based on similarity rather than exact matches."
+  },
+  {
+    "question": "What computational complexity challenge do transformers face with long sequences?",
+    "answer": "Self-attention requires computing an M×M attention matrix where M is sequence length, making complexity quadratic in sequence length. This limits transformers to relatively short sequences unless architectural modifications (like Perceiver) address this bottleneck."
+  },
+  {
+    "question": "How do you implement causal masking in transformer decoders?",
+    "answer": "Create a lower triangular matrix using tf.linalg.band_part() where position (i,j) is 1 if j≤i and 0 otherwise. This ensures that when processing token i, the model can only attend to tokens 1 through i, preventing it from seeing future tokens."
+  },
+  {
+    "question": "What role do skip connections and layer normalization play in transformers?",
+    "answer": "Skip connections (residual connections) help gradients flow through deep networks and prevent degradation. Layer normalization stabilizes training by normalizing activations. Together, they enable training very deep transformer networks effectively."
+  },
+  {
+    "question": "What is the T5 model's key innovation in framing NLP tasks?",
+    "answer": "T5 frames all NLP tasks as text-to-text problems. Translation becomes 'translate English to Spanish: I like soccer' → 'me gusta el fútbol'. Classification becomes 'classify: [text]' → class name. This unified approach simplifies training and enables pretraining on diverse tasks."
+  }
+]

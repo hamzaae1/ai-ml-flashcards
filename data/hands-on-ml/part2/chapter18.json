@@ -1,0 +1,174 @@
+[
+  {
+    "question": "What was the revolutionary breakthrough that DeepMind achieved in 2013 in reinforcement learning?",
+    "answer": "DeepMind demonstrated a system that could learn to play just about any Atari game from scratch, eventually outperforming humans in most of them, using only raw pixels as inputs and without any prior knowledge of the game rules. This was achieved by applying deep learning to reinforcement learning."
+  },
+  {
+    "question": "What is reinforcement learning and how does it work?",
+    "answer": "Reinforcement learning is where a software agent makes observations and takes actions within an environment, receiving rewards in return. Its objective is to learn to act in a way that maximizes expected rewards over time through trial and error."
+  },
+  {
+    "question": "What is a policy in reinforcement learning?",
+    "answer": "A policy is the algorithm a software agent uses to determine its actions. It could be a neural network taking observations as inputs and outputting actions to take, or any other algorithm that maps states to actions."
+  },
+  {
+    "question": "What are two main approaches to policy search mentioned in the chapter?",
+    "answer": "1) Brute-force approach: trying many different parameter values and picking the combination that performs best. 2) Genetic algorithms: creating generations of policies, killing the worst performers, and having survivors produce offspring with random variations."
+  },
+  {
+    "question": "What is policy gradients and how does it work?",
+    "answer": "Policy gradients use optimization techniques by evaluating gradients of rewards with regard to policy parameters, then tweaking these parameters by following gradients toward higher rewards (gradient ascent)."
+  },
+  {
+    "question": "What is OpenAI Gym and why is it useful?",
+    "answer": "OpenAI Gym is a toolkit that provides a wide variety of simulated environments (Atari games, board games, 2D and 3D physical simulations) that can be used to train agents, compare them, or develop new RL algorithms."
+  },
+  {
+    "question": "Describe the CartPole environment used as an example in the chapter.",
+    "answer": "CartPole is a 2D simulation where a cart can be accelerated left or right to balance a pole placed on top of it. Observations are a 1D array with cart position, velocity, pole angle, and angular velocity. Actions are discrete: 0 (left) or 1 (right)."
+  },
+  {
+    "question": "What are the five values returned by the env.step() method in OpenAI Gym?",
+    "answer": "1) obs: new observation, 2) reward: reward received, 3) done: whether episode is over, 4) truncated: whether episode was interrupted early, 5) info: environment-specific dictionary with extra information."
+  },
+  {
+    "question": "Why do neural network policies use random action selection based on probabilities rather than always choosing the highest-scoring action?",
+    "answer": "This approach lets the agent find the right balance between exploring new actions and exploiting actions known to work well. It addresses the exploration/exploitation dilemma that is central to reinforcement learning."
+  },
+  {
+    "question": "What is the credit assignment problem in reinforcement learning?",
+    "answer": "When an agent gets a reward, it's hard to know which actions should get credited or blamed for it. Since rewards are typically sparse and delayed, it's difficult to determine which of many actions contributed to the final outcome."
+  },
+  {
+    "question": "What is an action's return and how is it calculated?",
+    "answer": "An action's return is the sum of all discounted future rewards that come after it. It's calculated as the immediate reward plus gamma times the next reward plus gamma squared times the reward after that, etc., where gamma is the discount factor."
+  },
+  {
+    "question": "What is action advantage and how is it computed?",
+    "answer": "Action advantage estimates how much better or worse an action is compared to other possible actions on average. It's computed by running many episodes, normalizing all action returns by subtracting the mean and dividing by standard deviation."
+  },
+  {
+    "question": "Describe the four steps of the REINFORCE policy gradient algorithm.",
+    "answer": "1) Let the neural network play several times, computing gradients to make chosen actions more likely. 2) Compute each action's advantage. 3) If advantage is positive, apply gradients to make action more likely; if negative, apply opposite gradients. 4) Compute mean of all gradient vectors and perform gradient descent step."
+  },
+  {
+    "question": "What is a Markov chain?",
+    "answer": "A Markov chain is a stochastic process with no memory. It has a fixed number of states and randomly evolves from one state to another at each step, where transition probabilities depend only on the current state pair (s, s'), not on past states."
+  },
+  {
+    "question": "How do Markov Decision Processes (MDPs) differ from Markov chains?",
+    "answer": "MDPs are like Markov chains but with a twist: at each step, an agent can choose one of several possible actions, transition probabilities depend on the chosen action, some state transitions return rewards, and the agent's goal is to find a policy that maximizes reward over time."
+  },
+  {
+    "question": "What is the Bellman optimality equation?",
+    "answer": "V*(s) = max_a Σ_s' T(s,a,s')[R(s,a,s') + γ·V*(s')] for all s. This recursive equation says that if the agent acts optimally, the optimal value of the current state equals the expected reward plus expected optimal value of next states."
+  },
+  {
+    "question": "What is the value iteration algorithm?",
+    "answer": "An algorithm that iteratively updates state value estimates using: V_k+1(s) ← max_a Σ_s' T(s,a,s')[R(s,a,s') + γ·V_k(s')]. Starting with zero estimates, this converges to optimal state values given enough time."
+  },
+  {
+    "question": "What are Q-values and how do they differ from state values?",
+    "answer": "Q-values (quality values) are the optimal state-action values Q*(s,a), representing the sum of discounted future rewards expected after reaching state s, choosing action a, but before seeing the outcome, assuming optimal play afterward. Unlike state values, they include the action choice."
+  },
+  {
+    "question": "What is the Q-value iteration algorithm?",
+    "answer": "Q_k+1(s,a) ← Σ_s' T(s,a,s')[R(s,a,s') + γ·max_a' Q_k(s',a')] for all s,a. Once you have optimal Q-values, the optimal policy is simply choosing the action with highest Q-value for each state."
+  },
+  {
+    "question": "What is temporal difference (TD) learning?",
+    "answer": "TD learning is similar to Q-value iteration but adapted for when the agent has only partial knowledge of the MDP. It updates state value estimates based on actually observed transitions and rewards: V_k+1(s) ← (1-α)V_k(s) + α(r + γ·V_k(s'))."
+  },
+  {
+    "question": "What is Q-learning?",
+    "answer": "Q-learning is an adaptation of Q-value iteration for situations where transition probabilities and rewards are initially unknown. It works by watching an agent play and gradually improving Q-value estimates using: Q(s,a) ← α(r + γ·max_a' Q(s',a'))."
+  },
+  {
+    "question": "What is the difference between off-policy and on-policy algorithms?",
+    "answer": "Off-policy algorithms (like Q-learning) train a policy different from the one used during exploration - the exploration policy can be completely random while training an optimal policy. On-policy algorithms (like policy gradients) explore using the policy being trained."
+  },
+  {
+    "question": "What is an ε-greedy policy?",
+    "answer": "An ε-greedy policy acts randomly with probability ε, or greedily with probability 1-ε (choosing the action with highest Q-value). This balances exploration of unknown regions with exploitation of promising areas as Q-values improve."
+  },
+  {
+    "question": "Why is approximate Q-learning necessary for complex environments?",
+    "answer": "Q-learning doesn't scale to large MDPs. For example, Ms. Pac-Man has more than 2^150 ≈ 10^45 possible states (considering pellet combinations), making it impossible to keep track of every Q-value estimate."
+  },
+  {
+    "question": "What is deep Q-learning (DQN)?",
+    "answer": "Deep Q-learning uses a deep neural network (DQN) to approximate Q-values Q_θ(s,a) for any state-action pair using a manageable number of parameters. The DQN is trained to minimize the squared error between estimated and target Q-values."
+  },
+  {
+    "question": "What is the target Q-value formula in deep Q-learning?",
+    "answer": "y(s,a) = r + γ·max_a' Q_θ(s',a'). The target combines the observed reward r with the discounted maximum Q-value for the next state s', assuming optimal play from then on."
+  },
+  {
+    "question": "What is a replay buffer and why is it important?",
+    "answer": "A replay buffer stores all experiences (state, action, reward, next_state, done, truncated) and samples random training batches from it. This reduces correlations between experiences in training batches, which tremendously helps training."
+  },
+  {
+    "question": "What is catastrophic forgetting in reinforcement learning?",
+    "answer": "Catastrophic forgetting occurs when an agent's performance suddenly drops after previously reaching high performance. As the agent explores and updates its policy, what it learns in one part of the environment may break what it learned earlier in other parts."
+  },
+  {
+    "question": "What is the fixed Q-value targets technique?",
+    "answer": "Instead of using one DQN for both predictions and targets (which can be unstable like a dog chasing its tail), use two DQNs: an online model for learning and moving the agent, and a target model only for defining targets. The target model is updated less frequently."
+  },
+  {
+    "question": "What is double DQN and what problem does it solve?",
+    "answer": "Double DQN addresses overestimation of Q-values by the target network. It uses the online model to select the best actions for next states, and the target model only to estimate Q-values for those selected actions, reducing overestimation bias."
+  },
+  {
+    "question": "What is prioritized experience replay (PER)?",
+    "answer": "PER samples important experiences more frequently from the replay buffer instead of uniform sampling. Experience importance is measured by TD error magnitude |δ| = |r + γ·V(s') - V(s)|. Large TD errors indicate surprising transitions worth learning from."
+  },
+  {
+    "question": "What is dueling DQN?",
+    "answer": "Dueling DQN expresses Q-values as Q(s,a) = V(s) + A(s,a), where V(s) is state value and A(s,a) is action advantage. The model estimates both, then subtracts the maximum predicted advantage from all advantages, since the best action should have zero advantage."
+  },
+  {
+    "question": "What is AlphaGo and how does it work?",
+    "answer": "AlphaGo uses Monte Carlo tree search (MCTS) based on deep neural networks to play Go. It selects moves using a policy network trained with policy gradients, running simulations and spending more time on promising branches, rather than playing randomly like traditional MCTS."
+  },
+  {
+    "question": "What are actor-critic algorithms?",
+    "answer": "Actor-critic algorithms combine policy gradients with deep Q-networks. They contain two neural networks: a policy net (actor) and a DQN (critic). The DQN learns from experiences while the policy net learns faster by relying on action values estimated by the DQN."
+  },
+  {
+    "question": "What is A3C (Asynchronous Advantage Actor-Critic)?",
+    "answer": "A3C is an actor-critic variant where multiple agents learn in parallel, exploring different copies of the environment. They asynchronously push weight updates to and pull from a master network. The DQN estimates advantages rather than Q-values, which stabilizes training."
+  },
+  {
+    "question": "What is soft actor-critic (SAC)?",
+    "answer": "SAC learns not only to maximize rewards but also to maximize the entropy of its actions - trying to be as unpredictable as possible while still getting rewards. This encourages exploration, speeds up training, and reduces repetitive actions when DQN estimates are imperfect."
+  },
+  {
+    "question": "What is proximal policy optimization (PPO)?",
+    "answer": "PPO is based on A2C but clips the loss function to avoid excessively large weight updates that often lead to training instabilities. It's a simplification of trust region policy optimization (TRPO) and was used in OpenAI Five that defeated world champions at Dota 2."
+  },
+  {
+    "question": "What is curiosity-based exploration?",
+    "answer": "Instead of relying on sparse environmental rewards, make the agent curious to explore by giving it intrinsic rewards. The agent tries to predict action outcomes and seeks situations where outcomes don't match predictions - it wants to be surprised rather than bored."
+  },
+  {
+    "question": "What is open-ended learning (OEL)?",
+    "answer": "OEL trains agents capable of endlessly learning new and interesting tasks, typically generated procedurally. Examples include POET algorithm that generates 2D environments with obstacles and trains agents to walk, gradually increasing difficulty through curriculum learning."
+  },
+  {
+    "question": "Why is reinforcement learning considered notoriously difficult?",
+    "answer": "RL is difficult due to training instabilities, huge sensitivity to hyperparameter values and random seeds, correlated experiences, and constantly changing learning environments. As researcher Andrej Karpathy said, supervised learning 'wants to work' but 'RL must be forced to work.'"
+  },
+  {
+    "question": "Why shouldn't you plot loss as a performance indicator in RL?",
+    "answer": "Loss is a poor indicator of RL model performance. Loss might decrease while agent performs worse (e.g., overfitting one region), or loss might increase while agent performs better (e.g., when correcting underestimated Q-values). It's better to plot rewards."
+  },
+  {
+    "question": "What is the exploration function approach to Q-learning?",
+    "answer": "Instead of ε-greedy exploration, add a bonus to Q-value estimates to encourage trying actions not tried much before: Q(s,a) ← α(r + γ·max_a' f(Q(s',a'), N(s',a'))), where N counts action frequency and f(Q,N) = Q + κ/(1+N) with curiosity hyperparameter κ."
+  },
+  {
+    "question": "What practical advice does the chapter give about injecting prior knowledge into RL agents?",
+    "answer": "Unless writing a research paper, don't hesitate to inject prior knowledge into agents as it speeds up training dramatically. For example, add negative rewards proportional to pole angle in CartPole since you know vertical is better. Also consider imitating existing good policies before using RL to improve them."
+  }
+]

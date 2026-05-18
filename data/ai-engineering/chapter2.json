@@ -1,0 +1,186 @@
+[
+{
+"question": "What are the three key design decisions that impact a foundation model's capabilities and usability?",
+"answer": "Training data, model architecture and size, and how they are post-trained to align with human preferences."
+},
+{
+"question": "What is Common Crawl and why is it problematic as training data?",
+"answer": "Common Crawl is a dataset created by a nonprofit that crawls 2-3 billion web pages monthly. It's problematic because it contains clickbait, misinformation, propaganda, conspiracy theories, racism, misogyny, and fake news from questionable websites."
+},
+{
+"question": "What percentage of Common Crawl consists of English content, and how does this compare to other languages?",
+"answer": "English accounts for 45.88% of Common Crawl data, making it eight times more prevalent than Russian (5.97%), the second-most common language."
+},
+{
+"question": "How does language representation in training data affect model performance?",
+"answer": "Models work much better for well-represented languages like English. For example, GPT-4 performed significantly better on MMLU benchmark in English than in under-represented languages like Telugu, Marathi, and Punjabi."
+},
+{
+"question": "Why is translating queries to English and back not an ideal solution for under-represented languages?",
+"answer": "It requires a model that can sufficiently understand the under-represented language, and translation causes information loss. For example, Vietnamese pronouns that denote relationships become generic 'I' and 'you' in English."
+},
+{
+"question": "How does tokenization efficiency vary across languages, and what are the cost implications?",
+"answer": "Languages like Burmese require about 10 times more tokens than English for the same content (median 72 vs 7 tokens), making inference 10 times slower and more expensive for token-based pricing."
+},
+{
+"question": "What are domain-specific models and why are they necessary?",
+"answer": "Domain-specific models are trained on specialized data for specific fields like drug discovery or cancer screening. They're necessary because general-purpose models are unlikely to perform well on domain-specific tasks that weren't well-represented in their training data."
+},
+{
+"question": "What are the two main problems with the seq2seq architecture that transformers address?",
+"answer": "1) The decoder generates outputs using only the final hidden state of the input (like using only a book summary), limiting output quality. 2) Sequential processing makes it slow for long sequences since each token must finish processing before the next begins."
+},
+{
+"question": "How does the attention mechanism solve the limitations of seq2seq?",
+"answer": "The attention mechanism allows the model to weigh the importance of different input tokens when generating each output token, like referencing any page in a book rather than just the summary. It also enables parallel processing of input tokens."
+},
+{
+"question": "What are the two steps in transformer-based language model inference?",
+"answer": "1) Prefill: The model processes input tokens in parallel, creating intermediate state (key and value vectors) for generating the first output token. 2) Decode: The model generates output tokens one at a time sequentially."
+},
+{
+"question": "What are the three key vectors in the attention mechanism and what do they represent?",
+"answer": "Query vector (Q): represents the current decoder state seeking information. Key vector (K): represents each previous token (like page numbers). Value vector (V): represents the actual content of each previous token (like page content)."
+},
+{
+"question": "How is multi-headed attention implemented in practice using Llama 2-7B as an example?",
+"answer": "Llama 2-7B has 32 attention heads with a 4096 hidden dimension. Each K, V, Q vector is split into 32 vectors of dimension 128 (4096/32=128), allowing the model to attend to different groups of tokens simultaneously."
+},
+{
+"question": "What are the main components of a transformer block?",
+"answer": "1) Attention module: consists of query, key, value, and output projection weight matrices. 2) MLP module: consists of linear layers separated by nonlinear activation functions like ReLU or GELU."
+},
+{
+"question": "What determines a transformer model's size?",
+"answer": "The model's dimension (determines sizes of key, query, value, and output projection matrices), number of transformer blocks, dimension of the feedforward layer, and vocabulary size."
+},
+{
+"question": "What are some alternative architectures gaining traction to replace transformers?",
+"answer": "RWKV (RNN-based model that can be parallelized), and State Space Models (SSMs) like S4, H3, Mamba, and Jamba, which show promise for long-range memory and efficient sequence processing."
+},
+{
+"question": "What are the three numbers that signal a model's scale?",
+"answer": "1) Number of parameters (proxy for learning capacity), 2) Number of tokens the model was trained on (proxy for how much it learned), 3) Number of FLOPs (proxy for training cost)."
+},
+{
+"question": "How do mixture-of-experts (MoE) models work, using Mixtral 8x7B as an example?",
+"answer": "Mixtral 8x7B has 8 experts with 7 billion parameters each (46.7B total due to shared parameters). At each layer, only 2 experts are active per token, so only 12.9 billion parameters are used per token, making it cost-equivalent to a 12.9B dense model."
+},
+{
+"question": "What is the Chinchilla scaling law and what does it recommend?",
+"answer": "A rule for compute-optimal training that states the number of training tokens should be approximately 20 times the model size. For example, a 3B-parameter model needs about 60B training tokens. Both model size and training tokens should be scaled equally."
+},
+{
+"question": "What are the two main scaling bottlenecks for foundation models?",
+"answer": "1) Training data: We may run out of internet data in the next few years as dataset growth rate exceeds new data generation rate. 2) Electricity: Data centers consume 1-2% of global electricity and may reach 4-20% by 2030."
+},
+{
+"question": "What are the two main issues that post-training addresses in pre-trained models?",
+"answer": "1) Self-supervision optimizes for text completion, not conversations (models complete sentences rather than respond appropriately). 2) Models trained on indiscriminate internet data can produce racist, sexist, rude, or incorrect outputs."
+},
+{
+"question": "What are the two main steps of post-training?",
+"answer": "1) Supervised finetuning (SFT): Finetune on high-quality instruction data to optimize for conversations. 2) Preference finetuning: Further finetune using reinforcement learning techniques like RLHF, DPO, or RLAIF to align with human preferences."
+},
+{
+"question": "What is demonstration data and how is it used in supervised finetuning?",
+"answer": "Demonstration data consists of (prompt, response) pairs showing appropriate responses. It's used in supervised finetuning through behavior cloning - demonstrating how the model should behave so it can clone this behavior across different types of requests."
+},
+{
+"question": "What are the two parts of RLHF (Reinforcement Learning from Human Feedback)?",
+"answer": "1) Train a reward model that scores the foundation model's outputs based on human preferences. 2) Optimize the foundation model using reinforcement learning to generate responses that maximize the reward model's scores."
+},
+{
+"question": "Why is comparison data easier to obtain than direct scoring for training reward models?",
+"answer": "Asking labelers to compare two responses and decide which is better is more consistent than asking them to score each response directly on a scale. Direct scoring varies significantly between labelers and even for the same labeler over time."
+},
+{
+"question": "How does temperature affect sampling in language models?",
+"answer": "Higher temperature reduces probabilities of common tokens and increases probabilities of rare tokens, making outputs more creative but potentially less coherent. Lower temperature makes models more likely to pick obvious values, creating consistent but potentially boring outputs."
+},
+{
+"question": "What happens when temperature is set to 0 in language model sampling?",
+"answer": "When temperature is set to 0, the model performs greedy sampling - it simply picks the token with the largest logit without doing logit adjustment and softmax calculation, making outputs completely deterministic."
+},
+{
+"question": "What is the difference between top-k and top-p sampling strategies?",
+"answer": "Top-k sampling considers a fixed number of top values (k), while top-p (nucleus sampling) dynamically selects values until their cumulative probability reaches p (typically 0.9-0.95). Top-p adapts to context - fewer options for simple questions, more for complex ones."
+},
+{
+"question": "What is test time compute and how does the 'best of N' strategy work?",
+"answer": "Test time compute involves generating multiple responses per query to increase chances of good responses. 'Best of N' generates N outputs and picks the best one, often using highest average logprob or reward model scores to select the winner."
+},
+{
+"question": "How do you calculate the probability of a sequence of tokens in language models?",
+"answer": "The probability is the product of individual token probabilities: p(sequence) = p(token1) × p(token2|token1) × p(token3|token1,token2)... In log space, it's the sum of logprobs, often averaged by sequence length to avoid bias toward shorter sequences."
+},
+{
+"question": "What are the five main approaches for generating structured outputs?",
+"answer": "1) Prompting: Instructing models to generate specific formats. 2) Post-processing: Fixing common formatting mistakes with scripts. 3) Test time compute: Keep generating until one fits expected format. 4) Constrained sampling: Filter logits to only allow valid tokens. 5) Finetuning: Train on examples following desired format."
+},
+{
+"question": "How does constrained sampling work for structured outputs?",
+"answer": "The model outputs logits for all possible tokens, then filters the logit vector to keep only tokens that meet the constraints (based on grammar rules), applies softmax to these valid tokens only, and samples from the filtered set."
+},
+{
+"question": "What makes AI models probabilistic and what are the main consequences?",
+"answer": "AI models sample outputs according to probability distributions rather than always giving the same answer. This causes inconsistency (different outputs for same/similar inputs) and hallucinations (responses not grounded in facts), but also enables creativity."
+},
+{
+"question": "What are the two scenarios where model inconsistency manifests?",
+"answer": "1) Same input, different outputs: giving the same prompt twice leads to different responses. 2) Slightly different input, drastically different outputs: small changes like capitalizing a letter can lead to very different outputs."
+},
+{
+"question": "What are the two main hypotheses for why language models hallucinate?",
+"answer": "1) Self-delusion: Models can't differentiate between given data and generated data, so they treat their own potentially wrong outputs as facts when generating subsequent tokens. 2) Knowledge mismatch: During training, labelers use knowledge the model doesn't have, teaching it to hallucinate."
+},
+{
+"question": "What is snowballing hallucination?",
+"answer": "After making an incorrect assumption, a model continues hallucinating to justify the initial wrong assumption. This can cause models to make mistakes on questions they would otherwise answer correctly, as the wrong assumption cascades through their reasoning."
+},
+{
+"question": "What are some techniques mentioned for mitigating hallucinations?",
+"answer": "Adding prompts like 'Answer as truthfully as possible, and if unsure, say I don't know', asking for concise responses (fewer tokens = less chance to hallucinate), using verification techniques, and implementing reinforcement learning with better reward functions that punish making things up."
+},
+{
+"question": "According to the chapter, what makes sampling one of the most underrated concepts in AI?",
+"answer": "Sampling explains many seemingly baffling AI behaviors including hallucinations and inconsistencies. Choosing the right sampling strategy can significantly boost model performance with relatively little effort, making it crucial for AI engineering."
+},
+{
+"question": "What are logprobs and why are they preferred over regular probabilities?",
+"answer": "Logprobs (log probabilities) are probabilities in log scale. They're preferred because they help reduce the underflow problem - with large vocabularies (100,000+ tokens), many probabilities become too small to represent and get rounded to zero, but log scale reduces this issue."
+},
+{
+"question": "What is the relationship between model training approach and data availability according to the scaling law?",
+"answer": "The Chinchilla scaling law assumes data acquisition costs are much cheaper than compute costs. When training data costs are significant, different calculations are needed. The law was developed for dense models on human-generated data, requiring adaptation for sparse models and synthetic data."
+},
+{
+"question": "How do newer generation models compare to older ones of the same size?",
+"answer": "As the community better understands training large models, newer-generation models tend to outperform older-generation models of the same size. For example, Llama 3-8B (2024) outperforms even Llama 2-70B (2023) on the MMLU benchmark."
+},
+{
+"question": "What makes developing new architectures to replace transformers challenging?",
+"answer": "Transformers have been heavily optimized since 2017 and are designed to run efficiently on current hardware (originally TPUs, later GPUs). New architectures must perform at scale on hardware people care about, and they must simulate programs that existing architectures cannot to truly outperform them."
+},
+{
+"question": "What is the main difference between pre-training and post-training objectives?",
+"answer": "Pre-training optimizes token-level quality (predicting the next token accurately), while post-training optimizes for response-level quality that users prefer. Users don't care about individual token accuracy - they care about the overall quality of complete responses."
+},
+{
+"question": "How does the cost and resource allocation compare between pre-training and post-training?",
+"answer": "Post-training consumes a small portion of resources compared to pre-training. For example, InstructGPT used only 2% of compute for post-training and 98% for pre-training, making post-training relatively efficient for unlocking model capabilities."
+},
+{
+"question": "What was the key finding about test time compute and optimal number of outputs?",
+"answer": "OpenAI found that sampling more outputs improved performance up to 400 outputs, beyond which performance decreased. They hypothesized this was because more samples increased chances of adversarial outputs fooling the verifier. However, Stanford found continued improvement up to 10,000 samples."
+},
+{
+"question": "What are the key challenges and benefits of the probabilistic nature of AI models?",
+"answer": "Benefits: Makes AI great for creative tasks by exploring beyond common paths and thinking outside the box. Challenges: Creates inconsistency and hallucinations that make building reliable AI applications difficult, requiring significant AI engineering efforts to harness and mitigate."
+},
+{
+"question": "What are stopping conditions in autoregressive language models and what are their trade-offs?",
+"answer": "Stopping conditions control when models stop generating tokens to manage latency and cost. Methods include fixed token limits (can cut off mid-sentence) or stop tokens/words (like end-of-sequence). Early stopping can cause malformatted outputs (like incomplete JSON missing brackets)."
+}
+]

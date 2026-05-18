@@ -1,0 +1,174 @@
+[
+{
+"question": "What is RAG and what problem does it solve?",
+"answer": "RAG (Retrieval-Augmented Generation) is a technique that enhances a model's generation by retrieving relevant information from external memory sources. It solves the problem of knowledge-intensive tasks where all available knowledge can't be input into the model directly, helping models generate more detailed responses while reducing hallucinations."
+},
+{
+"question": "What are the two dominating patterns for context construction mentioned in the chapter?",
+"answer": "The two dominating patterns are RAG (retrieval-augmented generation), which allows models to retrieve relevant information from external data sources, and the agentic pattern, which allows models to use tools such as web search and news APIs to gather information."
+},
+{
+"question": "When was the retrieve-then-generate pattern first introduced and by whom?",
+"answer": "The retrieve-then-generate pattern was first introduced in 'Reading Wikipedia to Answer Open-Domain Questions' by Chen et al. in 2017. The system would first retrieve five Wikipedia pages most relevant to a question, then a model would use this information to generate an answer."
+},
+{
+"question": "What are the two main components of a RAG system?",
+"answer": "A RAG system has two components: a retriever that retrieves information from external memory sources and a generator that generates a response based on the retrieved information."
+},
+{
+"question": "What are the two main functions of a retriever in RAG?",
+"answer": "A retriever has two main functions: indexing (processing data so it can be quickly retrieved later) and querying (sending a query to retrieve data relevant to it). How to index data depends on how you want to retrieve it later on."
+},
+{
+"question": "What are the two common retrieval mechanisms discussed in the chapter?",
+"answer": "The two common retrieval mechanisms are term-based retrieval (also called lexical retrieval, which finds documents based on keyword matches) and embedding-based retrieval (also called semantic retrieval, which ranks documents based on meaning alignment with the query)."
+},
+{
+"question": "What is TF-IDF and what do its components measure?",
+"answer": "TF-IDF combines Term Frequency (TF) - the number of times a term appears in a document - and Inverse Document Frequency (IDF) - a measure of how informative a term is based on how many documents contain it. The more documents contain a term, the less informative it is."
+},
+{
+"question": "What is BM25 and how does it improve upon TF-IDF?",
+"answer": "BM25 (Okapi BM25) is the 25th generation of the Best Matching algorithm developed by Robertson et al. in the 1980s. It's a modification of TF-IDF that normalizes term frequency scores by document length, addressing the issue that longer documents are more likely to contain terms and have higher frequency values."
+},
+{
+"question": "What are the steps in embedding-based retrieval?",
+"answer": "Embedding-based retrieval involves: 1) Converting data chunks into embeddings using an embedding model and storing them in a vector database during indexing, 2) Converting the query into an embedding using the same model, and 3) Fetching k data chunks whose embeddings are closest to the query embedding."
+},
+{
+"question": "What is the difference between k-NN and ANN in vector search?",
+"answer": "k-NN (k-nearest neighbors) computes similarity between the query and all vectors, ranks them, and returns the k most similar - it's precise but slow. ANN (approximate nearest neighbor) uses algorithms to find approximate results faster, trading some accuracy for efficiency, which is necessary for large datasets."
+},
+{
+"question": "What are the two metrics used to evaluate retrieval quality?",
+"answer": "Context precision (out of all documents retrieved, what percentage is relevant to the query?) and context recall (out of all documents that are relevant to the query, what percentage is retrieved?). These help assess how accurately and completely a retriever finds relevant information."
+},
+{
+"question": "How do term-based and embedding-based retrieval compare in terms of speed, performance, and cost?",
+"answer": "Term-based retrieval is much faster and cheaper, with strong out-of-the-box performance but limited improvement potential. Embedding-based retrieval is slower and more expensive but can outperform term-based retrieval with fine-tuning and allows more natural queries focused on semantics rather than exact terms."
+},
+{
+"question": "What is hybrid search and how does it work?",
+"answer": "Hybrid search combines term-based and embedding-based retrieval approaches. Different algorithms can be used in sequence (cheap retrieval followed by precise reranking) or in parallel (multiple retrievers fetch candidates, then rankings are combined using techniques like reciprocal rank fusion)."
+},
+{
+"question": "What is reciprocal rank fusion (RRF)?",
+"answer": "RRF is an algorithm for combining rankings from different retrievers. It assigns each document a score based on its ranking (1st = score of 1, 2nd = score of 0.5, etc.). A document's final score is the sum of its scores across all retrievers, allowing combination of multiple retrieval approaches."
+},
+{
+"question": "What are the main chunking strategies for documents in RAG?",
+"answer": "Main strategies include: equal length chunks (by characters, words, sentences, or paragraphs), recursive splitting (using increasingly smaller units until chunks fit size limits), and document-specific strategies (e.g., Q&A pairs for FAQ documents, language-specific splitting)."
+},
+{
+"question": "What are the trade-offs with chunk size in RAG?",
+"answer": "Smaller chunks allow more diverse information and can fit more chunks in context, but may cause loss of important information and increase computational overhead (especially for embedding-based retrieval). Larger chunks preserve context better but limit the number that can be included."
+},
+{
+"question": "What is query rewriting and why is it important in RAG?",
+"answer": "Query rewriting (also called query reformulation) involves rewriting ambiguous queries to reflect what the user is actually asking. For example, 'How about Emily Doe?' in a conversation about purchases should be rewritten to 'When was the last time Emily Doe bought something from us?' to enable effective retrieval."
+},
+{
+"question": "What is contextual retrieval and how does it improve RAG performance?",
+"answer": "Contextual retrieval augments each chunk with relevant context to make it easier to retrieve. This includes adding metadata, tags, keywords, questions the chunk can answer, or context from the original document. Anthropic's approach uses AI to generate 50-100 token contexts explaining each chunk's relationship to the original document."
+},
+{
+"question": "What is multimodal RAG?",
+"answer": "Multimodal RAG augments queries not only with text documents but also with images, videos, audio, etc. from external sources. Images can be retrieved using metadata or content-based approaches with multimodal embedding models like CLIP that can generate embeddings for both images and texts."
+},
+{
+"question": "How does RAG work with tabular data?",
+"answer": "RAG with tabular data involves: 1) Text-to-SQL conversion based on user query and table schemas, 2) SQL execution to retrieve data, and 3) Response generation based on SQL results and the original query. This requires the system to have SQL generation and execution capabilities."
+},
+{
+"question": "How is an agent defined in the context of AI?",
+"answer": "An agent is anything that can perceive its environment and act upon that environment. An AI agent is characterized by the environment it operates in and the set of actions it can perform, which is augmented by the tools it has access to."
+},
+{
+"question": "What is the relationship between an agent's environment and its tools?",
+"answer": "There's a strong dependency between an agent's environment and tools. The environment determines what tools an agent can potentially use (e.g., chess game limits actions to valid moves), while an agent's tool inventory restricts the environment it can operate in (e.g., a swimming-only robot is confined to water environments)."
+},
+{
+"question": "Why do agents typically require more powerful models than non-agent applications?",
+"answer": "Agents require more powerful models due to: 1) Compound mistakes - accuracy decreases with more steps (95% accuracy per step becomes 60% over 10 steps), and 2) Higher stakes - with access to tools, agents perform more impactful tasks where failures have severe consequences."
+},
+{
+"question": "What are the three categories of tools for agents mentioned in the chapter?",
+"answer": "The three categories are: 1) Knowledge augmentation tools (retrievers, APIs for context construction), 2) Capability extension tools (calculators, code interpreters, translators to address model limitations), and 3) Write action tools (enabling agents to make changes to data sources and act in the real world)."
+},
+{
+"question": "What are the key components of the planning process in agents?",
+"answer": "Planning involves: 1) Plan generation (task decomposition into manageable actions), 2) Reflection and error correction (evaluating and improving plans), 3) Execution (taking actions outlined in the plan), and 4) Further reflection to determine if the goal is accomplished and correct mistakes."
+},
+{
+"question": "Why should planning be decoupled from execution in agents?",
+"answer": "Planning should be decoupled from execution to avoid fruitless execution. Without oversight, an agent might run a 1,000-step plan for hours before realizing it doesn't accomplish the goal. Plans should be validated using heuristics or AI judges before execution."
+},
+{
+"question": "What are the different control flows that plans can have?",
+"answer": "Plans can have: 1) Sequential (B after A completes), 2) Parallel (A and B simultaneously), 3) If statements (B or C depending on previous output), and 4) For loops (repeat A until condition is met). AI models determine these control flows, making non-sequential flows more difficult to generate and execute."
+},
+{
+"question": "What is the ReAct framework and how does it work?",
+"answer": "ReAct (Reasoning and Acting) interleaves reasoning and action in agents. At each step, the agent explains its thinking (planning), takes actions, then analyzes observations (reflection) until the task is finished, typically following a 'Thought, Act, Observation' format until completion."
+},
+{
+"question": "What are the main planning failure modes in agents?",
+"answer": "Planning failures include: 1) Tool use failures (invalid tools, valid tools with invalid parameters, valid tools with incorrect parameter values), 2) Goal failures (plan doesn't solve task or ignores constraints), and 3) Reflection errors (agent incorrectly believes task is accomplished)."
+},
+{
+"question": "What are the three main memory mechanisms for AI models?",
+"answer": "The three mechanisms are: 1) Internal knowledge (retained from training data, accessible in all queries), 2) Short-term memory (context from previous messages, fast but limited capacity), and 3) Long-term memory (external data sources accessed via retrieval, persistent across tasks)."
+},
+{
+"question": "What are the benefits of augmenting AI models with memory systems?",
+"answer": "Memory systems help: 1) Manage information overflow within sessions, 2) Persist information between sessions for personalization, 3) Boost model consistency by referencing previous answers, and 4) Maintain data structural integrity by storing structured data properly."
+},
+{
+"question": "What is function calling in the context of agents?",
+"answer": "Function calling is how model providers implement tool use, effectively turning models into agents. It involves: 1) Creating a tool inventory with function descriptions and parameters, 2) Specifying which tools the agent can use per query, and 3) The model automatically generating which tools to use and their parameters."
+},
+{
+"question": "What is the difference between planning granularity levels?",
+"answer": "Planning granularity involves a trade-off: detailed plans (using exact function names) are harder to generate but easier to execute, while higher-level plans (using natural language descriptions) are easier to generate but harder to execute. Higher-level planning is more robust to tool API changes."
+},
+{
+"question": "What are the key factors to consider when evaluating retrieval solutions?",
+"answer": "Key factors include: supported retrieval mechanisms and hybrid search capabilities, embedding models and vector search algorithms (for vector databases), scalability for data storage and query traffic, indexing time and bulk processing capabilities, query latency for different algorithms, and pricing structure."
+},
+{
+"question": "How should tools be selected for agents?",
+"answer": "Tool selection requires experimentation and analysis: compare agent performance with different tool sets, conduct ablation studies to see impact of removing tools, analyze tools that cause frequent mistakes, and plot distribution of tool usage. Different models and tasks show different tool preferences."
+},
+{
+"question": "What is tool transition and how can it improve agents?",
+"answer": "Tool transition studies how likely an agent is to call tool Y after tool X. If two tools are frequently used together, they can be combined into a bigger tool. Agents aware of this information can combine initial tools to continually build more complex tools, as proposed in the Chameleon framework."
+},
+{
+"question": "What are the main types of agent failure modes?",
+"answer": "Agent failures include: 1) Planning failures (tool use errors, goal failures, reflection errors), 2) Tool failures (wrong outputs, translation errors, missing required tools), and 3) Efficiency issues (too many steps, high costs, slow actions)."
+},
+{
+"question": "What memory management strategies are discussed for handling context overflow?",
+"answer": "Strategies include: 1) FIFO (first in, first out) - simple but can lose important early information, 2) Redundancy removal through summarization and entity tracking, 3) Reflection-based approaches where agents determine what information to keep, merge, or replace, and 4) Handling contradictory information appropriately."
+},
+{
+"question": "According to Anthropic's guidance, when might you not need RAG?",
+"answer": "Anthropic suggests that for Claude models, if your knowledge base is smaller than 200,000 tokens (about 500 pages of material), you can include the entire knowledge base in the prompt without needing RAG or similar methods."
+},
+{
+"question": "What is the fundamental debate about foundation models as planners?",
+"answer": "There's debate whether foundation models can truly plan. Critics like Yann LeCun argue autoregressive LLMs cannot plan, and Kambhampati suggests they confuse planning knowledge with executable plans. However, others argue LLMs might be poor planners due to lacking proper tools rather than fundamental inability."
+},
+{
+"question": "How do Foundation Model (FM) agents differ from Reinforcement Learning (RL) agents?",
+"answer": "Both are characterized by environments and actions, but differ in planners: RL agents use planners trained by RL algorithms (requiring significant time/resources), while FM agents use the model itself as the planner (can be prompted or fine-tuned with generally fewer resources). They may eventually merge."
+},
+{
+"question": "What role does reflection play in agent performance?",
+"answer": "Reflection significantly boosts agent performance by evaluating plans and outcomes at multiple stages: after receiving queries, after initial plan generation, after each execution step, and after completion. It can be done through self-critique or separate evaluator components, though it increases latency and cost."
+},
+{
+"question": "Why is RAG still valuable despite increasing context lengths?",
+"answer": "RAG remains valuable because: 1) Applications will always require context longer than available limits as data continues growing, 2) Models don't necessarily use long contexts well (focusing on wrong parts), 3) Every extra token incurs cost and latency, and 4) RAG allows using only the most relevant information for each query."
+}
+]

@@ -1,0 +1,178 @@
+[
+  {
+    "question": "What is an A/B experiment in machine learning deployment?",
+    "answer": "An A/B experiment consists of testing two different versions of your product on different subsets of users to check which version works best and get other insights."
+  },
+  {
+    "question": "What is Google Vertex AI and how was it formed?",
+    "answer": "Google Vertex AI is a platform that merged Google AI Platform (formerly Google ML Engine) and Google AutoML in 2021. It provides AI-related tools and services for training, deploying, and managing ML models."
+  },
+  {
+    "question": "Why might you want to wrap your ML model in a web service instead of using it directly in Python?",
+    "answer": "Wrapping a model in a web service decouples it from the rest of the infrastructure, making it possible to easily switch model versions, scale the service independently, perform A/B experiments, and ensure all software components rely on the same model versions."
+  },
+  {
+    "question": "What is TensorFlow Serving (TF Serving) and what are its main benefits?",
+    "answer": "TF Serving is a very efficient, battle-tested model server written in C++. It can sustain high loads, serve multiple versions of models, watch a model repository to automatically deploy the latest versions, and handle graceful model transitions."
+  },
+  {
+    "question": "What format must you use to export a Keras model for TF Serving?",
+    "answer": "You must export the model to the SavedModel format using model.save(). To version the model, create subdirectories for each model version (e.g., my_mnist_model/0001, my_mnist_model/0002)."
+  },
+  {
+    "question": "Why should you include preprocessing layers in your exported model?",
+    "answer": "Including preprocessing layers allows the model to ingest data in its natural form in production, avoids separate preprocessing in the application, simplifies updates, and limits the risk of mismatch between the model and required preprocessing steps."
+  },
+  {
+    "question": "What is a SavedModel and what components does it contain?",
+    "answer": "A SavedModel contains one or more metagraphs. Each metagraph is a computation graph plus function signature definitions (including input/output names, types, and shapes), identified by a set of tags like 'serve' for serving or 'train' for training."
+  },
+  {
+    "question": "What command can you use to inspect a SavedModel?",
+    "answer": "Use the saved_model_cli command: 'saved_model_cli show --dir model_path' to see tag sets, and 'saved_model_cli show --dir model_path --tag_set serve --signature_def serving_default' to see detailed signature information."
+  },
+  {
+    "question": "How do you start TF Serving and what ports does it use by default?",
+    "answer": "Start with: tensorflow_model_server --port=8500 --rest_api_port=8501 --model_name=model_name --model_base_path=path. It uses port 8500 for gRPC API and port 8501 for REST API."
+  },
+  {
+    "question": "What are the advantages and disadvantages of the REST API vs gRPC API for TF Serving?",
+    "answer": "REST API: Simple, works with any client, but inefficient for large data (JSON text-based, verbose). gRPC API: Compact binary format, efficient HTTP/2 communication, much better for large amounts of data or when latency is important."
+  },
+  {
+    "question": "How does TF Serving handle model version updates?",
+    "answer": "TF Serving automatically checks for new model versions at regular intervals. When found, it handles graceful transitions: answers pending requests with the previous version while handling new requests with the new version, then unloads the old version once all pending requests are complete."
+  },
+  {
+    "question": "What is model warmup in TF Serving?",
+    "answer": "Model warmup runs the new model on example instances (stored in the assets/extra directory) before starting to serve requests. This ensures everything is properly loaded and avoids long response times for the first requests."
+  },
+  {
+    "question": "What is automatic batching in TF Serving and how do you enable it?",
+    "answer": "Automatic batching combines multiple requests received within a short period into a batch before using the model. Enable with --enable_batching option. This provides significant performance boosts by leveraging GPU power, trading some latency for greater throughput."
+  },
+  {
+    "question": "What are the main steps to create a prediction service on Vertex AI?",
+    "answer": "1. Create a GCP account and project 2. Enable required APIs (Cloud Storage, Vertex AI) 3. Create a GCS bucket 4. Upload your SavedModel 5. Create a Vertex AI model 6. Create an endpoint 7. Deploy the model to the endpoint with specified machine and GPU types."
+  },
+  {
+    "question": "What authentication method should you use in Colab for GCP services?",
+    "answer": "In Colab, use: from google.colab import auth; auth.authenticate_user(). This uses OAuth 2.0 authentication where you confirm access to your Google credentials and GCP resources."
+  },
+  {
+    "question": "What is the difference between user authentication and service account authentication in GCP?",
+    "answer": "User authentication (OAuth 2.0) is for applications accessing user's personal data. Service account authentication is for applications accessing GCP services on their own behalf, not on behalf of users. Service accounts are preferred for production applications."
+  },
+  {
+    "question": "How do you run batch predictions on Vertex AI?",
+    "answer": "Create a JSON Lines file with input instances, upload to GCS, then call model.batch_predict() specifying the input file path, output directory, and machine specifications. Results are saved as JSON Lines files in GCS."
+  },
+  {
+    "question": "What are the main objectives of TensorFlow Lite (TFLite)?",
+    "answer": "1. Reduce model size to shorten download time and reduce RAM usage 2. Reduce computations needed for each prediction to reduce latency, battery usage, and heating 3. Adapt the model to device-specific constraints."
+  },
+  {
+    "question": "How does TFLite's model converter optimize models?",
+    "answer": "It compresses models to FlatBuffer format, prunes unnecessary operations (like training ops), optimizes computations (e.g., 3×a + 4×a + 5×a → 12×a), and fuses operations when possible (e.g., folding batch normalization into previous layer operations)."
+  },
+  {
+    "question": "What is post-training quantization in TFLite?",
+    "answer": "Post-training quantization converts 32-bit float weights to 8-bit integers using symmetrical quantization. It finds the maximum absolute weight value (m) and maps the range -m to +m to -127 to +127, reducing model size by 4x."
+  },
+  {
+    "question": "What is quantization-aware training and when do you need it?",
+    "answer": "Quantization-aware training adds fake quantization operations during training so the model learns to ignore quantization noise. It's needed when post-training quantization causes too much accuracy loss, making the final weights more robust to quantization."
+  },
+  {
+    "question": "What scenarios benefit from running ML models in web browsers using TensorFlow.js?",
+    "answer": "1. Intermittent/slow connectivity situations 2. Need for fastest possible response times 3. Privacy protection by keeping private data on client side. TensorFlow.js can load TFLite models and supports more GPU cards than regular TensorFlow through WebGL."
+  },
+  {
+    "question": "What is a Progressive Web App (PWA) and how does it relate to ML deployment?",
+    "answer": "A PWA is a website that meets criteria allowing it to be viewed in any browser and installed as a standalone app on mobile devices. It can work offline using service workers and allows managing a single code base for web and mobile ML applications."
+  },
+  {
+    "question": "How does TensorFlow automatically detect and use GPUs?",
+    "answer": "TensorFlow automatically detects available GPUs and places operations there by default. You can check with tf.config.list_physical_devices('GPU'). Variables/operations without GPU kernels fall back to CPU."
+  },
+  {
+    "question": "What GPU software components are needed for TensorFlow?",
+    "answer": "1. CUDA Toolkit - allows using CUDA-enabled GPUs for general computations 2. cuDNN - GPU-accelerated library for common DNN operations like convolutions and pooling. TensorFlow uses these to control GPU cards and accelerate computations."
+  },
+  {
+    "question": "What are the main approaches to managing GPU RAM in TensorFlow?",
+    "answer": "1. Split GPUs between processes using CUDA_VISIBLE_DEVICES 2. Set specific memory limits with tf.config.set_logical_device_configuration() 3. Enable memory growth with tf.config.experimental.set_memory_growth() 4. Split one GPU into multiple logical devices."
+  },
+  {
+    "question": "How does TensorFlow decide device placement for operations and variables?",
+    "answer": "By default, all variables and operations go to the first GPU (/gpu:0), except those without GPU kernels which go to CPU (/cpu:0). You can manually place operations using tf.device('/cpu:0') context."
+  },
+  {
+    "question": "How does TensorFlow execute operations across multiple devices in parallel?",
+    "answer": "TensorFlow analyzes the computation graph, finds operations with zero dependencies, adds them to device evaluation queues, and decrements dependency counters as operations complete. Operations run in parallel across devices with CPU using inter-op and intra-op thread pools."
+  },
+  {
+    "question": "What is the difference between model parallelism and data parallelism?",
+    "answer": "Model parallelism: The model is split across devices (challenging, limited effectiveness for most architectures). Data parallelism: The model is replicated across devices, each trained on different data subsets, then gradients are averaged (generally recommended)."
+  },
+  {
+    "question": "What is the mirrored strategy in data parallelism?",
+    "answer": "The mirrored strategy completely mirrors all model parameters across all GPUs and applies identical parameter updates on every GPU, keeping all replicas perfectly identical. It's efficient especially on single machines and uses AllReduce algorithms for gradient averaging."
+  },
+  {
+    "question": "What are the pros and cons of synchronous vs asynchronous parameter updates?",
+    "answer": "Synchronous: All workers wait for slowest worker, but consistent updates. Asynchronous: No waiting, better bandwidth usage, but can have stale gradients that slow convergence or cause wobble effects. Synchronous with spare replicas often works better."
+  },
+  {
+    "question": "What are stale gradients and how can you reduce their effects?",
+    "answer": "Stale gradients occur when parameters have been updated several times by other replicas before current gradients are applied. Solutions: reduce learning rate, drop/scale stale gradients, adjust mini-batch size, use warmup phase with single replica initially."
+  },
+  {
+    "question": "How do you use the Distribution Strategies API for multi-GPU training?",
+    "answer": "Create strategy = tf.distribute.MirroredStrategy(), then use 'with strategy.scope():' to wrap model creation and compilation. Call model.fit() normally - Keras automatically handles distribution, splitting batches across replicas."
+  },
+  {
+    "question": "What is a TensorFlow cluster and what are the different task types?",
+    "answer": "A TensorFlow cluster is a group of TF processes running in parallel. Task types: 'worker' (performs computations), 'chief' (worker + extra duties like logging), 'ps' (parameter server for variables), 'evaluator' (handles evaluation)."
+  },
+  {
+    "question": "How do you configure and start a TensorFlow cluster?",
+    "answer": "Define cluster specification with task addresses, set TF_CONFIG environment variable with cluster spec and current task info (type/index), then run the same training script on all workers using MultiWorkerMirroredStrategy."
+  },
+  {
+    "question": "What are the key considerations for training large models on Vertex AI?",
+    "answer": "Save models/checkpoints/logs to GCS using AIP_MODEL_DIR, AIP_CHECKPOINT_DIR, AIP_TENSORBOARD_LOG_DIR environment variables. Identify chief using resolved.task_type == 'chief'. Ensure training data is accessible from VMs (GCS, BigQuery, web)."
+  },
+  {
+    "question": "How do you create and run a custom training job on Vertex AI?",
+    "answer": "Create CustomTrainingJob specifying script path, Docker images for training/serving, Python requirements, and staging bucket. Then call run() with machine type, replica count, and accelerator specifications."
+  },
+  {
+    "question": "How does Vertex AI's hyperparameter tuning service work?",
+    "answer": "Uses Bayesian optimization to find optimal hyperparameter combinations. Your script accepts hyperparameters as command-line arguments, reports performance using the hypertune library, and Vertex AI runs multiple trials with different values based on previous results."
+  },
+  {
+    "question": "What are the main components needed for hyperparameter tuning on Vertex AI?",
+    "answer": "1. Training script that accepts hyperparameters as arguments 2. Performance reporting using hypertune.report_hyperparameter_tuning_metric() 3. CustomJob template defining machine specs 4. HyperparameterTuningJob defining search space and trial limits."
+  },
+  {
+    "question": "How can you use Keras Tuner for distributed hyperparameter search?",
+    "answer": "Set three environment variables on each machine: KERASTUNER_TUNER_ID (chief/worker ID), KERASTUNER_ORACLE_IP (chief's IP), KERASTUNER_ORACLE_PORT (communication port). Run the same Keras Tuner script on all machines."
+  },
+  {
+    "question": "What causes bandwidth saturation in distributed training?",
+    "answer": "Communicating model parameters and gradients between devices/servers. Time spent moving data can outweigh computation speedup. More severe for large dense models, less severe for sparse models where gradients are mostly zeros."
+  },
+  {
+    "question": "What is pipeline parallelism and how does PipeDream work?",
+    "answer": "Pipeline parallelism combines model and data parallelism by splitting the model into consecutive stages on different machines. Each stage alternates forward propagation and backpropagation in an asynchronous pipeline, achieving over 90% reduction in network communications."
+  },
+  {
+    "question": "What is weight stashing in PipeDream?",
+    "answer": "Weight stashing involves each stage saving weights during forward propagation and restoring them during backpropagation. This ensures the same weights are used for both forward and backward passes, mitigating issues with stale gradients across pipeline stages."
+  },
+  {
+    "question": "What are some general strategies to reduce bandwidth saturation in distributed training?",
+    "answer": "Use few powerful GPUs rather than many weak ones, group GPUs on well-interconnected servers, reduce precision from 32-bit to 16-bit floats, shard parameters across multiple parameter servers, and prefer sparse models over dense ones when possible."
+  }
+]

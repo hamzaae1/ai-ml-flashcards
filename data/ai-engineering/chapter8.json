@@ -1,0 +1,174 @@
+[
+  {
+    "question": "What demonstrates the increasing importance of data in AI development when comparing GPT-3 to GPT-4?",
+    "answer": "Only 2 people were credited with data work for GPT-3, but 80 people were credited for data processes in GPT-4. Even for something as simple as ChatML format, 11 people were involved, many of them senior researchers."
+  },
+  {
+    "question": "What is the goal of dataset engineering?",
+    "answer": "To create a dataset that allows you to train the best model, ideally within your allocated budget."
+  },
+  {
+    "question": "How have data operations evolved in AI companies?",
+    "answer": "They have evolved from side tasks handled when people have time to dedicated roles. Many AI companies now employ data labelers, dataset creators, and data quality engineers."
+  },
+  {
+    "question": "What is the difference between model-centric AI and data-centric AI?",
+    "answer": "Model-centric AI tries to improve performance by enhancing models (new architectures, larger sizes, new training techniques). Data-centric AI tries to improve performance by enhancing data (new processing techniques, high-quality datasets)."
+  },
+  {
+    "question": "What was Andrew Ng's 2021 data-centric AI competition about?",
+    "answer": "Participants needed to improve upon the same base dataset by applying techniques such as fixing incorrect labels, adding edge case examples, and augmenting data."
+  },
+  {
+    "question": "What was the goal of DataComp competition in 2023?",
+    "answer": "To create the best dataset for training a CLIP model. A standardized script trains a CLIP model on each submitted dataset, and quality is evaluated based on performance on 38 downstream tasks."
+  },
+  {
+    "question": "What are the three high-level criteria for data curation?",
+    "answer": "Data quality, data coverage, and data quantity."
+  },
+  {
+    "question": "Why is chain-of-thought (CoT) data more challenging to create?",
+    "answer": "Generating multi-step responses is tedious and time-consuming. Explaining how to solve a problem step-by-step is much more challenging than simply giving the final answer."
+  },
+  {
+    "question": "Why might human annotations not be ideal for AI tool use data?",
+    "answer": "What's efficient for humans might not be efficient for AI. For example, a human might prefer a web interface while a model can use an API directly. Human explanations might also miss steps due to faulty memory."
+  },
+  {
+    "question": "What is the difference between single-turn and multi-turn data?",
+    "answer": "Single-turn data helps train a model to respond to individual instructions. Multi-turn data teaches the model how to solve tasks that involve back-and-forth interactions."
+  },
+  {
+    "question": "What are the six characteristics of high-quality data?",
+    "answer": "Relevant, aligned with task requirements, consistent, correctly formatted, sufficiently unique, and compliant."
+  },
+  {
+    "question": "What does 'aligned with task requirements' mean for data quality?",
+    "answer": "The annotations should align with the task's requirements. If the task requires factual consistency, annotations should be factually correct. If it requires creativity, annotations should be creative."
+  },
+  {
+    "question": "What is data coverage and why is it important?",
+    "answer": "Data coverage means the training data should cover the range of problems you expect the model to solve. It requires sufficient data diversity to capture the diverse usage patterns of your application."
+  },
+  {
+    "question": "What did the Llama 3 team find about the percentage of math and code data in their training phases?",
+    "answer": "During pre-training and supervised finetuning, math, reasoning, and code tokens accounted for almost half the training data, despite being far below 50% of internet data. This confirms that high-quality code and math data is more effective for boosting reasoning capabilities."
+  },
+  {
+    "question": "What did Zhou et al.'s experiment show about data quality versus diversity?",
+    "answer": "A 7B-parameter model finetuned on a dataset that was both high-quality and diverse (3.83 score) outperformed models trained on datasets that were either diverse or high-quality alone (3.49 and 3.33 scores respectively)."
+  },
+  {
+    "question": "What three factors influence how much data you need for finetuning?",
+    "answer": "1) Finetuning techniques (full finetuning requires more data than PEFT methods), 2) Task complexity (simple tasks need less data), 3) Base model's performance (better base models need fewer examples)."
+  },
+  {
+    "question": "What is ossification in the context of model training?",
+    "answer": "A phenomenon where pre-training can ossify (freeze) the model weights so they don't adapt as well to finetuning data. It's more common in smaller models and can make finetuning worse than training from scratch."
+  },
+  {
+    "question": "What does OpenAI's finetuning guide show about model performance with different amounts of data?",
+    "answer": "With 100 examples, more advanced models give much better finetuning performance. With 550,000 examples, all models give similar performance after finetuning."
+  },
+  {
+    "question": "What is the most important source of data for applications?",
+    "answer": "Data from your own application. If you can create a data flywheel that leverages user-generated data to continually improve your product, you gain a significant advantage because it's perfectly relevant and matches the distribution you care about."
+  },
+  {
+    "question": "What are the main types of user-generated data?",
+    "answer": "User content, system-generated data from user usage, and user feedback."
+  },
+  {
+    "question": "What is the difference between data augmentation and data synthesis?",
+    "answer": "Data augmentation creates new data from existing real data (e.g., flipping an image). Data synthesis generates data to mimic properties of real data (e.g., simulating mouse movements). Augmented data is derived from real data, whereas synthetic data isn't real."
+  },
+  {
+    "question": "What are the five main reasons for data synthesis?",
+    "answer": "1) To increase data quantity, 2) To increase data coverage, 3) To increase data quality, 4) To mitigate privacy concerns, 5) To distill models."
+  },
+  {
+    "question": "How can synthetic data increase data quality?",
+    "answer": "Sometimes humans have fundamental limitations. For example, AI can generate more complex math problems than average human experts, and AI-generated preference ratings can be more consistent than human ratings which vary by mood and motivation."
+  },
+  {
+    "question": "What is rule-based data synthesis?",
+    "answer": "The simplest way to generate data using predefined rules and templates. For example, creating a credit card transaction by starting with a transaction template and using random generators to populate each field."
+  },
+  {
+    "question": "How can perturbation be used for data augmentation?",
+    "answer": "Adding noise to existing data to generate new data. Training models on perturbed data can both improve performance and make models more robust against attacks. For example, BERT authors replaced 1.5% of tokens with random words for a small performance boost."
+  },
+  {
+    "question": "What is simulation-based data synthesis?",
+    "answer": "Running experiments virtually instead of in the real world where it can be expensive and dangerous. Examples include simulating self-driving car scenarios or robot movements in virtual environments."
+  },
+  {
+    "question": "How did OpenAI use simulation for their Dota 2 bot?",
+    "answer": "They used a simulator that enabled the bot to play approximately 180 years' worth of games every day. The bot learned through self-play, playing against itself to develop and refine strategies over time."
+  },
+  {
+    "question": "How can AI's paraphrasing abilities be used for data augmentation?",
+    "answer": "Given a query like 'How to reset my password?', AI can paraphrase it to create new queries like 'I forgot my password', 'How can I change my password?', and 'Steps to reset passwords'."
+  },
+  {
+    "question": "What is back-translation and how is it used for quality verification?",
+    "answer": "If the original English sentence is X and the translated sentence is Y, you use another model to translate Y back into English (X'). If X' and X are very different, the translation Y is likely bad."
+  },
+  {
+    "question": "What are the two main approaches for instruction data synthesis?",
+    "answer": "1) Generate instructions and have humans write responses, or 2) Have humans write instructions and use AI to generate responses. You can also generate both instructions and responses using AI."
+  },
+  {
+    "question": "What is the reverse instruction approach?",
+    "answer": "Take existing long-form, high-quality content like stories, books, and Wikipedia articles, and use AI to generate prompts that would elicit such content. This yields higher-quality instruction data by avoiding AI-generated hallucinations in responses."
+  },
+  {
+    "question": "How did the Llama 3 team ensure quality of their generated coding data?",
+    "answer": "They used a rigorous pipeline: 1) Run code through parsers and linters for syntax errors, 2) Use AI-generated unit tests for runtime errors, 3) When solutions fail, prompt the model to revise with feedback from parsers, linters, and tests."
+  },
+  {
+    "question": "What are the main approaches for data verification?",
+    "answer": "Functional correctness (for code and other verifiable outputs), AI judges/verifiers that assign scores or classify examples, factual consistency detection, and content detectors to distinguish real from synthetic data."
+  },
+  {
+    "question": "What are the four major limitations of AI-generated data?",
+    "answer": "1) Quality control - AI data can be low quality, 2) Superficial imitation - may mimic style but struggle with accuracy, 3) Potential model collapse from recursive training, 4) Obscured data lineage creates risks."
+  },
+  {
+    "question": "What is model collapse?",
+    "answer": "A phenomenon where recursively using AI-generated data in training causes irreversible defects in models, degrading performance over time. AI models generate probable events more often, so over iterations, probable events become over-represented while rare events are forgotten."
+  },
+  {
+    "question": "How can model collapse potentially be avoided?",
+    "answer": "Research suggests mixing synthetic data with real data can avoid model collapse, though there's no definitive recommendation for the proportion of synthetic to real data."
+  },
+  {
+    "question": "What is model distillation?",
+    "answer": "A method where a small model (student) is trained to mimic a larger model (teacher). The knowledge of the big model is distilled into the small model, traditionally to produce smaller, faster models for deployment."
+  },
+  {
+    "question": "What did DistilBERT achieve compared to BERT?",
+    "answer": "DistilBERT reduced BERT's size by 40% while retaining 97% of its language comprehension capabilities and being 60% faster."
+  },
+  {
+    "question": "What are the main data processing steps mentioned in the chapter?",
+    "answer": "Inspect data, deduplicate data, clean and filter data, and format data according to model requirements."
+  },
+  {
+    "question": "Why is data deduplication important?",
+    "answer": "Duplicated data can skew distribution, introduce biases, cause test set contamination, and waste time and compute. An Anthropic study showed repeating 0.1% of data 100 times can degrade an 800M parameter model's performance to that of a 400M model."
+  },
+  {
+    "question": "What are three approaches for data deduplication?",
+    "answer": "1) Pairwise comparison using similarity scores, 2) Hashing examples into buckets and checking within buckets, 3) Dimensionality reduction followed by pairwise comparison."
+  },
+  {
+    "question": "What did Databricks find about removing formatting tokens?",
+    "answer": "Removing extraneous Markdown and HTML tokens improved their model's accuracy by 20% while reducing input token lengths by 60%."
+  },
+  {
+    "question": "How can finetuning help with prompt length and cost?",
+    "answer": "During finetuning, instructions typically don't need task descriptions or examples since the model learns from training examples. This allows much shorter prompts at inference time, reducing input token costs."
+  }
+]

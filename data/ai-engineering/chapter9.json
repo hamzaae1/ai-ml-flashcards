@@ -1,0 +1,166 @@
+[
+{
+"question": "What is the main focus of Chapter 9 on Inference Optimization?",
+"answer": "The chapter focuses on making AI models faster and cheaper during inference, discussing optimization techniques at the model, hardware, and service levels to reduce latency and cost."
+},
+{
+"question": "What are the two main computational bottlenecks in AI inference?",
+"answer": "Compute-bound (tasks limited by computation needed) and memory bandwidth-bound (tasks constrained by data transfer rate between memory and processors)."
+},
+{
+"question": "What is the difference between training and inference in AI models?",
+"answer": "Training refers to building a model (involves forward and backward passes), while inference refers to using a model to compute outputs for given inputs (involves only forward pass)."
+},
+{
+"question": "What are the two main steps in transformer-based language model inference?",
+"answer": "Prefill (processing input tokens in parallel, which is compute-bound) and Decode (generating output tokens one at a time, which is memory bandwidth-bound)."
+},
+{
+"question": "What is the difference between online and batch inference APIs?",
+"answer": "Online APIs optimize for latency and process requests as they arrive, while batch APIs optimize for cost with higher latency tolerance, allowing broader optimization techniques and often 50% cost reduction."
+},
+{
+"question": "What does TTFT stand for and what does it measure?",
+"answer": "Time to First Token - measures how quickly the first token is generated after users send a query, corresponding to the prefill step duration and depending on input length."
+},
+{
+"question": "What does TPOT stand for and what does it measure?",
+"answer": "Time Per Output Token - measures how quickly each output token is generated after the first token. For streaming mode, TPOT should be around 120 ms or 6-8 tokens/second for good user experience."
+},
+{
+"question": "How is total latency calculated for autoregressive models?",
+"answer": "Total latency = TTFT + TPOT × (number of output tokens)"
+},
+{
+"question": "What is goodput in the context of AI inference?",
+"answer": "Goodput measures the number of requests per second that satisfy the Service Level Objective (SLO), accounting for the latency/throughput trade-off by focusing on requests that meet performance requirements."
+},
+{
+"question": "What is MFU and how is it different from GPU utilization?",
+"answer": "Model FLOP/s Utilization (MFU) is the ratio of observed throughput to theoretical maximum throughput at peak FLOP/s. Unlike GPU utilization (percentage of time GPU is active), MFU measures actual computational efficiency."
+},
+{
+"question": "What is MBU and how is it calculated?",
+"answer": "Model Bandwidth Utilization (MBU) measures percentage of achievable memory bandwidth used. Calculated as: (parameter count × bytes/param × tokens/s) / (theoretical bandwidth)"
+},
+{
+"question": "What are the main differences between CPUs and GPUs for AI workloads?",
+"answer": "CPUs have few powerful cores (up to 64) for sequential tasks, while GPUs have thousands of smaller cores optimized for parallel processing like matrix multiplication, which constitutes over 90% of neural network operations."
+},
+{
+"question": "What are the three levels of memory in an AI accelerator system?",
+"answer": "CPU memory/DRAM (25-50 GB/s, large capacity), GPU high-bandwidth memory/HBM (256 GB/s to 1.5+ TB/s, 24-80 GB), and GPU on-chip SRAM (10+ TB/s, under 40 MB)."
+},
+{
+"question": "Why is electricity consumption a bottleneck for scaling AI compute?",
+"answer": "An NVIDIA H100 running at peak for a year consumes ~7,000 kWh (compared to 10,000 kWh for average US household), and data centers need massive electricity supply and cooling systems."
+},
+{
+"question": "What are the three main model compression techniques mentioned?",
+"answer": "Quantization (reducing model precision), distillation (training smaller models to mimic larger ones), and pruning (removing less important parameters or setting them to zero)."
+},
+{
+"question": "What is speculative decoding and how does it work?",
+"answer": "A technique using a faster draft model to generate token sequences that are then verified in parallel by the target model. The target model accepts the longest subsequence it agrees with, then generates one additional token."
+},
+{
+"question": "What is inference with reference?",
+"answer": "A technique that selects draft tokens from the input context instead of using a model, useful when responses significantly overlap with input text (like document analysis or code fixing)."
+},
+{
+"question": "What is the KV cache and why is it important?",
+"answer": "A cache storing key and value vectors from previous tokens to avoid recomputation during autoregressive generation. Critical for efficiency but grows linearly with sequence length and can become very large."
+},
+{
+"question": "How is KV cache size calculated?",
+"answer": "2 × B × S × L × H × M, where B=batch size, S=sequence length, L=transformer layers, H=model dimension, M=memory per value. For Llama 2 13B example: ~54 GB without optimization."
+},
+{
+"question": "What are the three approaches to attention mechanism optimization?",
+"answer": "Redesigning the attention mechanism (like local windowed attention), optimizing KV cache management (like PagedAttention), and writing specialized kernels for attention computation (like FlashAttention)."
+},
+{
+"question": "What is multi-query attention?",
+"answer": "An attention mechanism variant that shares key-value vectors across query heads, reducing KV cache memory footprint compared to standard multi-head attention."
+},
+{
+"question": "What is grouped-query attention?",
+"answer": "A generalization of multi-query attention that groups query heads and shares key-value pairs only within groups, allowing flexible balance between query heads and key-value pairs."
+},
+{
+"question": "What are kernels in the context of AI optimization?",
+"answer": "Specialized pieces of code optimized for specific hardware accelerators (like GPUs) to perform computationally intensive operations like matrix multiplication, attention, and convolution more efficiently."
+},
+{
+"question": "What are four common techniques used in kernel optimization?",
+"answer": "Vectorization (processing multiple data elements simultaneously), parallelization (dividing work across cores/threads), loop tiling (optimizing data access patterns), and operator fusion (combining multiple operators)."
+},
+{
+"question": "What is static batching?",
+"answer": "A batching technique that groups a fixed number of requests together before processing. Like a bus that waits until every seat is filled before departing, which can cause delays for early requests."
+},
+{
+"question": "What is dynamic batching?",
+"answer": "A batching technique with a maximum time window - processes batches either when full or when time limit reached, whichever comes first. Keeps latency manageable but may waste compute on unfilled batches."
+},
+{
+"question": "What is continuous batching (in-flight batching)?",
+"answer": "Allows completed responses in a batch to be returned immediately while adding new requests to replace them, maximizing occupancy. Like a bus that picks up new passengers after dropping others off."
+},
+{
+"question": "Why is decoupling prefill and decode beneficial?",
+"answer": "Because prefill is compute-bound and decode is memory bandwidth-bound, using separate instances prevents them from competing for resources and significantly improves both TTFT and TPOT."
+},
+{
+"question": "What is prompt caching and when is it useful?",
+"answer": "Storing overlapping text segments (like system prompts or long documents) for reuse across queries. Particularly valuable for applications with long system prompts or document-based queries."
+},
+{
+"question": "What cost and latency benefits does prompt caching provide?",
+"answer": "Up to 90% cost savings and 75% latency reduction for long cached contexts. Google offers 75% discount on cached tokens, while Anthropic promises up to 90% cost savings."
+},
+{
+"question": "What is replica parallelism?",
+"answer": "Creating multiple replicas of the same model to handle more requests simultaneously. The most straightforward parallelization strategy, essentially scaling horizontally with more model copies."
+},
+{
+"question": "What is tensor parallelism?",
+"answer": "Splitting tensors in operations (like matrix multiplication) across multiple devices to enable serving large models and reduce latency, though communication overhead may reduce benefits."
+},
+{
+"question": "What is pipeline parallelism?",
+"answer": "Dividing model computation into stages assigned to different devices, enabling overlapping computations as data flows through stages. Increases total latency due to communication but enables large model serving."
+},
+{
+"question": "What factors determine the prefill to decode instance ratio?",
+"answer": "Workload characteristics (input length requirements) and latency priorities. For long inputs prioritizing TTFT: 2:1 to 4:1 ratio. For short inputs prioritizing TPOT: 1:2 to 1:1 ratio."
+},
+{
+"question": "What is the typical trade-off between latency and throughput in AI inference?",
+"answer": "Techniques like batching can improve throughput but increase latency. According to LinkedIn's experience, you can often double or triple throughput if willing to sacrifice TTFT and TPOT."
+},
+{
+"question": "Why are percentiles (p50, p90, p95, p99) more useful than average latency?",
+"answer": "Because latency is a distribution and averages can be misleading due to outliers. Percentiles tell you what percentage of requests experience certain latency levels and help identify performance issues."
+},
+{
+"question": "How do model-level and service-level optimizations differ?",
+"answer": "Model-level optimization often requires changing the model itself (potentially affecting behavior), while service-level optimization keeps the model intact and only changes how it's served."
+},
+{
+"question": "What are the most impactful inference optimization techniques across various use cases?",
+"answer": "Quantization (works well across models), tensor parallelism (reduces latency and enables large models), replica parallelism (straightforward to implement), and attention mechanism optimization (accelerates transformers)."
+},
+{
+"question": "What key insight does the PyTorch optimization case study demonstrate?",
+"answer": "Combining multiple techniques can dramatically improve performance: torch.compile + INT8 quantization + INT4 quantization + speculative decoding achieved significant throughput improvements for Llama-7B."
+},
+{
+"question": "What makes inference optimization an interdisciplinary field?",
+"answer": "It requires collaboration among model researchers, application developers, system engineers, compiler designers, hardware architects, and data center operators due to optimization opportunities at multiple levels."
+},
+{
+"question": "How does the autoregressive decoding bottleneck impact cost and latency?",
+"answer": "Each token generation requires transferring entire model parameters, making it bandwidth-heavy and computationally inefficient. Output tokens cost 2-4x input tokens, and a single output token can impact latency as much as 100 input tokens."
+}
+]

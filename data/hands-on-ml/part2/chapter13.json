@@ -1,0 +1,194 @@
+[
+  {
+    "question": "What is the tf.data API and what are its main capabilities?",
+    "answer": "The tf.data API is TensorFlow's data loading and preprocessing system that can load and preprocess data extremely efficiently, read from multiple files in parallel using multithreading and queuing, shuffle and batch samples, and do all of this on the fly while GPUs/TPUs are training the current batch."
+  },
+  {
+    "question": "What file formats can the tf.data API read from?",
+    "answer": "The tf.data API can read from text files (such as CSV files), binary files with fixed-size records, binary files using TensorFlow's TFRecord format (which supports records of varying sizes), and SQL databases."
+  },
+  {
+    "question": "What is TFRecord and what makes it special?",
+    "answer": "TFRecord is a flexible and efficient binary format that usually contains protocol buffers. It's TensorFlow's preferred format for storing large amounts of data and reading it efficiently."
+  },
+  {
+    "question": "How do you create a basic dataset from tensor data using tf.data?",
+    "answer": "Use tf.data.Dataset.from_tensor_slices() to create a dataset from a tensor. For example: dataset = tf.data.Dataset.from_tensor_slices(X) where X is any data tensor."
+  },
+  {
+    "question": "What is an important characteristic of the tf.data API regarding data access?",
+    "answer": "The tf.data API is a streaming API - you can efficiently iterate through a dataset's items, but the API is not designed for indexing or slicing."
+  },
+  {
+    "question": "What happens when you apply the repeat() method to a dataset?",
+    "answer": "The repeat() method returns a new dataset that repeats the items of the original dataset. If called with no arguments, it will repeat the dataset forever. With an argument, it repeats that many times."
+  },
+  {
+    "question": "How does the batch() method work and what happens with the final batch?",
+    "answer": "The batch() method groups items into batches of the specified size. The final batch may be smaller if there aren't enough items left. You can set drop_remainder=True to drop the final batch if it's smaller than the specified size."
+  },
+  {
+    "question": "Do dataset transformation methods modify the original dataset?",
+    "answer": "No, dataset methods do not modify datasets - they create new ones. You must keep a reference to the new datasets (e.g., with dataset = ...) or else nothing will happen."
+  },
+  {
+    "question": "What is the map() method used for in tf.data?",
+    "answer": "The map() method is used to transform dataset items by applying a function to each item. It's commonly used for preprocessing data, and you can set num_parallel_calls to use multiple threads for intensive computations."
+  },
+  {
+    "question": "How does the shuffle() method work in tf.data?",
+    "answer": "The shuffle() method creates a dataset that fills a buffer with items from the source dataset, then randomly pulls items from this buffer while replacing them with fresh items from the source. You must specify the buffer size, which should be large enough for effective shuffling."
+  },
+  {
+    "question": "What happens when you call repeat() on a shuffled dataset?",
+    "answer": "By default, repeat() on a shuffled dataset generates a new random order at every iteration. You can set reshuffle_each_iteration=False to reuse the same order at each iteration."
+  },
+  {
+    "question": "How do you read from multiple CSV files efficiently using tf.data?",
+    "answer": "Use tf.data.Dataset.list_files() to create a dataset of filepaths, then use interleave() with TextLineDataset to read from multiple files simultaneously and interleave their lines."
+  },
+  {
+    "question": "What does the interleave() method do?",
+    "answer": "The interleave() method reads from multiple files simultaneously by cycling through them, reading one line at a time from each until all datasets are out of items. You can set num_parallel_calls for actual parallel reading."
+  },
+  {
+    "question": "What are the key components needed for parsing CSV data with tf.data?",
+    "answer": "You need tf.io.decode_csv() to parse lines, a record_defaults array specifying default values and types for each column, and tf.stack() to convert the parsed scalars into tensors."
+  },
+  {
+    "question": "What is prefetching and why is it important?",
+    "answer": "Prefetching allows the dataset to prepare the next batch while the training algorithm works on the current batch. Using prefetch(1) can dramatically improve performance by keeping the GPU almost 100% utilized."
+  },
+  {
+    "question": "When should you use the cache() method and where should it be placed in the pipeline?",
+    "answer": "Use cache() when the dataset is small enough to fit in memory. Place it after loading and preprocessing but before shuffling, repeating, batching, and prefetching. This ensures each instance is only read and preprocessed once."
+  },
+  {
+    "question": "What is the TFRecord format structure?",
+    "answer": "TFRecord is a simple binary format containing a sequence of binary records of varying sizes. Each record has a length, a CRC checksum for the length, the actual data, and a CRC checksum for the data."
+  },
+  {
+    "question": "How do you create a TFRecord file?",
+    "answer": "Use tf.io.TFRecordWriter: with tf.io.TFRecordWriter(\"my_data.tfrecord\") as f: f.write(b\"record data\")"
+  },
+  {
+    "question": "How do you read from TFRecord files?",
+    "answer": "Use tf.data.TFRecordDataset: dataset = tf.data.TFRecordDataset(filepaths). You can read multiple files in parallel by setting num_parallel_reads."
+  },
+  {
+    "question": "What are protocol buffers (protobufs)?",
+    "answer": "Protocol buffers are a portable, extensible, and efficient binary format developed at Google. They are defined using a simple language and are widely used, particularly in TFRecord files."
+  },
+  {
+    "question": "What is the structure of TensorFlow's Example protobuf?",
+    "answer": "An Example contains a Features object, which contains a dictionary mapping feature names to Feature values. Each Feature can be a BytesList, FloatList, or Int64List."
+  },
+  {
+    "question": "How do you parse serialized Example protobufs?",
+    "answer": "Use tf.io.parse_single_example() for single examples or tf.io.parse_example() for batches. You need to provide a feature description dictionary specifying each feature's shape, type, and default value."
+  },
+  {
+    "question": "What's the difference between FixedLenFeature and VarLenFeature descriptors?",
+    "answer": "FixedLenFeature is for features with fixed length and returns regular tensors. VarLenFeature is for variable-length features and returns sparse tensors that can be converted to dense tensors if needed."
+  },
+  {
+    "question": "When would you use SequenceExample instead of Example protobuf?",
+    "answer": "Use SequenceExample for handling lists of lists, such as documents with lists of sentences where each sentence is a list of words, plus contextual data like author and title."
+  },
+  {
+    "question": "What are the three main approaches for preprocessing data in TensorFlow?",
+    "answer": "1) Preprocess ahead of time using tools like NumPy/Pandas, 2) Preprocess on the fly with tf.data using map(), 3) Include preprocessing layers directly inside your model."
+  },
+  {
+    "question": "What are the advantages of including preprocessing layers in your model?",
+    "answer": "The model can ingest raw data directly in production, eliminating risk of training/serving skew. You don't need to reimplement preprocessing in different languages, and there's no mismatch between training and production preprocessing."
+  },
+  {
+    "question": "How does the Normalization layer work?",
+    "answer": "The Normalization layer standardizes input features. You can either specify mean and variance when creating it, or use the adapt() method to let it measure these statistics from the training data."
+  },
+  {
+    "question": "What are two ways to use the Normalization layer efficiently?",
+    "answer": "1) Include it in the model for convenience but slightly slower training, 2) Use it standalone to preprocess data once before training, then wrap it with the trained model for production deployment."
+  },
+  {
+    "question": "What does the Discretization layer do?",
+    "answer": "The Discretization layer transforms numerical features into categorical features by mapping value ranges (bins) to categories. This is useful for multimodal distributions or highly nonlinear relationships with the target."
+  },
+  {
+    "question": "How can you specify bin boundaries for the Discretization layer?",
+    "answer": "You can either provide bin_boundaries explicitly when creating the layer, or set num_bins and use adapt() to let the layer find appropriate boundaries based on value percentiles."
+  },
+  {
+    "question": "What does the CategoryEncoding layer do?",
+    "answer": "The CategoryEncoding layer performs one-hot encoding of categorical features. For multiple features, it does multi-hot encoding by default, or count encoding if you set output_mode=\"count\"."
+  },
+  {
+    "question": "How does the StringLookup layer work?",
+    "answer": "StringLookup maps string categories to integers, with unknown categories mapped to 0 and known categories numbered from 1 (most frequent to least frequent). Set output_mode=\"one_hot\" for direct one-hot encoding."
+  },
+  {
+    "question": "What are out-of-vocabulary (OOV) buckets in StringLookup?",
+    "answer": "OOV buckets are used when num_oov_indices > 1. Unknown categories get mapped pseudorandomly to different OOV buckets using a hash function, allowing the model to distinguish some rare categories despite hash collisions."
+  },
+  {
+    "question": "What is the hashing trick and when is it used?",
+    "answer": "The hashing trick maps categories pseudorandomly to buckets using a hash function modulo the number of buckets. The Hashing layer implements this and doesn't need adaptation, but hash collisions can make categories indistinguishable."
+  },
+  {
+    "question": "What are embeddings and how are they different from one-hot encoding?",
+    "answer": "Embeddings are dense representations of high-dimensional data like categories. Instead of sparse 50,000-dimensional one-hot vectors, embeddings might be 100-dimensional dense vectors that are trainable and improve during training."
+  },
+  {
+    "question": "How do embeddings learn useful representations?",
+    "answer": "Embeddings are initialized randomly and trained by gradient descent. Similar categories tend to move closer together in the embedding space while dissimilar ones move apart, creating useful representations for the task."
+  },
+  {
+    "question": "What made word embeddings particularly successful?",
+    "answer": "In 2013, Tomáš Mikolov and Google researchers developed efficient techniques to learn word embeddings by training neural networks to predict nearby words, achieving remarkable semantic relationships and analogies."
+  },
+  {
+    "question": "How does the Embedding layer work in Keras?",
+    "answer": "The Embedding layer wraps an embedding matrix with one row per category and one column per embedding dimension. It looks up and returns the row corresponding to each category ID. It's initialized randomly and trained with the model."
+  },
+  {
+    "question": "What is a typical range for embedding dimensions?",
+    "answer": "Embeddings typically have 10 to 300 dimensions, depending on the task, vocabulary size, and training set size. This hyperparameter needs to be tuned for optimal performance."
+  },
+  {
+    "question": "How does the TextVectorization layer preprocess text?",
+    "answer": "TextVectorization converts text to lowercase, removes punctuation, splits on whitespace, sorts words by frequency to create vocabulary, encodes unknown words as 1s, and pads shorter sentences with 0s."
+  },
+  {
+    "question": "What are the different output modes for TextVectorization?",
+    "answer": "Modes include: default (integer encoding), \"multi_hot\" (binary occurrence), \"count\" (word counts), and \"tf_idf\" (term frequency × inverse document frequency weighting)."
+  },
+  {
+    "question": "How does TF-IDF weighting work in TextVectorization?",
+    "answer": "TF-IDF multiplies each word count by log(1 + d/(f+1)), where d is total documents and f is documents containing the word. This downweights frequent words and upweights rare, informative words."
+  },
+  {
+    "question": "What are TensorFlow Hub modules?",
+    "answer": "TF Hub modules are pretrained model components for text, image, audio, etc. They contain both preprocessing code and pretrained weights, can be directly included in Keras models, and typically require no additional training."
+  },
+  {
+    "question": "What are the three main image preprocessing layers in Keras?",
+    "answer": "1) Resizing - resizes images to desired dimensions, 2) Rescaling - rescales pixel values (e.g., 0-255 to -1 to 1), 3) CenterCrop - crops images to keep only center patches of specified size."
+  },
+  {
+    "question": "What are data augmentation layers and when are they active?",
+    "answer": "Data augmentation layers like RandomCrop, RandomFlip, RandomRotation, etc., are only active during training and randomly transform input images to artificially increase training set size and improve performance."
+  },
+  {
+    "question": "What is TensorFlow Datasets (TFDS) and what does it provide?",
+    "answer": "TFDS is a project that makes it easy to load common datasets from small ones like MNIST to huge ones like ImageNet. It includes image, text, audio, video, and time series datasets with descriptions and exploration tools."
+  },
+  {
+    "question": "How do you load and use a dataset with TFDS?",
+    "answer": "Import tensorflow_datasets as tfds, then call tfds.load(name=\"dataset_name\"). Set as_supervised=True for labeled datasets to get (features, labels) tuples. Use the split argument to divide data (e.g., \"train[:90%]\")."
+  },
+  {
+    "question": "What is the relationship between one-hot encoding + Dense layer vs Embedding layer?",
+    "answer": "One-hot encoding followed by a Dense layer (no activation, no biases) is equivalent to an Embedding layer, but Embedding is much more efficient as it avoids multiplications by zero and uses fewer computations."
+  }
+]

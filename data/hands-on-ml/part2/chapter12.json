@@ -1,0 +1,162 @@
+[
+  {
+    "question": "What is TensorFlow and what are its main features?",
+    "answer": "TensorFlow is a powerful library for numerical computation, particularly well suited for large-scale machine learning. Main features: core similar to NumPy but with GPU support, distributed computing support, JIT compiler for optimization, portable computation graphs, reverse-mode autodiff, and excellent optimizers."
+  },
+  {
+    "question": "What is the difference between tf.Tensor and tf.Variable?",
+    "answer": "tf.Tensor values are immutable - you cannot modify them. tf.Variable acts like tf.Tensor but can be modified in place using assign(), assign_add(), assign_sub() methods, or scatter_update() methods. Variables are needed for model weights that must be updated during training."
+  },
+  {
+    "question": "How does TensorFlow handle type conversions?",
+    "answer": "TensorFlow does not perform automatic type conversions to avoid performance issues. It raises exceptions for incompatible types (e.g., adding float and integer tensors). You must use tf.cast() to explicitly convert types when needed."
+  },
+  {
+    "question": "What precision does TensorFlow use by default and why?",
+    "answer": "TensorFlow uses 32-bit precision by default, while NumPy uses 64-bit. This is because 32-bit precision is generally sufficient for neural networks, runs faster, and uses less RAM. When creating tensors from NumPy arrays, set dtype=tf.float32."
+  },
+  {
+    "question": "How do you create a custom loss function in Keras?",
+    "answer": "Create a function that takes labels (y_true) and predictions (y_pred) as arguments, uses TensorFlow operations to compute losses, and returns a tensor with individual sample losses. For better performance, use vectorized implementations with only TensorFlow operations."
+  },
+  {
+    "question": "What is the difference between using a function vs subclassing tf.keras.losses.Loss for custom losses?",
+    "answer": "Use a function for simple losses without hyperparameters. Subclass tf.keras.losses.Loss when you have hyperparameters that need to be saved with the model - implement __init__(), call(), and get_config() methods."
+  },
+  {
+    "question": "How do you save and load models with custom components?",
+    "answer": "When loading, provide a custom_objects dictionary mapping function names to actual functions. Alternatively, decorate functions with @keras.utils.register_keras_serializable() to make them automatically available to load_model()."
+  },
+  {
+    "question": "What are the key differences between losses and metrics?",
+    "answer": "Losses are used by gradient descent for training - must be differentiable with non-zero gradients, but don't need to be human-interpretable. Metrics evaluate models - must be interpretable by humans, can be non-differentiable or have zero gradients everywhere."
+  },
+  {
+    "question": "What is a streaming metric and why is it important?",
+    "answer": "A streaming metric (stateful metric) is gradually updated batch after batch, maintaining state across batches. Important for metrics like precision where you can't just average batch results - need to track cumulative true/false positives across all batches."
+  },
+  {
+    "question": "How do you create a custom streaming metric?",
+    "answer": "Subclass tf.keras.metrics.Metric, implement: __init__() to create state variables with add_weight(), update_state() to update variables given labels/predictions, result() to compute final result, and get_config() for persistence."
+  },
+  {
+    "question": "When should you use tf.keras.layers.Lambda vs creating a custom layer class?",
+    "answer": "Use Lambda for simple stateless layers (no weights) by wrapping a function. Create a custom layer class when you need weights/state by subclassing tf.keras.layers.Layer and implementing build() and call() methods."
+  },
+  {
+    "question": "What are the key methods to implement when creating a custom layer?",
+    "answer": "Key methods: __init__() for hyperparameters, build() to create weights using add_weight(), call() for forward computation, and get_config() for saving hyperparameters. The build() method is called when input shape is known."
+  },
+  {
+    "question": "How do you create a layer that behaves differently during training vs testing?",
+    "answer": "Add a training argument to the call() method and use it to decide behavior. For example: call(self, X, training=False). During training, the layer might add noise or apply dropout, while during testing it passes inputs unchanged."
+  },
+  {
+    "question": "What is the difference between subclassing Layer vs Model?",
+    "answer": "Layer: for internal components/reusable blocks. Model: for the complete trainable object with extra functionalities like compile(), fit(), evaluate(), predict(), get_layer(), and save() methods. Models are layers with additional capabilities."
+  },
+  {
+    "question": "How do you add custom losses based on model internals?",
+    "answer": "Compute the loss based on any part of the model (weights, activations), then pass the result to the add_loss() method. Similarly, use add_metric() for custom metrics. This is useful for regularization or monitoring internal aspects."
+  },
+  {
+    "question": "What is tf.GradientTape and how do you use it?",
+    "answer": "tf.GradientTape automatically records operations involving variables for automatic differentiation. Usage: create variables, use 'with tf.GradientTape() as tape:', perform computations, then call tape.gradient(loss, variables) to get gradients."
+  },
+  {
+    "question": "What are the key rules for using tf.GradientTape?",
+    "answer": "Tape auto-erases after calling gradient(), so use persistent=True for multiple calls. Only tracks variables by default - use tape.watch() for tensors. Put minimal code inside the tape block to save memory, or use tape.stop_recording()."
+  },
+  {
+    "question": "When might you need to write a custom training loop?",
+    "answer": "When fit() method isn't flexible enough - e.g., Wide & Deep paper using different optimizers for different paths, when you want full control over training process, or need to apply special transformations/constraints to gradients beyond clipping."
+  },
+  {
+    "question": "What are the main components of a custom training loop?",
+    "answer": "Key components: nested loops (epochs/batches), sample batches, use GradientTape to compute gradients, apply optimizer with apply_gradients(), update metrics, display progress. Must handle loss computation including regularization losses."
+  },
+  {
+    "question": "What is a TensorFlow Function and how do you create one?",
+    "answer": "A TF function is a graph-based version of a Python function that runs much faster. Create using @tf.function decorator or tf.function(). TensorFlow analyzes the function, generates an optimized computation graph, and executes it efficiently."
+  },
+  {
+    "question": "What happens when you call tf.function on a Python function?",
+    "answer": "TensorFlow uses AutoGraph to analyze source code and replace control flow with TensorFlow operations, then traces the function with symbolic tensors to generate a computation graph. The graph is optimized and cached for reuse."
+  },
+  {
+    "question": "What is AutoGraph in TensorFlow?",
+    "answer": "AutoGraph analyzes Python function source code to capture control flow statements (for, while, if, break, continue, return) and replaces them with appropriate TensorFlow operations like tf.while_loop() and tf.cond()."
+  },
+  {
+    "question": "How does TensorFlow handle polymorphism in TF functions?",
+    "answer": "TF functions generate new graphs for each unique set of input shapes and data types, caching them for reuse. Tensor arguments: new graph per shape/dtype. Python numerical values: new graph per distinct value (use sparingly)."
+  },
+  {
+    "question": "What are the main rules for writing TF functions?",
+    "answer": "Use TensorFlow operations not external libraries (NumPy, etc.), external calls only run during tracing, avoid side effects in non-TF code, other called functions should follow same rules, create variables only on first call."
+  },
+  {
+    "question": "When should you use Python values vs tensors as TF function arguments?",
+    "answer": "Use Python values only for arguments with few unique values (hyperparameters like number of neurons). Each distinct Python value generates a new graph, potentially slowing down programs and using excessive RAM. Use tensors for varying data."
+  },
+  {
+    "question": "What is the difference between eager execution and graph mode?",
+    "answer": "Eager execution (default in TF 2): operations perform computations immediately. Graph mode: operations add nodes to computation graph without performing computations, enabling optimization and faster execution when graph is run."
+  },
+  {
+    "question": "How can you boost performance with TF functions?",
+    "answer": "Use @tf.function to convert Python functions to optimized graphs. Set jit_compile=True for XLA compilation that fuses operations and uses less RAM. Keras automatically converts custom functions to TF functions."
+  },
+  {
+    "question": "What is XLA and how do you use it?",
+    "answer": "XLA (Accelerated Linear Algebra) compiles computation graphs into optimized kernels, often fusing multiple operations. Use by setting jit_compile=True in tf.function() or when calling model.compile(). Results in faster execution and dramatically less RAM usage."
+  },
+  {
+    "question": "How do you handle numerical stability issues in custom functions?",
+    "answer": "Add small values to avoid division by zero (e.g., tf.sqrt(x + 1e-6)). Rewrite functions for stability (e.g., log(1 + exp(z)) becomes log(1 + exp(-|z|)) + max(z, 0)). Use @tf.custom_gradient for custom gradient functions."
+  },
+  {
+    "question": "When and how do you use @tf.custom_gradient?",
+    "answer": "Use when a numerically stable function has unstable gradients. Decorator returns both function result and a gradient function. The gradient function receives backpropagated gradients and returns gradients multiplied by local gradients (chain rule)."
+  },
+  {
+    "question": "What are the key steps in implementing a custom training loop?",
+    "answer": "1) Define hyperparameters, optimizer, loss function, metrics 2) Create nested loops for epochs/batches 3) Sample batches 4) Use GradientTape for forward pass and loss computation 5) Compute gradients 6) Apply gradients 7) Update metrics 8) Reset states"
+  },
+  {
+    "question": "How do you handle regularization losses in custom training loops?",
+    "answer": "Compute total loss as main loss plus model.losses: loss = tf.add_n([main_loss] + model.losses). The model.losses contains regularization losses from layers. Use tf.reduce_mean() for main loss if needed."
+  },
+  {
+    "question": "What should you be careful about when calling models in training loops?",
+    "answer": "Always set training=True when calling the model during training, especially for models with BatchNormalization or Dropout. For custom models, ensure the training argument is propagated to constituent layers."
+  },
+  {
+    "question": "How do you apply constraints in custom training loops?",
+    "answer": "After apply_gradients(), iterate through model.variables and apply constraints: if variable.constraint is not None: variable.assign(variable.constraint(variable)). This handles kernel_constraint and bias_constraint."
+  },
+  {
+    "question": "What are the advantages and disadvantages of custom training loops?",
+    "answer": "Advantages: Full control over training process, can implement complex training strategies. Disadvantages: More code, more error-prone, harder to maintain. Use fit() method unless you specifically need the extra flexibility."
+  },
+  {
+    "question": "How does TensorFlow generate computation graphs from Python functions?",
+    "answer": "Two steps: 1) AutoGraph analyzes source code and replaces control flow with TF operations 2) Tracing calls the upgraded function with symbolic tensors in graph mode, where operations add nodes to graph instead of computing."
+  },
+  {
+    "question": "What are some limitations when using external libraries in TF functions?",
+    "answer": "External library calls (NumPy, standard library) only run during tracing, not in the graph. Side effects only occur during tracing. Random numbers generated only once during tracing. Use tf.py_function() to wrap arbitrary code but it hurts performance and portability."
+  },
+  {
+    "question": "How should you handle loops in TF functions?",
+    "answer": "TensorFlow only captures loops over tensors or tf.data.Dataset. Use 'for i in tf.range(x)' not 'for i in range(x)' if you want the loop in the graph. Otherwise it runs only during tracing (useful for building graph structure)."
+  },
+  {
+    "question": "What are the key TensorFlow data structures beyond regular tensors?",
+    "answer": "Sparse tensors (tf.SparseTensor) for mostly-zero tensors, Tensor arrays (tf.TensorArray) for lists of same-shape tensors, Ragged tensors (tf.RaggedTensor) for varying sizes, String tensors (tf.string), Sets, and Queues (FIFO, Priority, etc.)."
+  },
+  {
+    "question": "What is the recommended approach for most deep learning use cases?",
+    "answer": "95% of use cases only require Keras and tf.data APIs. Use custom components (losses, metrics, layers, models) when needed, but prefer high-level APIs. Write custom training loops only when you need flexibility that fit() method cannot provide."
+  }
+]

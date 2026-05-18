@@ -1,0 +1,162 @@
+[
+{
+"question": "What marked the beginning of accelerated AI development, and what was the first AI system capable of writing human-like articles?",
+"answer": "Accelerated AI development began in 2012. The first AI system capable of writing articles indistinguishable from human-written ones was GPT-2 (Generative Pre-trained Transformer 2)."
+},
+{
+"question": "How quickly did ChatGPT reach major user milestones when it was released?",
+"answer": "ChatGPT reached one million active users in five days and one hundred million active users in two months."
+},
+{
+"question": "What is Language AI and how does it relate to natural language processing (NLP)?",
+"answer": "Language AI refers to a subfield of AI that focuses on developing technologies capable of understanding, processing, and generating human language. The term Language AI can often be used interchangeably with natural language processing (NLP)."
+},
+{
+"question": "What is the bag-of-words technique and when was it popular?",
+"answer": "Bag-of-words is a method for representing unstructured text that was first mentioned around the 1950s but became popular around the 2000s. It works by tokenizing sentences into individual words and counting how often each word appears."
+},
+{
+"question": "What is tokenization in the context of text processing?",
+"answer": "Tokenization is the process of splitting up sentences into individual words or subwords (tokens). The most common method is splitting on whitespace to create individual words."
+},
+{
+"question": "What major limitation does the bag-of-words approach have?",
+"answer": "Bag-of-words considers language to be nothing more than an almost literal bag of words and ignores the semantic nature, or meaning, of text."
+},
+{
+"question": "What was word2vec and what breakthrough did it represent?",
+"answer": "Released in 2013, word2vec was one of the first successful attempts at capturing the meaning of text in embeddings. It learns semantic representations of words by training on vast amounts of textual data using neural networks."
+},
+{
+"question": "How does word2vec generate word embeddings?",
+"answer": "Word2vec generates word embeddings by looking at which other words tend to appear next to each other in sentences. It assigns vector embeddings to words and trains by predicting whether pairs of words are likely to be neighbors in a sentence."
+},
+{
+"question": "What are embeddings and how do they represent meaning?",
+"answer": "Embeddings are vector representations of data that attempt to capture meaning. They represent properties of words through numerical values, where words with similar meanings have embeddings that are closer to each other in dimensional space."
+},
+{
+"question": "What problem does static word embeddings like word2vec have with context?",
+"answer": "Static embeddings like word2vec always have the same representation regardless of context. For example, the word 'bank' will have the same embedding whether it refers to a financial bank or the bank of a river."
+},
+{
+"question": "What are recurrent neural networks (RNNs) and what tasks do they perform?",
+"answer": "RNNs are variants of neural networks that can model sequences. They are used for two main tasks: encoding (representing an input sentence) and decoding (generating an output sentence)."
+},
+{
+"question": "What does autoregressive mean in the context of language models?",
+"answer": "Autoregressive means that when generating the next word, the architecture needs to consume all previously generated words. Each step depends on the previous outputs in sequence."
+},
+{
+"question": "What breakthrough did the attention mechanism introduce in 2014?",
+"answer": "Attention allows a model to focus on parts of the input sequence that are relevant to one another and amplify their signal. It selectively determines which words are most important in a given sentence, solving the limitation of single context embeddings."
+},
+{
+"question": "What was revolutionary about the 'Attention is all you need' paper from 2017?",
+"answer": "The paper proposed the Transformer architecture, which was solely based on attention mechanisms and removed recurrent networks. This allowed for parallel training, tremendously speeding up the training process."
+},
+{
+"question": "What are the two main components of a Transformer encoder block?",
+"answer": "A Transformer encoder block consists of two parts: self-attention and a feedforward neural network."
+},
+{
+"question": "How does self-attention differ from previous attention mechanisms?",
+"answer": "Self-attention can attend to different positions within a single sequence, allowing it to look at the entire sequence in one go rather than processing one token at a time. This enables more accurate representation of input sequences."
+},
+{
+"question": "What is BERT and what type of architecture does it use?",
+"answer": "BERT (Bidirectional Encoder Representations from Transformers) is an encoder-only architecture introduced in 2018 that focuses on representing language. It uses only the encoder part of the Transformer and removes the decoder entirely."
+},
+{
+"question": "What is the [CLS] token in BERT and what is it used for?",
+"answer": "The [CLS] (classification) token is an additional token in BERT's input that serves as the representation for the entire input. It's often used as the input embedding for fine-tuning the model on specific tasks like classification."
+},
+{
+"question": "What is masked language modeling and how does BERT use it?",
+"answer": "Masked language modeling is a training technique where parts of the input are masked for the model to predict. BERT uses this method during training to create more accurate representations of the input."
+},
+{
+"question": "What is transfer learning in the context of language models?",
+"answer": "Transfer learning involves first pretraining a model for language modeling on large datasets (like Wikipedia), then fine-tuning it for specific tasks. This approach is less compute-intensive and requires less data than training from scratch."
+},
+{
+"question": "What is GPT-1 and what architecture does it use?",
+"answer": "GPT-1 (Generative Pre-trained Transformer) is a decoder-only architecture proposed in 2018 for generative tasks. It stacks decoder blocks similar to how BERT stacks encoder blocks, and was trained on 7,000 books and Common Crawl data."
+},
+{
+"question": "How did the GPT model series grow in terms of parameters?",
+"answer": "GPT-1 had 117 million parameters, GPT-2 had 1.5 billion parameters, and GPT-3 had 175 billion parameters, showing rapid growth in model size."
+},
+{
+"question": "What are instruct or chat models and how are they created?",
+"answer": "Instruct or chat models are generative models fine-tuned to follow directions and answer questions rather than just completing text. They are created by fine-tuning base generative models to exhibit conversational behavior."
+},
+{
+"question": "What is context length or context window in language models?",
+"answer": "Context length represents the maximum number of tokens the model can process at once. A large context window allows entire documents to be passed to the LLM, and it increases as new tokens are generated due to the autoregressive nature."
+},
+{
+"question": "Why is 2023 called 'The Year of Generative AI'?",
+"answer": "2023 is called The Year of Generative AI due to the tremendous impact and widespread adoption of ChatGPT (GPT-3.5), along with the rapid release of both open source and proprietary LLMs at an incredible pace."
+},
+{
+"question": "What are foundation models in the context of LLMs?",
+"answer": "Foundation models are open source base models that can be fine-tuned for specific tasks, like following instructions. They serve as the starting point for creating specialized applications."
+},
+{
+"question": "How does this book define 'large language models' differently from common usage?",
+"answer": "This book defines LLMs broadly to include both generative models (decoder-only) and representation models (encoder-only), as well as models with fewer than 1 billion parameters that don't generate text but can run on consumer hardware."
+},
+{
+"question": "What are the two main steps in training large language models?",
+"answer": "1. Language modeling (pretraining): Training on vast internet text to learn grammar, context, and patterns. 2. Fine-tuning: Further training on narrower tasks to adapt the model for specific applications or behaviors."
+},
+{
+"question": "What is the difference between pretraining and fine-tuning?",
+"answer": "Pretraining takes the majority of computation time and trains on vast text corpora to learn general language patterns. Fine-tuning uses the pretrained model and trains it on narrower tasks, saving massive resources since pretraining is already done."
+},
+{
+"question": "What are some key ethical considerations when developing and using LLMs?",
+"answer": "Key considerations include: bias and fairness (models may learn and amplify biases from training data), transparency and accountability, potential for generating harmful content, intellectual property concerns, and the need for regulation."
+},
+{
+"question": "What hardware considerations are important for running LLMs?",
+"answer": "The most important factor is VRAM (video random-access memory) on your GPU. More VRAM allows running larger models. This book focuses on models that can run on consumer hardware, with a minimum suggestion of 16 GB VRAM."
+},
+{
+"question": "What are proprietary/closed source LLMs and how are they accessed?",
+"answer": "Proprietary LLMs (like GPT-4 and Claude) don't share their weights and architecture publicly. They are accessed through APIs (application programming interfaces) provided by their developers, requiring no local GPU but often involving costs."
+},
+{
+"question": "What are the main advantages of proprietary LLMs?",
+"answer": "Users don't need powerful GPUs, no expertise required for hosting, lower barrier to entry, and they tend to be more performant due to significant organizational investment."
+},
+{
+"question": "What are open source LLMs and their main advantages?",
+"answer": "Open LLMs share their weights and architecture publicly. Advantages include complete user control, independence from API connections, ability to fine-tune, running sensitive data locally, and complete transparency of processes."
+},
+{
+"question": "What is Phi-3-mini and why is it used as the main example in this book?",
+"answer": "Phi-3-mini is a relatively small (3.8 billion parameters) but performant generative model that can run on devices with less than 8 GB VRAM. It's licensed under MIT license for commercial use and represents accessible LLM technology."
+},
+{
+"question": "What are the two models that are loaded when using an LLM?",
+"answer": "When using an LLM, two models are loaded: 1) The generative model itself, and 2) Its underlying tokenizer, which splits input text into tokens before feeding it to the generative model."
+},
+{
+"question": "What is the transformers.pipeline and what does it simplify?",
+"answer": "The transformers.pipeline is a function that encapsulates the model, tokenizer, and text generation process into a single, simplified interface for generating text."
+},
+{
+"question": "What do the parameters return_full_text, max_new_tokens, and do_sample control in text generation?",
+"answer": "return_full_text (False = don't return prompt), max_new_tokens (limits output length), and do_sample (False = always select most probable next token, True = use sampling for creativity)."
+},
+{
+"question": "What are representation models vs generative models in this book's terminology?",
+"answer": "Representation models (encoder-only, like BERT) focus on representing language and creating embeddings, typically don't generate text. Generative models (decoder-only, like GPT) focus on generating text and typically aren't trained to generate embeddings."
+},
+{
+"question": "What visual cues does the book use to distinguish between model types?",
+"answer": "Representation models are shown in teal with a small vector icon (indicating focus on vectors and embeddings), while generative models are shown in pink with a small chat icon (indicating generative capabilities)."
+}
+]

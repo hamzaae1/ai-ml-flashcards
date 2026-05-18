@@ -1,0 +1,170 @@
+[
+{
+"question": "What is the main inspiration behind artificial neural networks (ANNs)?",
+"answer": "ANNs are machine learning models inspired by the networks of biological neurons found in our brains. However, like planes inspired by birds that don't flap wings, ANNs have gradually become quite different from their biological cousins."
+},
+{
+"question": "Who first introduced artificial neural networks and when?",
+"answer": "ANNs were first introduced in 1943 by neurophysiologist Warren McCulloch and mathematician Walter Pitts in their paper 'A Logical Calculus of Ideas Immanent in Nervous Activity.'"
+},
+{
+"question": "What are the key components of a biological neuron?",
+"answer": "A biological neuron consists of a cell body containing the nucleus, many branching extensions called dendrites, one long extension called the axon, and synaptic terminals at the tip of axon branches that connect to other neurons."
+},
+{
+"question": "How do biological neurons communicate?",
+"answer": "Biological neurons produce electrical impulses called action potentials that travel along axons and make synapses release chemical signals called neurotransmitters. When a neuron receives sufficient neurotransmitters within milliseconds, it fires its own electrical impulse."
+},
+{
+"question": "What is a perceptron and who invented it?",
+"answer": "The perceptron is one of the simplest ANN architectures, invented in 1957 by Frank Rosenblatt. It's based on a threshold logic unit (TLU) that computes a linear function of its inputs and applies a step function to the result."
+},
+{
+"question": "What is the mathematical formula for a TLU (Threshold Logic Unit)?",
+"answer": "A TLU computes z = w₁x₁ + w₂x₂ + ... + wₙxₙ + b = wᵀx + b, then applies a step function: hw(x) = step(z). It's similar to logistic regression but uses a step function instead of the logistic function."
+},
+{
+"question": "What are the two most common step functions used in perceptrons?",
+"answer": "The Heaviside step function (outputs 0 if z < 0, 1 if z ≥ 0) and the sign function (outputs -1 if z < 0, 0 if z = 0, +1 if z > 0)."
+},
+{
+"question": "What is the perceptron learning rule?",
+"answer": "The perceptron learning rule updates weights as: wi,j(next step) = wi,j + η(yj - ŷj)xi, where η is the learning rate, yj is the target output, ŷj is the actual output, and xi is the input value."
+},
+{
+"question": "What major limitation did Minsky and Papert highlight about perceptrons?",
+"answer": "In their 1969 monograph, Minsky and Papert showed that perceptrons are incapable of solving some trivial problems like the exclusive OR (XOR) classification problem, since they can only learn linearly separable patterns."
+},
+{
+"question": "How can the XOR problem be solved with neural networks?",
+"answer": "The XOR problem can be solved by stacking multiple perceptrons to create a multilayer perceptron (MLP). An MLP can learn non-linear patterns that single perceptrons cannot."
+},
+{
+"question": "What is backpropagation and who developed the key techniques?",
+"answer": "Backpropagation combines reverse-mode automatic differentiation (introduced by Seppo Linnainmaa in 1970) with gradient descent. It was popularized by Rumelhart, Hinton, and Williams in 1985 for training neural networks."
+},
+{
+"question": "Why was the sigmoid function crucial for backpropagation?",
+"answer": "The step function contains only flat segments with no gradient, making gradient descent impossible. The sigmoid function σ(z) = 1/(1 + exp(-z)) has a well-defined nonzero derivative everywhere, allowing gradient descent to make progress at every step."
+},
+{
+"question": "What are the three popular activation functions mentioned in the chapter?",
+"answer": "1) Sigmoid function: σ(z) = 1/(1 + exp(-z)), 2) Hyperbolic tangent: tanh(z) = 2σ(2z) - 1, and 3) ReLU function: ReLU(z) = max(0, z)."
+},
+{
+"question": "Why is ReLU often preferred over sigmoid activation functions?",
+"answer": "ReLU is fast to compute, doesn't have a maximum output value (which helps reduce gradient descent issues), and generally works better in practice than sigmoid functions, despite not being differentiable at z = 0."
+},
+{
+"question": "Why do neural networks need nonlinear activation functions?",
+"answer": "Without nonlinearity between layers, chaining several linear transformations only results in another linear transformation. Nonlinear activations allow deep networks to solve complex problems that single layers cannot."
+},
+{
+"question": "How does backpropagation work in detail?",
+"answer": "Backpropagation processes mini-batches through epochs: 1) Forward pass computes outputs, 2) Measures network error using loss function, 3) Backward pass uses chain rule to compute error gradients for all weights, 4) Gradient descent step updates all weights."
+},
+{
+"question": "Why is random weight initialization important in neural networks?",
+"answer": "If all weights and biases are initialized to zero, all neurons in a layer remain identical and are affected identically by backpropagation. Random initialization breaks this symmetry, allowing backpropagation to train diverse neurons."
+},
+{
+"question": "What is the typical architecture for regression MLPs?",
+"answer": "For regression: 1-5 hidden layers, 10-100 neurons per layer, 1 output neuron per prediction dimension, ReLU activation in hidden layers, no activation (or ReLU/softplus for positive outputs) in output layer, MSE loss."
+},
+{
+"question": "What is the typical architecture for classification MLPs?",
+"answer": "For binary classification: sigmoid activation in output layer. For multiclass: one output neuron per class with softmax activation. For multilabel: one output neuron per label with sigmoid activation. Cross-entropy loss for all cases."
+},
+{
+"question": "What is Keras and how does it relate to TensorFlow?",
+"answer": "Keras is TensorFlow's high-level deep learning API that allows you to build, train, evaluate, and execute neural networks. Originally standalone, Keras became TensorFlow's official high-level API in TensorFlow 2."
+},
+{
+"question": "What are the three main APIs for building Keras models?",
+"answer": "1) Sequential API: for simple stacks of layers connected sequentially, 2) Functional API: for complex topologies with multiple inputs/outputs, 3) Subclassing API: for dynamic models with custom logic in the call() method."
+},
+{
+"question": "What does the Flatten layer do in Keras?",
+"answer": "The Flatten layer converts input data into a 1D array. For example, if it receives input with shape [32, 28, 28], it reshapes it to [32, 784]. It has no parameters and just does preprocessing."
+},
+{
+"question": "What is the difference between 'sparse_categorical_crossentropy' and 'categorical_crossentropy' loss?",
+"answer": "'sparse_categorical_crossentropy' is used when labels are class indices (e.g., 0, 1, 2), while 'categorical_crossentropy' is used when labels are one-hot vectors (e.g., [0, 0, 1])."
+},
+{
+"question": "What does the model.fit() method return and what information does it contain?",
+"answer": "model.fit() returns a History object containing training parameters (history.params), list of epochs (history.epoch), and a dictionary (history.history) with loss and metrics measured during training and validation."
+},
+{
+"question": "What is a Wide & Deep neural network?",
+"answer": "A Wide & Deep network connects all or part of the inputs directly to the output layer while also using a deep path. This allows the network to learn both deep patterns (via deep path) and simple rules (via wide path)."
+},
+{
+"question": "How do you handle multiple inputs in Keras functional API?",
+"answer": "Create separate Input layers for each input, process them through different paths, then concatenate them using a Concatenate layer. When creating the model, specify inputs=[input1, input2] and pass tuples of data during training."
+},
+{
+"question": "What are three use cases for multiple outputs in neural networks?",
+"answer": "1) Task demands it (e.g., object location + classification), 2) Multiple independent tasks on same data (multitask learning), 3) Regularization technique using auxiliary outputs to ensure underlying layers learn useful features."
+},
+{
+"question": "When should you use the Subclassing API instead of Sequential or Functional APIs?",
+"answer": "Use Subclassing API for models with loops, varying shapes, conditional branching, and dynamic behaviors, or when you prefer imperative programming style. However, it's harder to debug and inspect than declarative APIs."
+},
+{
+"question": "What are the two main formats for saving Keras models?",
+"answer": "1) SavedModel format (save_format='tf'): directory with saved_model.pb, keras_metadata.pb, variables/, and assets/, 2) HDF5 format (save_format='h5'): single file, but most deployment tools require SavedModel format."
+},
+{
+"question": "What is the purpose of callbacks in Keras training?",
+"answer": "Callbacks are objects that Keras calls before/after training, epochs, and batches. Examples include ModelCheckpoint (saves model during training), EarlyStopping (stops training when no progress), and TensorBoard (logs data for visualization)."
+},
+{
+"question": "How does the EarlyStopping callback work?",
+"answer": "EarlyStopping monitors validation metrics and stops training when no improvement is seen for a specified number of epochs (patience). With restore_best_weights=True, it rolls back to the best model at the end."
+},
+{
+"question": "What is TensorBoard and what can you visualize with it?",
+"answer": "TensorBoard is an interactive visualization tool for viewing learning curves, comparing runs, visualizing computation graphs, analyzing training statistics, viewing generated images/audio, and profiling network performance."
+},
+{
+"question": "What is Keras Tuner and what tuning strategies does it offer?",
+"answer": "Keras Tuner is a hyperparameter tuning library for Keras with strategies like RandomSearch (random sampling), Hyperband (successive halving), and BayesianOptimization (Gaussian process-guided search)."
+},
+{
+"question": "How does the Hyperband tuner work?",
+"answer": "Hyperband starts by training many models for few epochs, eliminates the worst models keeping only the top 1/factor models (e.g., top third), and repeats this selection process until one model remains. It's more efficient than pure random search."
+},
+{
+"question": "What are the recommended ranges for hidden layers and neurons in MLPs?",
+"answer": "For hidden layers: start with 1-2, can go up to 5+ for complex problems. For neurons per hidden layer: typically 10-100, often same size across layers works well. Deep networks are more parameter-efficient than wide shallow ones."
+},
+{
+"question": "What is the 'stretch pants' approach to neural network sizing?",
+"answer": "Build a model with slightly more layers and neurons than needed, then use early stopping and regularization to prevent overfitting. This avoids bottleneck layers that could lose important information permanently."
+},
+{
+"question": "How do you find a good learning rate?",
+"answer": "Train for a few hundred iterations starting with very low learning rate (10⁻⁵), gradually increasing to large value (10). Plot loss vs learning rate (log scale). Optimal rate is about 10x lower than where loss starts climbing."
+},
+{
+"question": "What is the current debate about batch sizes in neural network training?",
+"answer": "Large batches (up to 8,192) can be efficient with techniques like learning rate warmup, but small batches (2-32) often lead to better generalization. Strategy: try large batch with warmup first, fall back to small batch if training is unstable."
+},
+{
+"question": "Why is ReLU generally recommended as the default activation function for hidden layers?",
+"answer": "ReLU is fast to compute, doesn't suffer from vanishing gradients as much as sigmoid/tanh, and generally works well in practice. For output layers, the choice depends on the specific task requirements."
+},
+{
+"question": "What is transfer learning in the context of neural networks?",
+"answer": "Transfer learning involves reusing lower layers from a pre-trained model when training a new model for a related task. The new model doesn't learn low-level features from scratch but only needs to learn higher-level structures specific to the new task."
+},
+{
+"question": "How do deep networks achieve better parameter efficiency than shallow ones?",
+"answer": "Deep networks can model complex functions using exponentially fewer neurons than shallow networks. Lower layers model low-level structures, intermediate layers combine these into intermediate structures, and higher layers model high-level structures hierarchically."
+},
+{
+"question": "What is the vanishing gradients problem mentioned in the TensorFlow playground exercise?",
+"answer": "In deep networks, gradients can become very small as they propagate backward through layers, causing lower layers to train very slowly. This can be alleviated with better weight initialization, optimizers like Adam, or batch normalization."
+}
+]

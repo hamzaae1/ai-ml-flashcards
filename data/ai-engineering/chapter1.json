@@ -1,0 +1,166 @@
+[
+{
+"question": "What single word would the author use to describe AI post-2020, and what are its two major consequences?",
+"answer": "Scale. The two major consequences are: 1) AI models are becoming more powerful and capable of more tasks, enabling more applications, and 2) Training large models requires data, compute resources, and specialized talent that only a few organizations can afford, leading to the emergence of 'model as a service.'"
+},
+{
+"question": "What is AI engineering and how does it differ from traditional ML engineering?",
+"answer": "AI engineering is the process of building applications on top of readily available foundation models, rather than developing ML models from scratch. The demand for AI applications has increased while the barrier to entry has decreased due to accessible foundation models."
+},
+{
+"question": "What is a language model and what statistical information does it encode?",
+"answer": "A language model encodes statistical information about one or more languages. This information tells us how likely a word is to appear in a given context. For example, given 'My favorite color is __', a language model should predict 'blue' more often than 'car'."
+},
+{
+"question": "What is a token in the context of language models, and why do models use tokens instead of words or characters?",
+"answer": "A token can be a character, a word, or part of a word (like -tion). Models use tokens because: 1) They allow breaking words into meaningful components, 2) Fewer unique tokens than words reduces vocabulary size making models more efficient, and 3) Tokens help process unknown words by splitting them into recognizable parts."
+},
+{
+"question": "What are the two main types of language models and how do they differ?",
+"answer": "Masked language models predict missing tokens anywhere in a sequence using context from before and after (like filling in blanks). Autoregressive language models predict the next token using only preceding tokens and can continually generate tokens sequentially."
+},
+{
+"question": "Why are autoregressive language models more popular than masked language models today?",
+"answer": "Autoregressive models are the choice for text generation because they can continually generate one token after another, making them much more popular for generative AI applications, while masked models are mainly used for non-generative tasks like sentiment analysis."
+},
+{
+"question": "What is self-supervision and how does it overcome the data labeling bottleneck?",
+"answer": "Self-supervision allows models to infer labels from the input data itself, rather than requiring explicit labels. Language modeling is self-supervised because each input sequence provides both the labels (tokens to be predicted) and the contexts to predict them, enabling training on massive amounts of unlabeled text."
+},
+{
+"question": "How does the size of language models relate to the amount of training data needed?",
+"answer": "Larger models have more capacity to learn and therefore need more training data to maximize their performance. While you could train a large model on small datasets, it would be a waste of compute since similar results could be achieved with smaller models."
+},
+{
+"question": "What are foundation models and how do they differ from large language models?",
+"answer": "Foundation models are large-scale models that can work with multiple data modalities (text, images, videos, etc.), not just text. While many still call models like GPT-4V and Gemini LLMs, they're better characterized as foundation models because they incorporate additional modalities beyond language."
+},
+{
+"question": "What breakthrough do foundation models represent in AI research structure?",
+"answer": "Foundation models break from traditional AI research that was divided by data modalities (NLP for text, computer vision for images, etc.). They create multimodal models that can work across different data types, marking a transition from task-specific to general-purpose models."
+},
+{
+"question": "How did OpenAI use self-supervision for multimodal models with CLIP?",
+"answer": "OpenAI used natural language supervision to train CLIP by finding (image, text) pairs that co-occurred on the internet, generating a dataset of 400 million pairs without manual labeling cost. This was 400 times larger than ImageNet and enabled CLIP to generalize to multiple image classification tasks."
+},
+{
+"question": "What are the three factors that create ideal conditions for AI engineering's rapid growth?",
+"answer": "1) General-purpose AI capabilities - foundation models can do more tasks than ever before, 2) Increased AI investments - success of ChatGPT prompted sharp increases in AI investment, and 3) Low entrance barrier - model-as-a-service APIs make it easy to leverage AI with minimal coding."
+},
+{
+"question": "According to the Goldman Sachs Research estimate, how much could AI investment reach by 2025?",
+"answer": "AI investment could approach $100 billion in the US and $200 billion globally by 2025. FactSet found that one in three S&P 500 companies mentioned AI in their Q2 2023 earnings calls, three times more than the previous year."
+},
+{
+"question": "What are the eight categories of common generative AI use cases mentioned in the chapter?",
+"answer": "1) Coding, 2) Image and video production, 3) Writing, 4) Education, 5) Conversational bots, 6) Information aggregation, 7) Data organization, and 8) Workflow automation."
+},
+{
+"question": "Which occupation categories have the highest exposure to AI according to Eloundou et al. (2023)?",
+"answer": "Occupations with 100% or close to 100% exposure include interpreters and translators, tax preparers, web designers, writers, mathematicians, and financial quantitative analysts. Occupations with no exposure include cooks, stonemasons, and athletes."
+},
+{
+"question": "What did McKinsey researchers find about AI's impact on developer productivity for different types of tasks?",
+"answer": "AI can help developers be twice as productive for documentation, 25-50% more productive for code generation and refactoring, but minimal productivity improvement was observed for highly complex tasks. AI is much better at frontend than backend development."
+},
+{
+"question": "According to the MIT study on ChatGPT's impact on writing, what were the key findings?",
+"answer": "Among 453 college-educated professionals exposed to ChatGPT: average time decreased by 40%, output quality rose by 18%, and ChatGPT was more helpful to those with less inclination for writing. Users were 2x more likely to use it in their real job two weeks later."
+},
+{
+"question": "Why is AI particularly good at SEO according to the chapter?",
+"answer": "AI seems particularly good at SEO perhaps because many AI models are trained with data from the internet, which is populated with SEO-optimized text. This has enabled a new generation of content farms that create junk websites filled with AI-generated content to rank high on Google."
+},
+{
+"question": "How can AI be used in education beyond just homework completion?",
+"answer": "AI can summarize textbooks, generate personalized lecture plans, adapt materials to different learning formats (auditory, visual, code-based), create roleplay scenarios for language learning, generate and evaluate quizzes, serve as debate partners, and act as teaching assistants."
+},
+{
+"question": "What is the Microsoft Crawl-Walk-Run framework for AI automation?",
+"answer": "1) Crawl - human involvement is mandatory, 2) Walk - AI can directly interact with internal employees, 3) Run - increased automation, potentially including direct AI interactions with external users. The role of humans can change over time as AI system quality improves."
+},
+{
+"question": "What are the three general types of competitive advantages in AI according to the chapter?",
+"answer": "Technology, data, and distribution (ability to bring products to users). With foundation models, core technologies are similar across companies, and distribution advantages likely belong to big companies, making data advantages more nuanced but potentially the key differentiator."
+},
+{
+"question": "What is the 'last mile challenge' in AI product development?",
+"answer": "Initial success with foundation models can be misleading - it might take a weekend to build a demo but months or years to build a product. As described in UltraChat: 'the journey from 0 to 60 is easy, whereas progressing from 60 to 100 becomes exceedingly challenging.'"
+},
+{
+"question": "What are the three layers of the AI application stack?",
+"answer": "1) Application development - providing models with good prompts and context, requiring evaluation and interfaces, 2) Model development - tooling for developing, training, finetuning, and optimizing models, and 3) Infrastructure - tooling for model serving, managing data and compute, and monitoring."
+},
+{
+"question": "How do AI engineering and ML engineering differ in three major ways?",
+"answer": "1) AI engineering uses pre-trained models vs. training your own, focusing more on model adaptation, 2) AI models are bigger and consume more resources, requiring more efficient optimization, and 3) AI models produce open-ended outputs that are harder to evaluate, making evaluation a bigger problem."
+},
+{
+"question": "What are the two categories of model adaptation techniques?",
+"answer": "Prompt-based techniques (like prompt engineering) that adapt models without updating weights by giving instructions and context, and finetuning techniques that require updating model weights by making changes to the model itself."
+},
+{
+"question": "What are the differences between pre-training, finetuning, and post-training?",
+"answer": "Pre-training trains a model from scratch with randomly initialized weights (most resource-intensive). Finetuning continues training a previously trained model. Post-training refers to training after pre-training, often done by model developers before release, while finetuning is done by application developers."
+},
+{
+"question": "How has dataset engineering changed with foundation models compared to traditional ML?",
+"answer": "Traditional ML focused more on feature engineering with tabular data. Foundation models require less feature engineering but more work on data deduplication, tokenization, context retrieval, and quality control including removing sensitive information and toxic data."
+},
+{
+"question": "Why has inference optimization become even more important with foundation models?",
+"answer": "Foundation models incur higher inference cost and latency than traditional models. They are often autoregressive (tokens generated sequentially), so if it takes 10ms per token, generating 100 tokens takes 1 second. Getting latency down to expected 100ms for internet applications is a huge challenge."
+},
+{
+"question": "What are the three key responsibilities of the application development layer?",
+"answer": "1) Evaluation - mitigating risks and uncovering opportunities throughout model adaptation, 2) Prompt engineering - getting models to express desirable behaviors from input alone, and 3) AI interface - creating interfaces for end users to interact with AI applications."
+},
+{
+"question": "Why is evaluation more challenging with foundation models than traditional ML?",
+"answer": "Foundation models are open-ended with expanded capabilities. Unlike close-ended tasks with expected ground truths (like fraud detection), tasks like chatbots have so many possible responses that it's impossible to create exhaustive lists of correct answers to compare against."
+},
+{
+"question": "How did the Gemini vs. ChatGPT evaluation controversy demonstrate the importance of prompt engineering?",
+"answer": "Google claimed Gemini beat ChatGPT on MMLU using CoT@32 technique (showing 32 examples) while ChatGPT was shown only 5 examples. When both were shown 5 examples, ChatGPT performed better, highlighting how different prompts can drastically affect model performance."
+},
+{
+"question": "What new types of AI interfaces are gaining popularity?",
+"answer": "Standalone web/desktop/mobile apps, browser extensions for quick AI queries, chatbots integrated into chat apps (Slack, Discord, WeChat), plug-ins and add-ons for products like VSCode and Microsoft 365, voice-based interfaces, and embodied interfaces in AR/VR."
+},
+{
+"question": "How does AI engineering workflow differ from traditional ML engineering workflow?",
+"answer": "Traditional ML: start with data gathering and training, build product last. AI engineering: start with building the product first using readily available models, then invest in data and models only once the product shows promise. This rewards those who can iterate fast."
+},
+{
+"question": "What role do Apple's framework dimensions play in AI product design?",
+"answer": "Critical vs. complementary (how essential AI is to the app), Reactive vs. proactive (responds to user requests vs. shows responses opportunistically), and Dynamic vs. static (updated continually with user feedback vs. updated periodically)."
+},
+{
+"question": "Why are companies faster to deploy internal-facing AI applications than external-facing ones?",
+"answer": "Internal applications help companies develop AI engineering expertise while minimizing risks associated with data privacy, compliance, and potential catastrophic failures. They prefer applications with lower risks and often use close-ended tasks that are easier to evaluate."
+},
+{
+"question": "What percentage of compute and data resources does pre-training typically consume in model development?",
+"answer": "Pre-training takes up to 98% of overall compute and data resources for models like InstructGPT. It's the most resource-intensive phase and takes a long time, where mistakes can incur significant financial loss and project delays."
+},
+{
+"question": "What trends does Figure 1-11 show about AI model cost and performance evolution?",
+"answer": "Between 2022 and 2024, the cost of AI reasoning rapidly dropped over time while model performance on benchmarks like MMLU improved. This shows that model inference is getting faster, cheaper, and better quality simultaneously."
+},
+{
+"question": "According to LinkedIn's experience, what was the timeline for achieving different quality levels in their AI product?",
+"answer": "It took them one month to achieve 80% of the experience they wanted, which made them underestimate the remaining effort. It took four more months to surpass 95%. Each subsequent 1% gain was slow and discouraging, with much time spent on product kinks and hallucinations."
+},
+{
+"question": "What makes maintenance of AI products particularly challenging?",
+"answer": "AI's fast pace of change means committing to 'riding this bullet train.' You must constantly run cost-benefit analyses as the best option today might become the worst tomorrow. Regulations around AI are evolving and can cause fatal changes to business models."
+},
+{
+"question": "How has the programming language landscape changed with AI engineering?",
+"answer": "Traditional ML engineering was Python-centric, but AI engineering shows increasing support for JavaScript APIs with tools like LangChain.js, Transformers.js, OpenAI's Node library, and Vercel's AI SDK to attract more frontend engineers."
+},
+{
+"question": "What does completion mean in the context of language models, and why is it powerful?",
+"answer": "Completion means given a text (prompt), the model tries to complete that text. It's incredibly powerful because many tasks including translation, summarization, coding, and solving math problems can be framed as completion tasks, though completion isn't the same as conversation."
+}
+]

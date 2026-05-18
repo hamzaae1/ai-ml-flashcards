@@ -1,0 +1,174 @@
+[
+  {
+    "question": "What are the two main types of models discussed in the first chapters of the book?",
+    "answer": "Text representation models like BERT and its derivatives, and generative pre-trained transformers (GPT) that are trained primarily for text generation."
+  },
+  {
+    "question": "What is prompt engineering?",
+    "answer": "The process of designing prompts in a way that enhances the quality of generated text from generative models."
+  },
+  {
+    "question": "What are the main considerations when choosing between proprietary and open source text generation models?",
+    "answer": "Proprietary models are generally more performant, but open source models offer more flexibility and are free to use."
+  },
+  {
+    "question": "Which model is recommended as a starting point and why?",
+    "answer": "Phi-3-mini with 3.8 billion parameters, because it's suitable for devices with up to 8 GB of VRAM and scaling up to larger models tends to be a better experience than scaling down."
+  },
+  {
+    "question": "What are the special tokens used in the Phi-3 prompt template?",
+    "answer": "<|user|>, <|assistant|>, and <|end|> tokens that indicate who said what and when the model should stop generating text."
+  },
+  {
+    "question": "What does the do_sample parameter control in text generation?",
+    "answer": "When set to False, no sampling is done and only the most probable next token is selected. When set to True, it enables sampling parameters like temperature and top_p."
+  },
+  {
+    "question": "What does the temperature parameter control?",
+    "answer": "The randomness or creativity of generated text. A temperature of 0 generates the same response every time, while higher values allow less probable words to be generated."
+  },
+  {
+    "question": "What is top_p (nucleus sampling)?",
+    "answer": "A sampling technique that controls which subset of tokens (the nucleus) the LLM can consider by setting a cumulative probability threshold."
+  },
+  {
+    "question": "What is the difference between top_p and top_k?",
+    "answer": "top_p considers tokens until reaching a cumulative probability threshold, while top_k controls exactly how many of the most probable tokens the LLM can consider."
+  },
+  {
+    "question": "What parameter combination would you use for brainstorming sessions?",
+    "answer": "High temperature and high top_p to achieve high randomness with a large pool of potential tokens, leading to highly diverse and creative results."
+  },
+  {
+    "question": "What parameter combination is best for email generation?",
+    "answer": "Low temperature and low top_p to get deterministic output with highly probable predicted tokens, resulting in predictable, focused, and conservative outputs."
+  },
+  {
+    "question": "What are the two basic components of an instruction prompt?",
+    "answer": "The instruction itself and the data that relates to the instruction."
+  },
+  {
+    "question": "What are output indicators in prompt engineering?",
+    "answer": "Components like 'Text:' and 'Sentiment:' that help guide the model to produce specific outputs rather than complete sentences."
+  },
+  {
+    "question": "What are the key advanced components that can be included in complex prompts?",
+    "answer": "Persona, Instruction, Context, Format, Audience, Tone, and Data."
+  },
+  {
+    "question": "What is the primacy and recency effect in prompting?",
+    "answer": "LLMs tend to focus on information either at the beginning of a prompt (primacy effect) or the end of a prompt (recency effect), often forgetting information in the middle."
+  },
+  {
+    "question": "What is in-context learning?",
+    "answer": "Providing the LLM with examples of exactly what you want to achieve, rather than just describing the task."
+  },
+  {
+    "question": "What are the three types of prompting based on number of examples?",
+    "answer": "Zero-shot prompting (no examples), one-shot prompting (single example), and few-shot prompting (two or more examples)."
+  },
+  {
+    "question": "What is chain prompting?",
+    "answer": "Taking the output of one prompt and using it as input for the next, creating a continuous chain of interactions that solves a problem by breaking it into pieces."
+  },
+  {
+    "question": "What are the benefits of chain prompting?",
+    "answer": "Allows the LLM to spend more time on each individual question instead of tackling the whole problem, and enables different parameters for each call."
+  },
+  {
+    "question": "What are System 1 and System 2 thinking processes?",
+    "answer": "System 1 is automatic, intuitive, and near-instantaneous (like generative models). System 2 is conscious, slow, and logical, involving brainstorming and self-reflection."
+  },
+  {
+    "question": "What is chain-of-thought prompting?",
+    "answer": "A method that aims to have the generative model 'think' first by providing examples that demonstrate the reasoning process before generating the final response."
+  },
+  {
+    "question": "What is zero-shot chain-of-thought?",
+    "answer": "Asking the generative model to provide reasoning without providing examples, commonly using phrases like 'Let's think step-by-step' to prime reasoning."
+  },
+  {
+    "question": "What is self-consistency in prompt engineering?",
+    "answer": "A method that asks the generative model the same prompt multiple times and takes the majority result as the final answer to counteract randomness."
+  },
+  {
+    "question": "What is tree-of-thought prompting?",
+    "answer": "A method where the generative model explores different solutions at each step of a multi-step problem, votes for the best solution, and continues to the next step."
+  },
+  {
+    "question": "What is a simplified version of tree-of-thought prompting?",
+    "answer": "Asking the model to mimic a conversation between multiple experts who question each other until they reach a consensus, rather than making multiple model calls."
+  },
+  {
+    "question": "What are the four main reasons for validating generative model output?",
+    "answer": "Structured output (adhering to specific formats like JSON), Valid output (staying within specified choices), Ethics (avoiding profanity, PII, bias), and Accuracy (factual correctness)."
+  },
+  {
+    "question": "What are the three general ways of controlling generative model output?",
+    "answer": "Examples (provide examples of expected output), Grammar (control the token selection process), and Fine-tuning (tune a model on data with expected output)."
+  },
+  {
+    "question": "What is the main disadvantage of using few-shot learning for output control?",
+    "answer": "You cannot explicitly prevent certain output from being generated - the model may still not follow instructions entirely despite guidance."
+  },
+  {
+    "question": "What are some packages developed for constraining and validating generative model output?",
+    "answer": "Guidance, Guardrails, and LMQL, which can leverage generative models to validate their own output based on predefined guardrails."
+  },
+  {
+    "question": "What is constrained sampling?",
+    "answer": "Performing validation during the token sampling process by defining grammars or rules that the LLM should adhere to when choosing its next token."
+  },
+  {
+    "question": "What library is used to demonstrate constrained sampling with JSON grammar?",
+    "answer": "llama-cpp-python, which expects models in GGUF format and can apply JSON grammar to ensure output adheres to that format."
+  },
+  {
+    "question": "What does the n_gpu_layers parameter control in llama-cpp-python?",
+    "answer": "Setting it to -1 indicates that all layers of the model should be run from the GPU."
+  },
+  {
+    "question": "What does the n_ctx parameter refer to in llama-cpp-python?",
+    "answer": "The context size of the model."
+  },
+  {
+    "question": "How do you enable JSON output formatting in llama-cpp-python?",
+    "answer": "By specifying response_format as {'type': 'json_object'} in the create_chat_completion method."
+  },
+  {
+    "question": "What are some use cases mentioned for chain prompting?",
+    "answer": "Response validation (double-checking outputs), Parallel prompts (merging multiple outputs), and Writing stories (breaking down into components like summary, characters, story beats)."
+  },
+  {
+    "question": "What is the key principle behind instruction-based prompting?",
+    "answer": "Having the LLM answer a specific question or resolve a certain task, as opposed to general conversation or role-playing."
+  },
+  {
+    "question": "What are some important prompting techniques mentioned for improving output quality?",
+    "answer": "Specificity (accurately describe what you want), addressing Hallucination (ask model to say 'I don't know' if uncertain), and Order (place instructions at beginning or end of prompts)."
+  },
+  {
+    "question": "What is the most important aspect of prompt engineering according to the chapter?",
+    "answer": "Specificity - by restricting and specifying what the model should generate, there is a smaller chance of having it generate something unrelated to your use case."
+  },
+  {
+    "question": "What does the chapter say about the iterative nature of prompt engineering?",
+    "answer": "Prompt engineering is an iterative process of prompt optimization that requires experimentation, and there is not and unlikely will ever be a perfect prompt design."
+  },
+  {
+    "question": "How does chain-of-thought help with complex tasks like mathematical questions?",
+    "answer": "It allows the model to distribute more compute over the reasoning process, with each additional token in the reasoning allowing the LLM to stabilize its output rather than calculating the entire solution based on a few tokens."
+  },
+  {
+    "question": "What alternative phrases can be used instead of 'Let's think step-by-step' for zero-shot chain-of-thought?",
+    "answer": "'Take a deep breath and think step-by-step' and 'Let's work through this problem step-by-step'."
+  },
+  {
+    "question": "What is the main trade-off with self-consistency prompting?",
+    "answer": "While it can improve performance by reducing randomness through majority voting, it becomes n times slower where n is the number of output samples."
+  },
+  {
+    "question": "What makes tree-of-thought particularly useful?",
+    "answer": "It's tremendously helpful when needing to consider multiple paths, like when writing a story or coming up with creative ideas, though it requires many calls to generative models which slows the application significantly."
+  }
+]

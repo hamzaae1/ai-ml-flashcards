@@ -1,0 +1,178 @@
+[
+  {
+    "question": "What is text clustering and what is its main purpose?",
+    "answer": "Text clustering aims to group similar texts based on their semantic content, meaning, and relationships. It facilitates efficient categorization of large volumes of unstructured text and allows for quick exploratory data analysis."
+  },
+  {
+    "question": "How have language models enhanced text clustering effectiveness?",
+    "answer": "The recent evolution of language models enables contextual and semantic representations of text, which has enhanced clustering effectiveness. Language models capture that language is more than a bag of words and can represent semantic meaning and context."
+  },
+  {
+    "question": "What are some creative applications of text clustering mentioned in the chapter?",
+    "answer": "Text clustering allows for creative solutions and diverse applications, such as finding outliers, speeding up labeling, and finding incorrectly labeled data."
+  },
+  {
+    "question": "How does text clustering relate to topic modeling?",
+    "answer": "Text clustering has found itself in the realm of topic modeling, where we want to discover abstract topics that appear in large collections of textual data. Topics are generally described using keywords or keyphrases and ideally have a single overarching label."
+  },
+  {
+    "question": "What dataset is used throughout this chapter for demonstrations?",
+    "answer": "The chapter uses ArXiv articles from the Computation and Language section, containing 44,949 abstracts between 1991 and 2024 from ArXiv's cs.CL section."
+  },
+  {
+    "question": "What are the three main steps in the common text clustering pipeline?",
+    "answer": "1. Convert the input documents to embeddings with an embedding model, 2. Reduce the dimensionality of embeddings with a dimensionality reduction model, 3. Find groups of semantically similar documents with a cluster model."
+  },
+  {
+    "question": "Why is choosing the right embedding model important for clustering?",
+    "answer": "Choosing embedding models optimized for semantic similarity tasks is especially important for clustering as we attempt to find groups of semantically similar documents. Most embedding models focus on semantic similarity."
+  },
+  {
+    "question": "Which embedding model is used in the chapter and why?",
+    "answer": "The chapter uses the 'thenlper/gte-small' model instead of the previously used 'sentence-transformers/all-mpnet-base-v2'. It's a more recent model that outperforms the previous model on clustering tasks and is faster for inference due to its small size."
+  },
+  {
+    "question": "How many dimensions does each document embedding contain in the example?",
+    "answer": "Each embedding has 384 values that together represent the semantic representation of the document. These embeddings can be viewed as the features that we want to cluster."
+  },
+  {
+    "question": "Why is dimensionality reduction necessary before clustering?",
+    "answer": "As the number of dimensions increases, there is exponential growth in possible values within each dimension. High-dimensional data can be troublesome for clustering techniques as it becomes more difficult to identify meaningful clusters."
+  },
+  {
+    "question": "What is the purpose of dimensionality reduction techniques?",
+    "answer": "Dimensionality reduction techniques aim to preserve the global structure of high-dimensional data by finding low-dimensional representations, allowing data in high-dimensional space to be compressed to a lower-dimensional representation."
+  },
+  {
+    "question": "Which dimensionality reduction method is used in the chapter and why?",
+    "answer": "The chapter uses UMAP (Uniform Manifold Approximation and Projection) instead of PCA because UMAP tends to handle nonlinear relationships and structures better than PCA."
+  },
+  {
+    "question": "What are the key parameters used for UMAP in the example?",
+    "answer": "n_components=5 (reduces to 5 dimensions), min_dist=0.0 (minimum distance between embedded points, set to 0 for tighter clusters), metric='cosine' (because Euclidean methods have issues with high-dimensional data), and random_state=42 for reproducibility."
+  },
+  {
+    "question": "What is a limitation of dimensionality reduction techniques?",
+    "answer": "Dimensionality reduction techniques are not flawless and do not perfectly capture high-dimensional data in lower-dimensional representation. Information will always be lost with this procedure. There's a balance between reducing dimensionality and keeping as much information as possible."
+  },
+  {
+    "question": "Why is HDBSCAN preferred over k-means for clustering in this context?",
+    "answer": "Unlike k-means which requires knowing the number of clusters beforehand, HDBSCAN is a density-based algorithm that freely calculates the number of clusters and does not force all data points to be part of a cluster. It can also detect outliers."
+  },
+  {
+    "question": "What does HDBSCAN stand for and what are its advantages?",
+    "answer": "HDBSCAN stands for Hierarchical Density-Based Spatial Clustering of Applications with Noise. It's a hierarchical variation of DBSCAN that allows dense micro-clusters to be found without explicitly specifying the number of clusters, and can detect outliers in the data."
+  },
+  {
+    "question": "How many clusters were generated in the ArXiv dataset example?",
+    "answer": "With HDBSCAN, 156 clusters were generated in the dataset. To create more clusters, you would need to reduce the value of min_cluster_size as it represents the minimum size that a cluster can take."
+  },
+  {
+    "question": "What was discovered when inspecting cluster 0 in the example?",
+    "answer": "When inspecting cluster 0, the documents were mostly about translation from and to sign language, showing that the clustering algorithm successfully grouped semantically similar documents together."
+  },
+  {
+    "question": "What limitation exists when using dimensionality reduction for visualization?",
+    "answer": "Using any dimensionality reduction technique for visualization creates information loss. It's merely an approximation of what the original embeddings look like and might push clusters together or drive them further apart than they actually are. Human evaluation is therefore key."
+  },
+  {
+    "question": "How does traditional topic modeling differ from the clustering approach described?",
+    "answer": "Traditional topic modeling involves finding a set of keywords or phrases that best represent and capture the meaning of topics. Classic approaches like latent Dirichlet allocation assume each topic is characterized by a probability distribution of words in the corpus's vocabulary."
+  },
+  {
+    "question": "What is a major limitation of traditional bag-of-words approaches?",
+    "answer": "Traditional bag-of-words techniques do not take the context nor the meaning of words and phrases into account. In contrast, Transformer-based embeddings are optimized for semantic similarity and contextual meaning through attention."
+  },
+  {
+    "question": "What is BERTopic and how does it work?",
+    "answer": "BERTopic is a topic modeling technique that leverages clusters of semantically similar texts to extract various types of topic representations. It follows the same clustering procedure (embed, reduce dimensionality, cluster) then models a distribution over words using bag-of-words."
+  },
+  {
+    "question": "What are the two main steps in BERTopic's algorithm?",
+    "answer": "First, it follows the text clustering procedure: embed documents, reduce dimensionality, and cluster to create groups of semantically similar documents. Second, it models a distribution over words in the corpus's vocabulary using a classic bag-of-words method."
+  },
+  {
+    "question": "What is c-TF-IDF and how does it differ from regular TF-IDF?",
+    "answer": "c-TF-IDF is a class-based variant of term frequency–inverse document frequency. Instead of calculating word frequency within individual documents, it calculates frequency within entire clusters (c-TF), then multiplies by IDF to put more weight on words meaningful to a cluster and less weight on words used across all clusters."
+  },
+  {
+    "question": "What is a major advantage of BERTopic's pipeline design?",
+    "answer": "A major advantage is that the two steps (clustering and topic representation) are largely independent of one another. This allows for significant modularity throughout every component of the pipeline - you can swap any algorithm with another similar one."
+  },
+  {
+    "question": "What does the modularity of BERTopic allow in terms of customization?",
+    "answer": "The modularity allows you to build your own topic model by replacing any component - you can swap embedding models, use k-means instead of HDBSCAN, use PCA instead of UMAP, etc. It's like building with Lego blocks where each part is completely replaceable."
+  },
+  {
+    "question": "What does topic -1 represent in BERTopic results?",
+    "answer": "Topic -1 contains all documents that could not be fitted within a topic and are considered outliers. This results from HDBSCAN, which does not force all points to be clustered. Outliers can be removed by using non-outlier algorithms like k-means or BERTopic's reduce_outliers() function."
+  },
+  {
+    "question": "How can you search for specific topics in BERTopic?",
+    "answer": "You can use the find_topics() function to search for specific topics based on a search term. It returns topic IDs and similarity scores, allowing you to find topics most relevant to your search query."
+  },
+  {
+    "question": "What limitation does the basic BERTopic pipeline have regarding semantic structures?",
+    "answer": "The basic pipeline still represents topics through bag-of-words without taking into account semantic structures. It focuses on word frequency rather than semantic relationships between words."
+  },
+  {
+    "question": "How does BERTopic address the limitation of basic bag-of-words representation?",
+    "answer": "BERTopic uses the strength of bag-of-words (speed) to generate an initial meaningful representation, then tweaks it using more powerful but slower techniques like embedding models. This reranking approach improves the resulting representation."
+  },
+  {
+    "question": "What are representation models in BERTopic?",
+    "answer": "Representation models are reranker models that take the first topic representation and output an improved representation. They only need to be applied once for every topic instead of every document, making them efficient even with millions of documents."
+  },
+  {
+    "question": "What is KeyBERTInspired and how does it work?",
+    "answer": "KeyBERTInspired is a representation model inspired by the KeyBERT keyword extraction package. It uses c-TF-IDF to extract representative documents per topic, calculates average document embeddings per topic, and compares them to candidate keyword embeddings to rerank keywords."
+  },
+  {
+    "question": "What improvement does KeyBERTInspired show in topic representations?",
+    "answer": "KeyBERTInspired makes topics easier to read compared to the original model. However, it may remove domain-specific abbreviations (like 'nmt' for neural machine translation) because the model cannot properly represent such entities, which can be informative for domain experts."
+  },
+  {
+    "question": "What is Maximal Marginal Relevance (MMR) and why is it useful?",
+    "answer": "MMR diversifies topic representations by finding keywords that are diverse from one another but still relate to the documents. It reduces redundancy (like having both 'summaries' and 'summary') by embedding candidate keywords and iteratively calculating the next best diverse keyword to add."
+  },
+  {
+    "question": "How does MMR work in BERTopic?",
+    "answer": "MMR goes from a larger set of initial keywords (like 30) to a smaller but more diverse set (like 10). It filters out redundant words and keeps only words that contribute something new to the topic representation, using a diversity parameter to control how diverse keywords need to be."
+  },
+  {
+    "question": "How can generative models be used efficiently in BERTopic?",
+    "answer": "Instead of using generative models to identify topics for all documents (potentially millions), BERTopic uses them to generate labels for topics based on keywords and representative documents. This requires only one generation per topic instead of per document."
+  },
+  {
+    "question": "What two components are included in the generative model prompt for topic labeling?",
+    "answer": "First, documents inserted using the [DOCUMENTS] tag - typically four documents with highest cosine similarity to the topic's c-TF-IDF values. Second, keywords that make up the topic, referenced using the [KEYWORDS] tag from previous representations."
+  },
+  {
+    "question": "What were the results when comparing Flan-T5 and GPT-3.5 for topic labeling?",
+    "answer": "Flan-T5 produced some logical labels like 'Summarization' but others were too broad like 'Science/Tech'. GPT-3.5 produced more impressive and informative labels like 'Neural Machine Translation Enhancements' and 'Document Summarization Techniques'."
+  },
+  {
+    "question": "What is a key recommendation for using multiple representation models?",
+    "answer": "Although generative models can create good labels, it's advised to generate multiple topic representations. BERTopic allows all topics to be represented by different representations simultaneously - you could use KeyBERTInspired, MMR, and GPT-3.5 side by side for different perspectives on the same topic."
+  },
+  {
+    "question": "What are some algorithmic variants that BERTopic supports due to its modularity?",
+    "answer": "BERTopic supports guided topic modeling, (semi-)supervised topic modeling, hierarchical topic modeling, dynamic topic modeling, multimodal topic modeling, multi-aspect topic modeling, online and incremental topic modeling, and zero-shot topic modeling."
+  },
+  {
+    "question": "What are three useful BERTopic visualizations mentioned for exploring topic relationships?",
+    "answer": "1. visualize_barchart() - shows ranked keywords, 2. visualize_heatmap() - shows relationships between topics, 3. visualize_hierarchy() - shows potential hierarchical structure of topics."
+  },
+  {
+    "question": "What is the main advantage of the reranking approach used in neural search and BERTopic?",
+    "answer": "The reranking approach leverages the speed of initial methods (like bag-of-words) to generate a meaningful first pass, then uses more powerful but slower techniques (like embedding models) to improve the results. This idea of reranking initial results is a main staple in neural search."
+  },
+  {
+    "question": "What practical benefits does BERTopic's efficiency provide for large-scale applications?",
+    "answer": "For large-scale applications with millions of documents and hundreds of topics, representation models only need to be applied once per topic instead of once per document. This makes the optimization of topic representations much more efficient and scalable."
+  },
+  {
+    "question": "What does the chapter demonstrate about combining different types of language models?",
+    "answer": "The chapter explores creative ways to combine encoder-only (embeddings), decoder-only (generative), and classical methods (bag-of-words) to create amazing new techniques and pipelines. This combination leverages the strengths of each approach while mitigating their individual weaknesses."
+  }
+]	

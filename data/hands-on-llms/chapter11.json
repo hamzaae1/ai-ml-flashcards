@@ -1,0 +1,170 @@
+[
+  {
+    "question": "What is the main difference between the approach in Chapter 4 and the fine-tuning approach discussed in Chapter 11?",
+    "answer": "In Chapter 4, pretrained models were kept frozen (nontrainable) and only a separate classification head was trained. In Chapter 11, both the pretrained BERT model and the classification head are fine-tuned together as a single architecture, allowing the model parameters to be updated during training."
+  },
+  {
+    "question": "What dataset is used for the supervised classification examples in this chapter?",
+    "answer": "The Rotten Tomatoes dataset, which contains 5,331 positive and 5,331 negative movie reviews from Rotten Tomatoes."
+  },
+  {
+    "question": "Which pretrained model is used as the base for fine-tuning in the classification examples?",
+    "answer": "bert-base-cased, which was pretrained on English Wikipedia and a large dataset of unpublished books."
+  },
+  {
+    "question": "What F1 score was achieved by fine-tuning the entire BERT model compared to the frozen approach in Chapter 4?",
+    "answer": "Fine-tuning the entire model achieved an F1 score of 0.85, which is higher than the task-specific model from Chapter 4 that resulted in an F1 score of 0.80."
+  },
+  {
+    "question": "What is DataCollatorWithPadding used for in the fine-tuning process?",
+    "answer": "DataCollatorWithPadding is used to dynamically pad input text to create equally sized representations during tokenization, helping build batches of data and allowing for data augmentation."
+  },
+  {
+    "question": "How many encoder blocks does BERT-base have and what are their indices?",
+    "answer": "BERT-base has 12 encoder blocks with indices ranging from 0 to 11, each consisting of attention heads, dense networks, and layer normalization."
+  },
+  {
+    "question": "What happened to performance when only the classification head was trained (freezing all BERT layers)?",
+    "answer": "When only the classification head was trained, the F1 score dropped significantly to 0.63, much lower than the 0.85 score when the entire model was fine-tuned."
+  },
+  {
+    "question": "What F1 score was achieved when freezing the first 10 encoder blocks and training only the last 2 blocks plus classification head?",
+    "answer": "An F1 score of 0.8 was achieved, which is much higher than freezing all layers (0.63) and demonstrates that training some layers can provide a good balance between performance and computational efficiency."
+  },
+  {
+    "question": "What is few-shot classification?",
+    "answer": "Few-shot classification is a technique within supervised classification where a classifier learns target labels based on only a few labeled examples. It's useful when you have a classification task but limited labeled data points."
+  },
+  {
+    "question": "What is SetFit and what framework is it built on?",
+    "answer": "SetFit is an efficient framework for few-shot text classification built on top of sentence-transformers architecture. It generates high-quality textual representations using only a few labeled examples to compete with fine-tuning BERT-like models on large datasets."
+  },
+  {
+    "question": "What are the three main steps in the SetFit algorithm?",
+    "answer": "1. Sampling training data: Generate positive and negative sentence pairs from in-class and out-class selection. 2. Fine-tuning embeddings: Fine-tune a pretrained embedding model using contrastive learning. 3. Training a classifier: Create and train a classification head on top of the embedding model."
+  },
+  {
+    "question": "How does SetFit generate positive and negative pairs from classification data?",
+    "answer": "SetFit creates positive pairs by combining sentences within the same class (e.g., 16 sentences about sports can create 16*(16-1)/2 = 120 positive pairs) and negative pairs by combining sentences from different classes."
+  },
+  {
+    "question": "What is contrastive learning and how is it used in SetFit?",
+    "answer": "Contrastive learning is a method that learns accurate sentence embeddings from pairs of similar (positive) and dissimilar (negative) sentences. SetFit uses this in step 2 to fine-tune a pretrained BERT model using the generated sentence pairs."
+  },
+  {
+    "question": "How many training examples were used in the SetFit few-shot experiment and what performance was achieved?",
+    "answer": "Only 32 labeled documents were used (16 examples per class), and the model achieved an F1 score of 0.85, which is very impressive considering the tiny dataset size."
+  },
+  {
+    "question": "How many sentence pairs were generated from the 32 labeled sentences in the SetFit example?",
+    "answer": "1,280 sentence pairs were generated. The calculation is: 20 sentence pair combinations per sample × 32 samples = 680, multiplied by 2 for positive and negative pairs = 1,280 total pairs."
+  },
+  {
+    "question": "What is zero-shot classification capability in SetFit?",
+    "answer": "SetFit can perform classification with no labels at all by generating synthetic examples from label names. For example, with target labels 'happy' and 'sad', it creates synthetic data like 'The example is happy' and 'This example is sad'."
+  },
+  {
+    "question": "What is continued pretraining with masked language modeling?",
+    "answer": "Instead of the typical two-step approach (pretraining then fine-tuning), continued pretraining adds a third step where an already pretrained BERT model continues training using masked language modeling on domain-specific data before fine-tuning for the target task."
+  },
+  {
+    "question": "What are the advantages of continued pretraining?",
+    "answer": "Continued pretraining helps update subword representations for domain-specific words the model hasn't seen before, adapts the model to specific domains or organizational language, and has been shown to improve classification performance."
+  },
+  {
+    "question": "What is the difference between token masking and whole-word masking?",
+    "answer": "Token masking randomly masks 15% of individual tokens, potentially masking parts of words. Whole-word masking masks entire words, which is more challenging and can lead to better performance as it requires learning more precise representations, but takes longer to converge."
+  },
+  {
+    "question": "What model class is used for masked language modeling in the continued pretraining example?",
+    "answer": "AutoModelForMaskedLM is used for masked language modeling, along with DataCollatorForLanguageModeling to handle the token masking process."
+  },
+  {
+    "question": "How did the continued pretraining affect the model's predictions for 'What a horrible [MASK]!'?",
+    "answer": "The original BERT model predicted general concepts like 'idea', 'dream', 'day'. After continued pretraining on movie data, it predicted movie-specific terms like 'movie', 'film', 'comedy', 'story', showing successful domain adaptation."
+  },
+  {
+    "question": "What is Named-Entity Recognition (NER) and how does it differ from document classification?",
+    "answer": "NER involves classifying individual tokens/words (like people, locations) rather than entire documents. It's useful for de-identification and anonymization of sensitive data. The key difference is that predictions are made for individual tokens in a sequence rather than for whole documents."
+  },
+  {
+    "question": "What dataset is used for the NER example and what types of entities does it contain?",
+    "answer": "The CoNLL-2003 dataset is used, containing several types of named entities: person (PER), organization (ORG), location (LOC), miscellaneous (MISC), and no entity (O). It has roughly 14,000 training samples."
+  },
+  {
+    "question": "What do the B- and I- prefixes mean in NER entity labels?",
+    "answer": "B- indicates the beginning of an entity phrase, and I- indicates inside/continuation of the same phrase. For example, 'Dean Palmer' would be labeled as 'Dean: B-PER' and 'Palmer: I-PER' to show they form a single person entity, not two separate people."
+  },
+  {
+    "question": "What challenge arises when tokenizing pre-labeled word-level data for NER?",
+    "answer": "The tokenizer may split words into subwords (e.g., 'homer' becomes 'home' and '##r'), but labels exist at the word level. This requires aligning labels with subtoken counterparts during tokenization."
+  },
+  {
+    "question": "How are labels aligned when a word is split into multiple tokens during NER preprocessing?",
+    "answer": "When a word like 'Maarten' (labeled B-PER) is split into tokens ['Ma', '##arte', '##n'], the first token gets B-PER (beginning) and subsequent tokens get I-PER (inside) to maintain the phrase structure."
+  },
+  {
+    "question": "What special label value is used for special tokens like [CLS] and [SEP] in NER?",
+    "answer": "Special tokens are assigned the label value -100, which tells the model to ignore these tokens during loss calculation since they don't correspond to actual words that need entity classification."
+  },
+  {
+    "question": "What DataCollator is used for token classification tasks like NER?",
+    "answer": "DataCollatorForTokenClassification is used instead of DataCollatorWithPadding, as it's specifically designed to handle token-level classification tasks."
+  },
+  {
+    "question": "What evaluation approach is used for NER and why is it different from document classification?",
+    "answer": "The seqeval package is used for sequential evaluation because NER has multiple predictions per document (one per token) rather than a single prediction per document. The evaluation must handle token-level predictions and ignore special tokens."
+  },
+  {
+    "question": "What was the result when testing the fine-tuned NER model on 'My name is Maarten.'?",
+    "answer": "The model correctly identified 'Maarten' as a person, with subtokens labeled as: 'Ma': B-PER (score: 0.995), '##arte': I-PER (score: 0.993), '##n': I-PER (score: 0.995), demonstrating successful entity recognition."
+  },
+  {
+    "question": "What are some alternative NER datasets mentioned in the chapter?",
+    "answer": "wnut_17 focuses on emerging and rare entities, tner/mit_movie_trivia detects entities like actor, plot, and soundtrack, and tner/mit_restaurant detects entities such as amenity, dish, and cuisine."
+  },
+  {
+    "question": "What is the main architectural difference between document classification and token classification in BERT?",
+    "answer": "Document classification uses aggregation or pooling of token embeddings to make a single prediction per document, while token classification makes individual predictions for each token in the sequence without pooling."
+  },
+  {
+    "question": "What model class is used for token classification tasks?",
+    "answer": "AutoModelForTokenClassification is used, which needs to be initialized with the number of labels and mappings between label IDs and names (id2label and label2id dictionaries)."
+  },
+  {
+    "question": "Why does the chapter emphasize that NER classifies tokens rather than entire words?",
+    "answer": "Because BERT's tokenizer splits words into subword tokens (e.g., 'Maarten' becomes ['Ma', '##arte', '##n']), so the model actually makes predictions on these individual tokens, not on complete words as they appear in the original text."
+  },
+  {
+    "question": "What is the three-step approach mentioned for continued pretraining in organizational settings?",
+    "answer": "1. Start with a pretrained model (e.g., BERT), 2. Continue pretraining on organization-specific data using MLM, 3. Fine-tune for specific tasks like classification, creating a genealogy from general model to domain-specific to task-specific models."
+  },
+  {
+    "question": "What is the key advantage of using differentiable heads in SetFit?",
+    "answer": "By setting use_differentiable_head=True and specifying head_params with out_features equal to the number of classes, you can use a neural network classification head instead of the default logistic regression, potentially improving performance."
+  },
+  {
+    "question": "How does the chapter demonstrate the effectiveness of partial layer freezing?",
+    "answer": "A graph shows that training just the first 5 encoder blocks is sufficient to nearly reach the performance of training all encoder blocks, with performance stabilizing early on, indicating diminishing returns from training additional layers."
+  },
+  {
+    "question": "What key insight does the chapter provide about the relationship between training time and layer freezing?",
+    "answer": "When training for multiple epochs, the difference in training time and resources between freezing and not freezing layers becomes larger, making it important to find a balance that works for your computational constraints."
+  },
+  {
+    "question": "What was the practical impact of fine-tuning on the movie review classification task?",
+    "answer": "Fine-tuning showed clear improvement (F1 of 0.85 vs 0.80 from Chapter 4's pretrained model) and only required a couple of minutes to train, demonstrating that fine-tuning can be more advantageous than using pretrained models as-is."
+  },
+  {
+    "question": "How does the chapter's approach to few-shot learning compare to traditional approaches?",
+    "answer": "Instead of requiring thousands of labeled examples, SetFit achieves comparable performance with just 32 labeled documents (16 per class), demonstrating the power of combining contrastive learning with intelligent data generation techniques."
+  },
+  {
+    "question": "What preprocessing considerations are unique to NER compared to document classification?",
+    "answer": "NER requires special handling of tokenization alignment, managing subword splits, assigning appropriate B- and I- labels to maintain phrase boundaries, and using -100 labels for special tokens to exclude them from loss calculation."
+  },
+  {
+    "question": "What is the overall progression of techniques covered in Chapter 11?",
+    "answer": "The chapter progresses from basic supervised fine-tuning, through layer freezing strategies, to few-shot learning with SetFit, continued pretraining with MLM, and finally token-level classification with NER, showing increasingly sophisticated fine-tuning approaches."
+  }
+]

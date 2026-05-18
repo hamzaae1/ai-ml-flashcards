@@ -1,0 +1,158 @@
+[
+{
+"question": "What is a closed-form equation and how does it apply to training linear regression models?",
+"answer": "A closed-form equation is only composed of a finite number of constants, variables, and standard operations (no infinite sums, limits, or integrals). For linear regression, the Normal equation provides a closed-form solution that directly computes the model parameters that best fit the training set by minimizing the cost function."
+},
+{
+"question": "What is the basic form of a linear regression model prediction?",
+"answer": "ŷ = θ₀ + θ₁x₁ + θ₂x₂ + ⋯ + θₙxₙ, where ŷ is the predicted value, n is the number of features, xᵢ is the i-th feature value, and θⱼ are the model parameters including the bias term θ₀ and feature weights."
+},
+{
+"question": "How can the linear regression model be written in vectorized form?",
+"answer": "ŷ = hθ(x) = θ · x, where hθ is the hypothesis function, θ is the parameter vector containing bias and feature weights, x is the feature vector with x₀ = 1, and θ · x is the dot product."
+},
+{
+"question": "What is the MSE cost function for linear regression and why is it preferred over RMSE during training?",
+"answer": "MSE(X, hθ) = (1/m) Σᵢ₌₁ᵐ (θᵀxⁱ - yⁱ)². It's simpler to minimize MSE than RMSE during training because minimizing a positive function also minimizes its square root, leading to the same optimal parameters."
+},
+{
+"question": "What is the Normal equation and what does it compute?",
+"answer": "The Normal equation is θ̂ = (XᵀX)⁻¹Xᵀy. It directly computes the value of θ that minimizes the MSE cost function for linear regression, providing a closed-form solution without needing iterative optimization."
+},
+{
+"question": "What is the computational complexity of the Normal equation and when does it become problematic?",
+"answer": "The Normal equation has complexity O(n²·⁴) to O(n³) for inverting the (n+1)×(n+1) matrix. It becomes very slow when the number of features grows large (e.g., 100,000+ features), but handles large training sets efficiently as it's O(m) with respect to instances."
+},
+{
+"question": "What is gradient descent and how does it work conceptually?",
+"answer": "Gradient descent is a generic optimization algorithm that finds optimal solutions by iteratively tweaking parameters to minimize a cost function. It measures the local gradient of the error function and moves in the direction of descending gradient until reaching a minimum."
+},
+{
+"question": "What role does the learning rate hyperparameter play in gradient descent?",
+"answer": "The learning rate determines the size of steps in gradient descent. If too small, the algorithm takes many iterations to converge. If too large, it might overshoot and diverge, jumping across the valley and potentially getting further from the solution."
+},
+{
+"question": "Why is the MSE cost function for linear regression particularly suitable for gradient descent?",
+"answer": "The MSE cost function is convex (no local minima, just one global minimum) and continuous with slopes that never change abruptly. This guarantees that gradient descent will approach the global minimum if the learning rate isn't too high and you wait long enough."
+},
+{
+"question": "Why is feature scaling important for gradient descent?",
+"answer": "When features have very different scales, the cost function becomes an elongated bowl, causing gradient descent to take a long, inefficient path to the minimum. Scaling features to similar ranges (e.g., using StandardScaler) allows the algorithm to converge much faster."
+},
+{
+"question": "What is batch gradient descent and what are its characteristics?",
+"answer": "Batch gradient descent computes gradients using the full training set at each step. The gradient vector is ∇θMSE(θ) = (2/m)Xᵀ(Xθ - y). It's slow on large datasets but scales well with number of features and provides stable convergence."
+},
+{
+"question": "What is stochastic gradient descent (SGD) and how does it differ from batch GD?",
+"answer": "SGD picks a random instance at each step and computes gradients based only on that single instance. It's much faster and can handle huge datasets since only one instance needs to be in memory, but the path is more erratic and it bounces around the minimum."
+},
+{
+"question": "What is a learning schedule and why is it used with SGD?",
+"answer": "A learning schedule gradually reduces the learning rate during training. It starts with large steps (for quick progress and escaping local minima) then gets smaller, allowing the algorithm to settle at the global minimum. This is similar to simulated annealing."
+},
+{
+"question": "What is mini-batch gradient descent and what are its advantages?",
+"answer": "Mini-batch GD computes gradients on small random sets of instances. It gets performance boosts from hardware optimization (especially GPUs), has less erratic progress than SGD, and walks closer to the minimum than SGD while being faster than batch GD."
+},
+{
+"question": "What is polynomial regression and how is it implemented?",
+"answer": "Polynomial regression fits nonlinear data by adding powers of each feature as new features, then training a linear model on this extended set. For example, adding x₁² transforms the feature space to allow fitting quadratic relationships."
+},
+{
+"question": "How does PolynomialFeatures work and what is the combinatorial explosion problem?",
+"answer": "PolynomialFeatures(degree=d) transforms n features into (n+d)!/d!n! features, adding all combinations up to the given degree. This causes combinatorial explosion - the number of features grows very rapidly with degree and number of original features."
+},
+{
+"question": "What are learning curves and how do they help detect overfitting and underfitting?",
+"answer": "Learning curves plot training and validation error as functions of training set size or iterations. If both errors are high and close, the model is underfitting. If there's a large gap with low training error but high validation error, the model is overfitting."
+},
+{
+"question": "What is the bias/variance trade-off in machine learning?",
+"answer": "Generalization error = Bias + Variance + Irreducible error. Bias comes from wrong assumptions (high-bias models underfit). Variance comes from sensitivity to training data variations (high-variance models overfit). Increasing model complexity typically increases variance and reduces bias."
+},
+{
+"question": "What is ridge regression and how does it work?",
+"answer": "Ridge regression adds a regularization term α/m Σᵢ₌₁ⁿ θᵢ² to the MSE cost function. This forces the algorithm to keep model weights small, reducing overfitting. The hyperparameter α controls regularization strength - larger α means more regularization."
+},
+{
+"question": "What is the closed-form solution for ridge regression?",
+"answer": "θ̂ = (XᵀX + αA)⁻¹Xᵀy, where A is the (n+1)×(n+1) identity matrix with a 0 in the top-left cell (corresponding to the bias term, which isn't regularized)."
+},
+{
+"question": "What is lasso regression and how does it differ from ridge regression?",
+"answer": "Lasso regression uses the ℓ1 norm of weights in its regularization term: J(θ) = MSE(θ) + 2α Σᵢ₌₁ⁿ |θᵢ|. Unlike ridge regression (ℓ2), lasso tends to eliminate weights of least important features (sets them to zero), automatically performing feature selection."
+},
+{
+"question": "Why does lasso regression eliminate features while ridge regression doesn't?",
+"answer": "The ℓ1 penalty in lasso creates 'gutters' along the axes in parameter space. Gradient descent naturally moves along these gutters, driving parameters to exactly zero. Ridge regression's ℓ2 penalty creates circular contours that shrink parameters toward zero but rarely eliminate them entirely."
+},
+{
+"question": "What is elastic net regression and when should it be preferred?",
+"answer": "Elastic net combines ridge and lasso: J(θ) = MSE(θ) + r·2α Σ|θᵢ| + (1-r)·α/m Σθᵢ². When r=0 it's ridge, when r=1 it's lasso. It's preferred over lasso when features > instances or when several features are strongly correlated."
+},
+{
+"question": "What is early stopping and how does it work as regularization?",
+"answer": "Early stopping monitors validation error during training and stops when it reaches a minimum (before it starts increasing again). It's a simple, efficient regularization technique that prevents overfitting without needing to modify the cost function."
+},
+{
+"question": "What is logistic regression and what does it estimate?",
+"answer": "Logistic regression estimates the probability that an instance belongs to a particular class. It computes a weighted sum like linear regression, but outputs the logistic (sigmoid) of the result: p = σ(θᵀx) = 1/(1 + exp(-θᵀx))."
+},
+{
+"question": "What is the logistic function and what are its properties?",
+"answer": "The logistic function σ(t) = 1/(1 + exp(-t)) is S-shaped (sigmoid) and outputs values between 0 and 1. When t < 0, σ(t) < 0.5; when t ≥ 0, σ(t) ≥ 0.5. This makes it suitable for binary classification with a default 50% threshold."
+},
+{
+"question": "What is the cost function for logistic regression and why is it used?",
+"answer": "The cost function (log loss) is J(θ) = -(1/m) Σᵢ₌₁ᵐ [yⁱlog(pⁱ) + (1-yⁱ)log(1-pⁱ)]. It penalizes wrong predictions heavily: -log(t) grows very large as t approaches 0, so low probability estimates for positive instances (and vice versa) incur high cost."
+},
+{
+"question": "What are the partial derivatives of the logistic regression cost function?",
+"answer": "∂J(θ)/∂θⱼ = (1/m) Σᵢ₌₁ᵐ (σ(θᵀxⁱ) - yⁱ)xⱼⁱ. This looks similar to linear regression - for each instance, it computes the prediction error and multiplies by the j-th feature value, then averages over all instances."
+},
+{
+"question": "What is softmax regression and when is it used?",
+"answer": "Softmax regression (multinomial logistic regression) generalizes logistic regression to multiple classes directly. It computes a score for each class sₖ(x) = θₖᵀx, then applies the softmax function to estimate probabilities: pₖ = exp(sₖ(x))/Σⱼexp(sⱼ(x))."
+},
+{
+"question": "What is the softmax function and what does it compute?",
+"answer": "The softmax function computes pₖ = exp(sₖ(x))/Σⱼ₌₁ᴷ exp(sⱼ(x)), where K is the number of classes. It normalizes the exponentials of all class scores to create a probability distribution - all probabilities sum to 1."
+},
+{
+"question": "What is the cross entropy cost function for softmax regression?",
+"answer": "J(Θ) = -(1/m) Σᵢ₌₁ᵐ Σₖ₌₁ᴷ yₖⁱ log(pₖⁱ), where yₖⁱ is 1 if instance i belongs to class k, 0 otherwise. When K=2, this reduces to the logistic regression cost function."
+},
+{
+"question": "How do you implement polynomial regression with Scikit-Learn?",
+"answer": "Use PolynomialFeatures to transform features: poly_features = PolynomialFeatures(degree=2, include_bias=False); X_poly = poly_features.fit_transform(X). Then fit a LinearRegression model on the transformed features."
+},
+{
+"question": "What are the key differences between Normal equation, SVD, and gradient descent approaches?",
+"answer": "Normal equation: O(n³), no hyperparameters, no scaling required, doesn't work with large n. SVD: O(n²), more stable. Gradient descent: works with large n, requires hyperparameters and scaling, can be used for other models beyond linear regression."
+},
+{
+"question": "When should you use ridge, lasso, or elastic net regression?",
+"answer": "Ridge: good default choice, handles correlated features well. Lasso: when you suspect only a few features are useful (automatic feature selection). Elastic net: preferred over lasso when features > instances or when several features are strongly correlated."
+},
+{
+"question": "What is the decision boundary in logistic regression and what determines it?",
+"answer": "The decision boundary is where the model estimates 50% probability for each class. For logistic regression, it occurs when θᵀx = 0, which defines a linear boundary. The model predicts positive class when θᵀx > 0 and negative class when θᵀx < 0."
+},
+{
+"question": "How does Scikit-Learn handle regularization parameters in different models?",
+"answer": "Ridge/Lasso: use 'alpha' parameter for regularization strength. SGDRegressor: use 'penalty' parameter ('l1', 'l2') and 'alpha'. LogisticRegression: uses 'C' parameter, which is the inverse of regularization strength (higher C = less regularization)."
+},
+{
+"question": "What is the relationship between logit, log-odds, and the logistic function?",
+"answer": "The logit function logit(p) = log(p/(1-p)) is the inverse of the logistic function. The score t in logistic regression is the logit of the estimated probability. Logit is also called log-odds since it's the log of the ratio between positive and negative class probabilities."
+},
+{
+"question": "What convergence guarantees does gradient descent have for different types of cost functions?",
+"answer": "For convex cost functions (like MSE for linear regression), gradient descent is guaranteed to find the global minimum. For non-convex functions, it may get stuck in local minima. The logistic regression cost function is also convex, ensuring global minimum convergence."
+},
+{
+"question": "How do you implement early stopping with SGD in practice?",
+"answer": "Monitor validation error at each epoch. Keep track of the best model so far. Stop training when validation error stops improving for a specified number of epochs. Use copy.deepcopy() to save the best model (copies both hyperparameters and learned parameters)."
+}
+]

@@ -1,0 +1,158 @@
+[
+  {
+    "question": "What are the four main advanced techniques discussed in this chapter for improving LLMs without fine-tuning?",
+    "answer": "Model I/O (loading and working with LLMs), Memory (helping LLMs to remember), Agents (combining complex behavior with external tools), and Chains (connecting methods and modules)."
+  },
+  {
+    "question": "What is LangChain and what are some newer alternative frameworks mentioned?",
+    "answer": "LangChain is one of the earlier frameworks that simplify working with LLMs through useful abstractions. Newer frameworks of note are DSPy and Haystack."
+  },
+  {
+    "question": "What is a GGUF model and why is it used?",
+    "answer": "A GGUF model represents a compressed version of its original counterpart through quantization, which reduces the number of bits needed to represent the parameters of an LLM."
+  },
+  {
+    "question": "What is quantization and what analogy is used to explain it?",
+    "answer": "Quantization reduces the number of bits required to represent LLM parameters while maintaining most original information. The analogy is telling time as '14:16' instead of '14:16 and 12 seconds' - removing seconds (precision) without removing vital information (hours and minutes)."
+  },
+  {
+    "question": "What are the benefits of using quantized models?",
+    "answer": "Quantized models are much faster to run, require less VRAM, and are often almost as accurate as the original, though they come with some loss in precision."
+  },
+  {
+    "question": "What is the recommended minimum quantization level and why?",
+    "answer": "At least 4-bit quantized models are recommended as they have a good balance between compression and accuracy. 3-bit or 2-bit models have noticeable performance degradation."
+  },
+  {
+    "question": "What are chains in LangChain and what is their basic purpose?",
+    "answer": "Chains are LangChain's main method for connecting an LLM with additional components like tools, prompts, or features. They extend LLM capabilities and can be connected together for complex systems."
+  },
+  {
+    "question": "What are the four main components of Phi-3's prompt template?",
+    "answer": "<s> to indicate when the prompt starts, <|user|> to indicate the start of the user's prompt, <|assistant|> to indicate the start of the model's output, and <|end|> to indicate the end of either the prompt or model's output."
+  },
+  {
+    "question": "How do you create and use a basic chain in LangChain?",
+    "answer": "Create a PromptTemplate with input variables, then chain it with the LLM using the pipe operator (prompt | llm), and invoke it with the required input variables."
+  },
+  {
+    "question": "What is the advantage of using sequential chains with multiple prompts?",
+    "answer": "Sequential chains break complex prompts into smaller subtasks that run sequentially, allowing for smaller prompts with intermediate outputs, and providing access to individual components rather than one monolithic output."
+  },
+  {
+    "question": "What is the fundamental problem with LLMs regarding conversation memory?",
+    "answer": "LLMs are stateless by default - they have no memory of any previous conversation and will forget information shared in earlier prompts."
+  },
+  {
+    "question": "What are the two common methods discussed for helping LLMs remember conversations?",
+    "answer": "Conversation buffer (storing the full conversation history) and Conversation summary (summarizing the conversation history)."
+  },
+  {
+    "question": "How does ConversationBufferMemory work?",
+    "answer": "It reminds the LLM exactly what happened in the past by copying the full conversation history and pasting it into the prompt as additional context."
+  },
+  {
+    "question": "What is ConversationBufferWindowMemory and when is it useful?",
+    "answer": "It retains only the last k conversations instead of the full chat history, useful for minimizing context window size when conversations grow too large but only captures recent interactions."
+  },
+  {
+    "question": "How does ConversationSummaryMemory work?",
+    "answer": "It uses another LLM to summarize the entire conversation history into main points rather than storing the full history, requiring two LLM calls: one for the user prompt and one for summarization."
+  },
+  {
+    "question": "What are the trade-offs between ConversationBufferMemory and ConversationSummaryMemory?",
+    "answer": "ConversationBufferMemory is instant but uses more tokens and can hit token limits. ConversationSummaryMemory is slower (requires additional LLM call) but frees up tokens and enables longer conversations."
+  },
+  {
+    "question": "What are agents in the context of LLMs?",
+    "answer": "Agents are systems that leverage a language model to determine which actions they should take and in what order, extending beyond user-defined steps to autonomous decision-making."
+  },
+  {
+    "question": "What are the two vital components that agents add to LLMs?",
+    "answer": "Tools that the agent can use to do things it could not do itself, and the agent type, which plans the actions to take or tools to use."
+  },
+  {
+    "question": "What is the ReAct framework and what does it stand for?",
+    "answer": "ReAct stands for Reasoning and Acting. It's a framework that combines reasoning and acting, allowing LLMs to determine actions and make decisions through step-by-step reasoning."
+  },
+  {
+    "question": "What are the three iterative steps in the ReAct framework?",
+    "answer": "Thought (what the LLM thinks it should do next and why), Action (triggering an external tool like calculator or search engine), and Observation (summarizing the results returned from the action)."
+  },
+  {
+    "question": "How does ReAct merge reasoning and acting?",
+    "answer": "ReAct allows reasoning to affect acting and actions to affect reasoning through an iterative cycle of thoughts, actions, and observations that results in the agent's output."
+  },
+  {
+    "question": "Why was OpenAI's GPT-3.5 used instead of Phi-3 for the agent examples?",
+    "answer": "The Phi-3 model used throughout the chapter is relatively small and not sufficient for autonomous agent processes, which require more powerful LLMs that can properly follow complex instructions."
+  },
+  {
+    "question": "What tools were used in the ReAct agent example?",
+    "answer": "DuckDuckGo search engine for web searches and a math tool (llm-math) that provides access to a basic calculator."
+  },
+  {
+    "question": "What is the AgentExecutor and what does it do?",
+    "answer": "The AgentExecutor handles executing the ReAct agent steps and manages the interaction between the agent, tools, and prompts in the ReAct pipeline."
+  },
+  {
+    "question": "What was the example task given to test the ReAct agent?",
+    "answer": "Finding the current price of a MacBook Pro in USD and converting it to EUR using an exchange rate of 0.85 EUR for 1 USD."
+  },
+  {
+    "question": "What are the potential risks of autonomous agent behavior?",
+    "answer": "There is no human in the loop to judge the quality of output or reasoning process, creating a double-edged sword that requires careful system design to improve reliability."
+  },
+  {
+    "question": "What are some suggested improvements for agent reliability?",
+    "answer": "Having the agent return source URLs where information was found, asking whether output is correct at each step, or implementing other human-in-the-loop validation mechanisms."
+  },
+  {
+    "question": "What are the pros of ConversationBufferMemory?",
+    "answer": "Easiest implementation, ensures no information loss within context window."
+  },
+  {
+    "question": "What are the cons of ConversationBufferMemory?",
+    "answer": "Slower generation speed as more tokens are needed, only suitable for large-context LLMs, larger chat histories make information retrieval difficult."
+  },
+  {
+    "question": "What are the pros of Windowed Conversation Buffer?",
+    "answer": "Large-context LLMs are not needed unless chat history is large, no information loss over the last k interactions."
+  },
+  {
+    "question": "What are the cons of Windowed Conversation Buffer?",
+    "answer": "Only captures the last k interactions, no compression of the last k interactions."
+  },
+  {
+    "question": "What are the pros of ConversationSummaryMemory?",
+    "answer": "Captures the full history, enables long conversations, reduces tokens needed to capture full history."
+  },
+  {
+    "question": "What are the cons of ConversationSummaryMemory?",
+    "answer": "An additional call is necessary for each interaction, quality is reliant on the LLM's summarization capabilities."
+  },
+  {
+    "question": "What is the fundamental concept behind giving LLMs tools like calculators?",
+    "answer": "LLMs are notoriously bad at mathematical problems but could do much more if provided access to external tools. The idea is to use LLMs not only to understand queries but also to decide which tool to use and when."
+  },
+  {
+    "question": "How does the chapter describe the evolution from simple chains to complex agent systems?",
+    "answer": "The chapter shows progression from basic prompt templates, to chains with memory, to multiple prompt chains, and finally to autonomous agents that can reason about and select their own tools and actions."
+  },
+  {
+    "question": "What is the significance of the ReAct template format described in the chapter?",
+    "answer": "The ReAct template provides a structured format for agents to follow: Question → Thought → Action → Action Input → Observation, with this cycle repeating until reaching a final answer."
+  },
+  {
+    "question": "What does the chapter suggest about the future of smaller LLMs in agent applications?",
+    "answer": "While current smaller LLMs are insufficient for complex agent tasks, the chapter notes that as the field evolves, it wouldn't be surprising if smaller LLMs eventually become capable enough to run these examples."
+  },
+  {
+    "question": "How does the chapter demonstrate the modular nature of LangChain components?",
+    "answer": "The chapter shows how components can be mixed and matched: prompt templates can be chained with LLMs, memory can be added to existing chains, and agents can incorporate all these elements plus external tools."
+  },
+  {
+    "question": "What was the final output result from the MacBook Pro pricing agent example?",
+    "answer": "The agent determined that a MacBook Pro costs $2,249.00 USD and would cost approximately 1,911.65 EUR with an exchange rate of 0.85 EUR for 1 USD."
+  }
+]

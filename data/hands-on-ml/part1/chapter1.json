@@ -1,0 +1,170 @@
+[
+{
+"question": "How is machine learning defined in the chapter?",
+"answer": "Machine learning is the science (and art) of programming computers so they can learn from data. It gives computers the ability to learn without being explicitly programmed."
+},
+{
+"question": "What was the first mainstream machine learning application mentioned?",
+"answer": "The spam filter, which took over the world in the 1990s and became so effective that users seldom need to flag emails as spam anymore."
+},
+{
+"question": "According to Tom Mitchell's definition, what three components define machine learning?",
+"answer": "A computer program learns from experience E with respect to task T and performance measure P, if its performance on T improves with experience E."
+},
+{
+"question": "What are the key terms in machine learning systems?",
+"answer": "Training set (examples used to learn), training instance/sample (each example), model (the part that learns and makes predictions), accuracy (performance measure for classification)."
+},
+{
+"question": "What are the three main criteria for classifying machine learning systems?",
+"answer": "1) How they are supervised during training (supervised, unsupervised, etc.), 2) Whether they can learn incrementally (online vs batch), 3) Whether they work by comparing data points or detecting patterns (instance-based vs model-based)."
+},
+{
+"question": "What is supervised learning?",
+"answer": "Training where the algorithm is fed a training set that includes the desired solutions, called labels. Examples include classification (like spam detection) and regression (predicting numeric values)."
+},
+{
+"question": "What is the difference between classification and regression?",
+"answer": "Classification predicts categories or classes (like spam/ham), while regression predicts numeric values (like car prices). The terms 'label' is more common for classification, 'target' for regression."
+},
+{
+"question": "What is unsupervised learning?",
+"answer": "Learning from unlabeled training data where the system tries to learn without a teacher. Examples include clustering, visualization, dimensionality reduction, and anomaly detection."
+},
+{
+"question": "What is clustering in machine learning?",
+"answer": "An unsupervised learning task that detects groups of similar instances. For example, identifying that 40% of blog visitors are teenagers who love comic books and visit after school."
+},
+{
+"question": "What is dimensionality reduction and why is it useful?",
+"answer": "Simplifying data without losing too much information, often by merging correlated features. It makes algorithms run faster, uses less memory, and sometimes improves performance."
+},
+{
+"question": "What is anomaly detection?",
+"answer": "Detecting unusual instances, like fraudulent credit card transactions or manufacturing defects. The system learns from mostly normal instances during training."
+},
+{
+"question": "What is the difference between anomaly detection and novelty detection?",
+"answer": "Anomaly detection works with training data that may contain some anomalies, while novelty detection requires a very clean training set and detects instances that look different from all training instances."
+},
+{
+"question": "What is semi-supervised learning?",
+"answer": "Learning from partially labeled data - when you have plenty of unlabeled instances and few labeled ones. Unlabeled examples can help classify new instances more accurately."
+},
+{
+"question": "What is self-supervised learning?",
+"answer": "Generating a fully labeled dataset from an unlabeled one. For example, randomly masking parts of images and training a model to recover the original image, then fine-tuning for the actual task."
+},
+{
+"question": "What is reinforcement learning?",
+"answer": "Learning where an agent observes the environment, selects actions, and gets rewards/penalties. It learns the best strategy (policy) to maximize rewards over time, like AlphaGo learning to play Go."
+},
+{
+"question": "What is batch learning?",
+"answer": "The system cannot learn incrementally - it must be trained using all available data offline. Once launched into production, it applies what it learned without further learning."
+},
+{
+"question": "What are the problems with batch learning?",
+"answer": "Models suffer from model rot/data drift as the world evolves. Retraining requires lots of time and computing resources, and may be impossible with huge datasets."
+},
+{
+"question": "What is online learning?",
+"answer": "Training the system incrementally by feeding data sequentially, either individually or in mini-batches. Each step is fast and cheap, allowing learning on-the-fly as new data arrives."
+},
+{
+"question": "What is the learning rate in online learning?",
+"answer": "A parameter controlling how fast the system adapts to new data. High learning rate = rapid adaptation but quick forgetting of old data. Low learning rate = slower learning but less sensitivity to noise."
+},
+{
+"question": "What is out-of-core learning?",
+"answer": "Using online learning algorithms to train models on huge datasets that cannot fit in memory. The algorithm loads part of the data, trains, and repeats until all data is processed."
+},
+{
+"question": "What is instance-based learning?",
+"answer": "Learning examples by heart, then generalizing to new cases using a similarity measure to compare them to learned examples. The system flags emails similar to known spam emails."
+},
+{
+"question": "What is model-based learning?",
+"answer": "Building a model from examples and using that model to make predictions. The model generalizes from training data to make predictions on new instances."
+},
+{
+"question": "What are the steps in a typical machine learning project workflow?",
+"answer": "1) Study the data, 2) Select a model, 3) Train it on training data (learning algorithm finds parameters that minimize cost function), 4) Apply the model to make predictions (inference)."
+},
+{
+"question": "What is the difference between model parameters and hyperparameters?",
+"answer": "Model parameters (like θ0, θ1) are found by the learning algorithm during training. Hyperparameters are parameters of the learning algorithm itself, set before training and remaining constant during training."
+},
+{
+"question": "What does 'The Unreasonable Effectiveness of Data' refer to?",
+"answer": "A concept showing that for complex problems, having more data often matters more than having better algorithms. Very different ML algorithms perform similarly when given enough data."
+},
+{
+"question": "What is nonrepresentative training data and why is it problematic?",
+"answer": "Training data that doesn't represent the cases you want to generalize to. This leads to models that make inaccurate predictions, especially for cases not well represented in training."
+},
+{
+"question": "What is sampling bias?",
+"answer": "When even large samples are nonrepresentative due to flawed sampling methods. Famous example: 1936 Literary Digest poll that wrongly predicted Landon would beat Roosevelt due to sampling wealthy people."
+},
+{
+"question": "What are examples of poor-quality data issues?",
+"answer": "Errors, outliers, noise from poor measurements. Solutions include discarding outliers, fixing errors manually, and deciding how to handle missing features (ignore, fill with median, train separate models)."
+},
+{
+"question": "What is feature engineering?",
+"answer": "Coming up with a good set of features to train on. Includes feature selection (choosing useful features), feature extraction (combining features), and creating new features by gathering new data."
+},
+{
+"question": "What is overfitting?",
+"answer": "When the model performs well on training data but doesn't generalize well. It happens when the model is too complex relative to the amount and noisiness of training data."
+},
+{
+"question": "What are solutions to overfitting?",
+"answer": "1) Simplify the model (fewer parameters, fewer attributes, more constraints), 2) Gather more training data, 3) Reduce noise in training data (fix errors, remove outliers)."
+},
+{
+"question": "What is regularization?",
+"answer": "Constraining a model to make it simpler and reduce overfitting risk. For example, forcing a linear model to have a smaller slope reduces complexity and improves generalization."
+},
+{
+"question": "What is underfitting?",
+"answer": "When the model is too simple to learn the underlying structure of the data. Even training examples have inaccurate predictions because reality is more complex than the model."
+},
+{
+"question": "What are solutions to underfitting?",
+"answer": "1) Select a more powerful model with more parameters, 2) Feed better features to the learning algorithm (feature engineering), 3) Reduce model constraints (reduce regularization)."
+},
+{
+"question": "Why do we split data into training and test sets?",
+"answer": "To estimate generalization error (out-of-sample error) by testing on data the model hasn't seen. If training error is low but test error is high, the model is overfitting."
+},
+{
+"question": "What is the typical train/test split ratio?",
+"answer": "Commonly 80% training and 20% testing, but this depends on dataset size. With 10 million instances, holding out 1% (100,000 instances) may be sufficient for testing."
+},
+{
+"question": "What is holdout validation?",
+"answer": "Holding out part of the training set as a validation set to evaluate candidate models and select the best hyperparameters. The final model is trained on the full training set including validation data."
+},
+{
+"question": "What is the problem with repeatedly testing on the same test set?",
+"answer": "You adapt the model to perform well on that specific test set, making it unlikely to perform as well on new data. The model becomes overfitted to the test set."
+},
+{
+"question": "What is cross-validation?",
+"answer": "Using many small validation sets repeatedly. Each model is evaluated once per validation set after training on the rest of the data. Averaging evaluations gives more accurate performance measures."
+},
+{
+"question": "What is data mismatch and how do you handle it?",
+"answer": "When training data isn't perfectly representative of production data. Use a train-dev set to distinguish between overfitting and data mismatch problems. Validation and test sets should be representative of production data."
+},
+{
+"question": "What is the No Free Lunch theorem?",
+"answer": "If you make no assumptions about the data, there's no reason to prefer one model over another. For some datasets linear models are best, for others neural networks. You must evaluate reasonable models based on reasonable assumptions."
+},
+{
+"question": "What are the four main challenges in machine learning mentioned?",
+"answer": "1) Insufficient quantity of training data, 2) Nonrepresentative training data, 3) Poor-quality data, 4) Irrelevant features. Additionally, overfitting and underfitting are algorithm-related challenges."
+}
+]

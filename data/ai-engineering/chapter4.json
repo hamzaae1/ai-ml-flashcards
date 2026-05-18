@@ -1,0 +1,158 @@
+[
+{
+"question": "What is evaluation-driven development in AI engineering?",
+"answer": "Evaluation-driven development means defining evaluation criteria before building AI applications. This approach is inspired by test-driven development in software engineering and ensures that applications demonstrate value and can be deployed with clear success metrics."
+},
+{
+"question": "Why are certain AI applications more commonly deployed in enterprises?",
+"answer": "Enterprise applications with clear evaluation criteria are most common: recommender systems (measured by engagement/purchase rates), fraud detection (measured by money saved), coding applications (evaluated using functional correctness), and classification tasks (easier to evaluate than open-ended tasks)."
+},
+{
+"question": "What are the four main buckets of evaluation criteria for AI applications?",
+"answer": "1) Domain-specific capability (how good the model is at understanding the specific domain), 2) Generation capability (coherence, faithfulness of outputs), 3) Instruction-following capability (whether outputs meet requested format/constraints), 4) Cost and latency metrics."
+},
+{
+"question": "How are domain-specific capabilities typically evaluated?",
+"answer": "Domain-specific capabilities are commonly evaluated using exact evaluation methods. Coding capabilities use functional correctness, while non-coding capabilities often use close-ended tasks like multiple-choice questions, which are easier to verify and reproduce."
+},
+{
+"question": "What percentage of tasks in Eleuther's lm-evaluation-harness were multiple-choice as of April 2024?",
+"answer": "75% of the tasks were multiple-choice, including benchmarks like UC Berkeley's MMLU, Microsoft's AGIEval, and the AI2 Reasoning Challenge (ARC-C). This approach was chosen to avoid inconsistent assessment that comes with open-ended tasks."
+},
+{
+"question": "What are the two main categories of factual consistency verification?",
+"answer": "1) Local factual consistency: output evaluated against explicitly provided context (e.g., summaries consistent with original documents), 2) Global factual consistency: output evaluated against open knowledge (e.g., general chatbots, fact-checking)."
+},
+{
+"question": "What are the three main AI as a judge techniques for evaluating factual consistency?",
+"answer": "1) Basic AI as a judge: asking an AI model to evaluate factual consistency, 2) Self-verification (like SelfCheckGPT): generating multiple outputs to check consistency, 3) Knowledge-augmented verification (like SAFE): using search engines to verify individual facts."
+},
+{
+"question": "How does Google DeepMind's SAFE system work?",
+"answer": "SAFE works in four steps: 1) Decompose the response into individual statements, 2) Revise each statement to be self-contained, 3) Propose fact-checking queries for Google Search API, 4) Use AI to determine if statements are consistent with search results."
+},
+{
+"question": "What is textual entailment and how does it relate to factual consistency?",
+"answer": "Textual entailment determines relationships between statements: entailment (hypothesis inferred from premise), contradiction (hypothesis contradicts premise), or neutral. Entailment implies factual consistency, contradiction implies inconsistency, neutral means consistency can't be determined."
+},
+{
+"question": "What are the six main categories of unsafe content in AI outputs?",
+"answer": "1) Inappropriate language (profanity, explicit content), 2) Harmful recommendations/tutorials, 3) Hate speech (racist, sexist, discriminatory), 4) Violence (threats, graphic detail), 5) Stereotypes, 6) Biases toward political/religious ideologies."
+},
+{
+"question": "What are the two main purposes of roleplaying instructions in AI?",
+"answer": "1) Roleplaying characters for user interaction (entertainment, gaming, interactive storytelling), 2) Roleplaying as a prompt engineering technique to improve the quality of model outputs."
+},
+{
+"question": "According to LMSYS's analysis, what ranking did roleplaying achieve among common use cases?",
+"answer": "Roleplaying was the eighth most common use case in LMSYS's analysis of one million conversations from their Vicuna demo and Chatbot Arena, making it especially important for AI-powered NPCs, AI companions, and writing assistants."
+},
+{
+"question": "What are the key latency metrics for foundation models?",
+"answer": "Multiple metrics including time to first token, time per token, time between tokens, and time per query. The relevance of each metric depends on your specific application needs and user experience requirements."
+},
+{
+"question": "What is the difference between 'open source', 'open weight', and 'open model'?",
+"answer": "'Open weight' refers to models where weights are public but training data isn't available. 'Open model' refers to models with both open weights and open training data. 'Open source' is used broadly for any model with public weights, regardless of data availability."
+},
+{
+"question": "What are the key licensing questions to ask about open source models?",
+"answer": "1) Does the license allow commercial use? 2) Are there restrictions on commercial use (e.g., Llama's 700M user limit)? 3) Can model outputs be used to train other models? Each license has different conditions that must be evaluated for specific needs."
+},
+{
+"question": "What are the seven axes to consider when choosing between hosting models vs using APIs?",
+"answer": "1) Data privacy, 2) Data lineage and copyright, 3) Performance, 4) Functionality, 5) API cost vs engineering cost, 6) Control, access, and transparency, 7) On-device deployment needs."
+},
+{
+"question": "Why might data contamination occur unintentionally in model training?",
+"answer": "Models trained on internet-scraped data can accidentally include publicly available benchmark data. Benchmark data published before model training is likely included in training data, contributing to benchmark saturation and the need for new benchmarks."
+},
+{
+"question": "What are the two main methods for detecting data contamination?",
+"answer": "1) N-gram overlapping: checking if sequences of tokens (e.g., 13 tokens) appear in both training and evaluation data, 2) Perplexity: unusually low perplexity on evaluation data suggests the model has seen it during training."
+},
+{
+"question": "What did OpenAI find when analyzing GPT-3's contamination with common benchmarks?",
+"answer": "OpenAI found 13 benchmarks with at least 40% contamination in GPT-3's training data. They measured the relative difference in performance between evaluating only clean samples versus the whole benchmark."
+},
+{
+"question": "What is the four-step model selection workflow described in the chapter?",
+"answer": "1) Filter models by hard attributes (licensing, privacy policies), 2) Use public benchmarks/leaderboards to narrow to promising models, 3) Run experiments with custom evaluation pipeline, 4) Continuously monitor in production and collect feedback for improvement."
+},
+{
+"question": "Why are public leaderboards limited in their benchmark selection?",
+"answer": "Due to compute constraints, most leaderboards include only a small number of benchmarks. For example, Hugging Face started with 4 benchmarks, extended to 6, while HELM used 10. This small set can't represent the vast capabilities of foundation models."
+},
+{
+"question": "What is Simpson's paradox in model evaluation?",
+"answer": "A phenomenon where model A performs better than model B on aggregated data but worse than model B on every subset. This highlights the importance of slice-based evaluation to avoid misleading overall performance metrics."
+},
+{
+"question": "What are the three levels at which evaluation can occur in complex AI applications?",
+"answer": "1) Per task (overall completion of user's goal), 2) Per turn (quality of each interaction), 3) Per intermediate output (evaluation of individual component outputs within the system)."
+},
+{
+"question": "What should be included in a comprehensive evaluation guideline?",
+"answer": "Define what the application should do AND what it shouldn't do, including out-of-scope inputs and appropriate responses. Create clear criteria with scoring rubrics and examples, validated by humans to ensure clarity and consistency."
+},
+{
+"question": "What is the importance of tying evaluation metrics to business metrics?",
+"answer": "Mapping evaluation metrics to business outcomes helps with planning and resource allocation. For example: 'Factual consistency of 80% enables automating 30% of support requests, 90% enables 50%, 98% enables 90%.' This determines usefulness thresholds."
+},
+{
+"question": "According to OpenAI's rough estimation, how many evaluation samples are needed for 95% confidence at different score differences?",
+"answer": "30% difference: ~10 samples, 10% difference: ~100 samples, 3% difference: ~1,000 samples, 1% difference: ~10,000 samples. Rule of thumb: for every 3× decrease in score difference, sample size increases 10×."
+},
+{
+"question": "What is data slicing in evaluation and why is it important?",
+"answer": "Data slicing means separating data into subsets and evaluating performance on each separately. It helps avoid biases, debug performance issues, find improvement areas, and avoid Simpson's paradox where aggregate performance masks subset-specific problems."
+},
+{
+"question": "What questions should be asked when evaluating an evaluation pipeline?",
+"answer": "1) Are you getting the right signals? (Do better responses get higher scores?) 2) How reliable is the pipeline? (Consistency across runs) 3) How correlated are metrics? (Avoid redundancy) 4) What cost/latency does evaluation add?"
+},
+{
+"question": "What was the key finding from the Stanford/UC Berkeley study about OpenAI model changes?",
+"answer": "The study found that GPT-3.5 and GPT-4's performances changed significantly between March 2023 and June 2023 on many benchmarks, leading to the perception that models were getting worse, highlighting evaluation challenges."
+},
+{
+"question": "What types of feedback criteria do users typically employ according to LangChain's State of AI 2023?",
+"answer": "On average, users employed 2.3 different types of feedback criteria to evaluate an application. For example, a customer support application might use relevance, factual consistency, and safety as its three evaluation criteria."
+},
+{
+"question": "Why is instruction-following capability essential for structured outputs?",
+"answer": "Applications requiring structured outputs (JSON format, regex matching) need models that can follow specific formatting instructions. If a model outputs unexpected formats like 'That's correct' instead of 'A, B, or C', it breaks downstream applications."
+},
+{
+"question": "What are the key considerations when mixing automatic and human evaluation methods?",
+"answer": "Use automatic metrics as much as possible for efficiency, but don't avoid human evaluation when needed. Consider using cheap classifiers on 100% of data and expensive AI judges on 1% for balanced confidence and cost management."
+},
+{
+"question": "How should evaluation methods be adapted for production versus experimentation?",
+"answer": "During experimentation, reference data may be available for comparison. In production, reference data may not be immediately available, but actual users provide feedback. Consider what user feedback to collect and how it correlates to other metrics."
+},
+{
+"question": "What is the bootstrap method for determining evaluation set size reliability?",
+"answer": "Create multiple bootstraps by drawing samples with replacement from your evaluation set, evaluate on each bootstrap, and check if results are consistent. If evaluation results vary wildly across bootstraps, you need a larger evaluation set."
+},
+{
+"question": "What are the pros and cons of using model APIs versus self-hosting models regarding functionality?",
+"answer": "APIs: More likely to support scaling, function calling, structured outputs, but less likely to expose logprobs. Self-hosting: No/limited support for function calling initially, but can access logprobs and intermediate outputs useful for classification, evaluation, and interpretability."
+},
+{
+"question": "Why has benchmark saturation become a recurring problem in AI evaluation?",
+"answer": "As AI models improve rapidly, benchmarks achieve perfect or near-perfect scores quickly. GLUE (2018) was saturated in one year, necessitating SuperGLUE (2019). Similarly, benchmarks had to evolve from grade-level to graduate-level questions as models improved."
+},
+{
+"question": "What was Rylan Schaeffer's demonstration about data contamination?",
+"answer": "In his satirical 2023 paper 'Pretraining on the Test Set Is All You Need', he showed that by training exclusively on benchmark data, his one-million-parameter model achieved near-perfect scores and outperformed much larger models, demonstrating contamination risks."
+},
+{
+"question": "According to the chapter, what is the relationship between model strength and evaluation difficulty?",
+"answer": "The more intelligent AI models become, the harder they are to evaluate. Most people can identify errors in first-grade math, but few can do so for PhD-level solutions. As models surpass human performance, human evaluators may only detect differences through comparison."
+},
+{
+"question": "What are the trade-offs between pointwise and comparative evaluation?",
+"answer": "Pointwise evaluation evaluates each model independently then ranks by scores, while comparative evaluation ranks models by direct comparison. Comparative evaluation is typically easier for subjective quality assessment but faces scalability challenges as model pairs grow quadratically."
+}
+]

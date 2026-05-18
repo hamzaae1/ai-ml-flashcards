@@ -1,0 +1,225 @@
+[
+  {
+    "title": "AI Engineering (Chip Huyen, 2025)",
+    "description": "This book introduces the emerging field of AI engineering, which focuses on building real-world applications powered by foundation models rather than training models from scratch. Chip Huyen, drawing on her industry and academic experience, provides a practical guide to evaluation, prompt design, retrieval-augmented generation, fine-tuning, dataset curation, and optimization. It serves as both a roadmap and toolkit for engineers transitioning from traditional ML to modern AI systems.",
+    "chapters": [
+      {
+        "path": "ai-engineering/chapter1.json",
+        "title": "Introduction to Building AI Applications with Foundation Models",
+        "summary": "Learn the foundations of AI engineering, foundation models, generative AI systems, self-supervised learning, multimodal AI, and how modern AI applications are built using pretrained models and APIs."
+      },
+      {
+        "path": "ai-engineering/chapter2.json",
+        "title": "Understanding Foundation Models",
+        "summary": "Learn how foundation models work internally including Transformers, attention mechanisms, scaling laws, mixture-of-experts architectures, multilingual modeling, supervised fine-tuning, and alignment techniques."
+      },
+      {
+        "path": "ai-engineering/chapter3.json",
+        "title": "Evaluation Methodology",
+        "summary": "Learn how to evaluate AI systems using perplexity, semantic similarity, exact match metrics, AI-as-a-judge systems, benchmark analysis, and evaluation frameworks for generative AI."
+      },
+      {
+        "path": "ai-engineering/chapter4.json",
+        "title": "Evaluate AI Systems",
+        "summary": "Learn enterprise AI evaluation techniques including hallucination detection, factual consistency, toxicity analysis, latency evaluation, conversational testing, and evaluation-driven development workflows."
+      },
+      {
+        "path": "ai-engineering/chapter5.json",
+        "title": "Prompt Engineering",
+        "summary": "Learn systematic prompt engineering techniques including zero-shot and few-shot prompting, chain-of-thought reasoning, self-critique prompting, prompt optimization, and reliable instruction design."
+      },
+      {
+        "path": "ai-engineering/chapter6.json",
+        "title": "RAG and Agents",
+        "summary": "Learn Retrieval-Augmented Generation (RAG), semantic retrieval, vector databases, chunking strategies, query rewriting, AI agents, tool usage, orchestration systems, and external memory architectures."
+      },
+      {
+        "path": "ai-engineering/chapter7.json",
+        "title": "Finetuning",
+        "summary": "Learn how to adapt foundation models using supervised fine-tuning, preference tuning, LoRA, quantization-aware training, parameter-efficient finetuning, and transfer learning strategies."
+      },
+      {
+        "path": "ai-engineering/chapter8.json",
+        "title": "Dataset Engineering",
+        "summary": "Learn how datasets for AI systems are designed, cleaned, generated, augmented, annotated, and optimized for coverage, diversity, quality, and large-scale model training."
+      },
+      {
+        "path": "ai-engineering/chapter9.json",
+        "title": "Inference Optimization",
+        "summary": "Learn how to optimize AI inference systems using quantization, batching, speculative decoding, KV cache optimization, FlashAttention, GPU optimization, and hardware-aware deployment strategies."
+      },
+      {
+        "path": "ai-engineering/chapter10.json",
+        "title": "AI Engineering Architecture and User Feedback",
+        "summary": "Learn how production AI systems are architected including routing systems, observability, monitoring, caching, guardrails, feedback loops, user analytics, and scalable AI infrastructure."
+      }
+    ]
+  },
+  {
+    "title": "Hands-On Large Language Models (Jay Alammar & Maarten Grootendorst, 2024)",
+    "description": "Written by two well-known educators in the AI community, this book offers a visual and hands-on journey into large language models. It blends intuitive explanations, diagrams, and Python code to show how LLMs work internally and how to apply them for classification, clustering, generation, retrieval, and fine-tuning. The book emphasizes accessibility and practical experimentation, making it a strong resource for both beginners and practitioners.",
+    "chapters": [
+      {
+        "path": "hands-on-llms/chapter1.json",
+        "title": "An Introduction to Large Language Models",
+        "summary": "Learn the evolution of NLP and LLMs including Transformers, attention mechanisms, transfer learning, encoder vs decoder architectures, and the foundations of modern language AI."
+      },
+      {
+        "path": "hands-on-llms/chapter2.json",
+        "title": "Tokens and Embeddings",
+        "summary": "Learn how LLMs process text using tokenization, vocabularies, token IDs, contextual embeddings, subword algorithms, and semantic vector representations."
+      },
+      {
+        "path": "hands-on-llms/chapter3.json",
+        "title": "Looking Inside Large Language Models",
+        "summary": "Learn how Transformer-based LLMs generate text using autoregressive decoding, attention layers, Transformer blocks, sampling methods, KV caching, and context management."
+      },
+      {
+        "path": "hands-on-llms/chapter4.json",
+        "title": "Text Classification",
+        "summary": "Learn how language models perform classification tasks including sentiment analysis, embedding-based classification, zero-shot classification, evaluation metrics, and supervised NLP systems."
+      },
+      {
+        "path": "hands-on-llms/chapter5.json",
+        "title": "Text Clustering and Topic Modeling",
+        "summary": "Learn semantic clustering, topic modeling, BERTopic, UMAP, HDBSCAN, embedding-based grouping, and unsupervised organization of text data."
+      },
+      {
+        "path": "hands-on-llms/chapter6.json",
+        "title": "Prompt Engineering",
+        "summary": "Learn prompt engineering strategies including few-shot prompting, chain-of-thought reasoning, self-consistency prompting, tree-of-thought reasoning, and generation control techniques."
+      },
+      {
+        "path": "hands-on-llms/chapter7.json",
+        "title": "Advanced Text Generation Techniques and Tools",
+        "summary": "Learn advanced LLM orchestration using LangChain, conversational memory, AI agents, tool usage, workflows, chains, and generation pipelines."
+      },
+      {
+        "path": "hands-on-llms/chapter8.json",
+        "title": "Semantic Search and Retrieval-Augmented Generation",
+        "summary": "Learn semantic search systems, vector databases, dense retrieval, reranking, chunking strategies, ANN indexing, and Retrieval-Augmented Generation (RAG)."
+      },
+      {
+        "path": "hands-on-llms/chapter9.json",
+        "title": "Multimodal Large Language Models",
+        "summary": "Learn multimodal AI systems including Vision Transformers, CLIP, BLIP-2, multimodal embeddings, image-text alignment, and vision-language architectures."
+      },
+      {
+        "path": "hands-on-llms/chapter10.json",
+        "title": "Creating Text Embedding Models",
+        "summary": "Learn how embedding models are trained using contrastive learning, Siamese networks, cosine similarity, ranking losses, and semantic representation learning."
+      },
+      {
+        "path": "hands-on-llms/chapter11.json",
+        "title": "Fine-Tuning Representation Models for Classification",
+        "summary": "Learn how representation models like BERT are fine-tuned for classification tasks using few-shot learning, domain adaptation, layer freezing, and contrastive learning techniques."
+      },
+      {
+        "path": "hands-on-llms/chapter12.json",
+        "title": "Fine-Tuning Generation Models",
+        "summary": "Learn how generative LLMs are adapted using supervised fine-tuning, LoRA, QLoRA, chat templates, instruction tuning, quantization, and alignment strategies."
+      }
+    ]
+  },
+  {
+    "title": "Hands-On Machine Learning (Aurélien Géron, 2019/2020)",
+    "description": "Aurélien Géron's widely acclaimed guide teaches machine learning through an applied, example-first approach using Python libraries like Scikit-Learn, TensorFlow, and Keras. Starting from fundamental concepts such as classification and decision trees, it progresses toward deep learning topics like CNNs, RNNs, and reinforcement learning. The book is designed as a comprehensive, practice-driven reference for students and professionals aiming to build robust ML systems.",
+    "chapters": [
+      {
+        "path": "hands-on-ml/part1/chapter1.json",
+        "title": "The Machine Learning Landscape",
+        "summary": "Learn the foundations of machine learning, including supervised and unsupervised learning, reinforcement learning, online vs batch learning, model-based learning, and the complete ML workflow."
+      },
+      {
+        "path": "hands-on-ml/part1/chapter2.json",
+        "title": "End-to-End Machine Learning Project",
+        "summary": "Learn how to build machine learning projects from data collection and preprocessing to feature engineering, pipelines, evaluation, and hyperparameter tuning."
+      },
+      {
+        "path": "hands-on-ml/part1/chapter3.json",
+        "title": "Classification",
+        "summary": "Learn supervised classification systems, confusion matrices, precision/recall, ROC curves, multiclass classification, and evaluation techniques."
+      },
+      {
+        "path": "hands-on-ml/part1/chapter4.json",
+        "title": "Training Models",
+        "summary": "Learn linear regression, gradient descent, regularization, polynomial regression, optimization methods, and the mathematics behind machine learning training."
+      },
+      {
+        "path": "hands-on-ml/part1/chapter5.json",
+        "title": "Support Vector Machines",
+        "summary": "Learn SVMs, margins, support vectors, kernel methods, nonlinear classification, and regression using support vector techniques."
+      },
+      {
+        "path": "hands-on-ml/part1/chapter6.json",
+        "title": "Decision Trees",
+        "summary": "Learn how decision trees work using entropy, Gini impurity, CART algorithms, pruning, regression trees, and interpretable AI methods."
+      },
+      {
+        "path": "hands-on-ml/part1/chapter7.json",
+        "title": "Ensemble Learning and Random Forests",
+        "summary": "Learn bagging, boosting, random forests, AdaBoost, gradient boosting, ensemble systems, and variance reduction techniques."
+      },
+      {
+        "path": "hands-on-ml/part1/chapter8.json",
+        "title": "Dimensionality Reduction",
+        "summary": "Learn PCA, manifold learning, t-SNE, feature compression, latent spaces, and visualization of high-dimensional data."
+      },
+      {
+        "path": "hands-on-ml/part1/chapter9.json",
+        "title": "Unsupervised Learning Techniques",
+        "summary": "Learn clustering, anomaly detection, Gaussian mixture models, DBSCAN, expectation-maximization, and unsupervised pattern discovery."
+      },
+      {
+        "path": "hands-on-ml/part2/chapter10.json",
+        "title": "Introduction to Artificial Neural Networks with Keras",
+        "summary": "Learn perceptrons, multilayer neural networks, activation functions, backpropagation, Keras APIs, and deep learning foundations."
+      },
+      {
+        "path": "hands-on-ml/part2/chapter11.json",
+        "title": "Training Deep Neural Networks",
+        "summary": "Learn advanced deep learning training techniques including transfer learning, gradient stabilization, initialization strategies, normalization, and optimization tricks."
+      },
+      {
+        "path": "hands-on-ml/part2/chapter12.json",
+        "title": "Custom Models and Training with TensorFlow",
+        "summary": "Learn TensorFlow internals, GradientTape, custom losses, custom metrics, custom layers, subclassing, autodiff, and custom training loops."
+      },
+      {
+        "path": "hands-on-ml/part2/chapter13.json",
+        "title": "Loading and Preprocessing Data with TensorFlow",
+        "summary": "Learn scalable TensorFlow data pipelines using tf.data, TFRecord, preprocessing layers, batching, shuffling, and efficient dataset systems."
+      },
+      {
+        "path": "hands-on-ml/part2/Chapter14.json",
+        "title": "Deep Computer Vision Using Convolutional Neural Networks",
+        "summary": "Learn CNNs, convolution operations, pooling, feature maps, ResNet, transfer learning, and deep learning for computer vision."
+      },
+      {
+        "path": "hands-on-ml/part2/chapter15.json",
+        "title": "Processing Sequences Using RNNs and CNNs",
+        "summary": "Learn RNNs, LSTMs, GRUs, sequence modeling, time series forecasting, and temporal deep learning architectures."
+      },
+      {
+        "path": "hands-on-ml/part2/chapter16.json",
+        "title": "Natural Language Processing with RNNs and Attention",
+        "summary": "Learn tokenization, embeddings, attention mechanisms, sequence-to-sequence systems, Transformers, and NLP generation architectures."
+      },
+      {
+        "path": "hands-on-ml/part2/chapter17.json",
+        "title": "Autoencoders, GANs, and Diffusion Models",
+        "summary": "Learn autoencoders, latent spaces, VAEs, GANs, denoising systems, and generative AI architectures."
+      },
+      {
+        "path": "hands-on-ml/part2/chapter18.json",
+        "title": "Reinforcement Learning",
+        "summary": "Learn reinforcement learning, policies, rewards, Q-learning, Bellman equations, policy gradients, and autonomous AI agents."
+      },
+      {
+        "path": "hands-on-ml/part2/chapter19.json",
+        "title": "Training and Deploying TensorFlow Models at Scale",
+        "summary": "Learn model deployment, TensorFlow Serving, Vertex AI, inference optimization, TensorFlow Lite, scalable serving systems, and production AI deployment."
+      }
+    ]
+  }
+]

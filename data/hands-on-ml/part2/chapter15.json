@@ -1,0 +1,170 @@
+[
+  {
+    "question": "What is the main capability that RNNs bring to neural networks?",
+    "answer": "RNNs can predict the future and analyze time series data such as daily active users, temperature, power consumption, and trajectories. They can work on sequences of arbitrary lengths rather than fixed-sized inputs, making them useful for natural language processing applications."
+  },
+  {
+    "question": "What are the two main difficulties that RNNs face?",
+    "answer": "1) Unstable gradients (which can be alleviated using techniques like recurrent dropout and recurrent layer normalization), and 2) Very limited short-term memory (which can be extended using LSTM and GRU cells)."
+  },
+  {
+    "question": "How does a simple recurrent neuron work?",
+    "answer": "At each time step t, the recurrent neuron receives inputs x(t) and its own output from the previous time step ŷ(t-1). At the first time step, the previous output is set to 0. The neuron processes these inputs and produces an output that becomes input for the next time step."
+  },
+  {
+    "question": "What does 'unrolling the network through time' mean?",
+    "answer": "It means representing the same recurrent neuron once per time step to visualize how the network processes a sequence. This shows the temporal flow of information through the network."
+  },
+  {
+    "question": "What is the mathematical equation for the output of a recurrent layer?",
+    "answer": "ŷ(t) = φ(Wx^T x(t) + Wŷ^T ŷ(t-1) + b), where φ is the activation function, Wx and Wŷ are weight matrices for inputs and previous outputs respectively, and b is the bias vector."
+  },
+  {
+    "question": "What is a memory cell in the context of RNNs?",
+    "answer": "A memory cell is a part of a neural network that preserves some state across time steps. A single recurrent neuron or layer of recurrent neurons is a basic cell, capable of learning short patterns (typically about 10 steps long)."
+  },
+  {
+    "question": "What are the four main types of RNN architectures mentioned?",
+    "answer": "1) Sequence-to-sequence (e.g., time series forecasting), 2) Sequence-to-vector (e.g., sentiment analysis), 3) Vector-to-sequence (e.g., image captioning), and 4) Encoder-decoder (e.g., machine translation)."
+  },
+  {
+    "question": "What is backpropagation through time (BPTT)?",
+    "answer": "BPTT is the training strategy for RNNs where the network is unrolled through time and regular backpropagation is applied. There's a forward pass through the unrolled network, then gradients are propagated backward through the unrolled network."
+  },
+  {
+    "question": "What preprocessing steps were taken for the Chicago ridership dataset?",
+    "answer": "The data was loaded, column names were shortened, rows were sorted by date, the redundant total column was removed, duplicate rows were dropped, and the data was scaled down by a factor of one million to ensure values are near the 0-1 range."
+  },
+  {
+    "question": "What is weekly seasonality and how does it appear in the Chicago ridership data?",
+    "answer": "Weekly seasonality is a pattern that clearly repeats every week. In the Chicago ridership data, it's so strong that forecasting tomorrow's ridership by copying values from a week earlier yields reasonably good results."
+  },
+  {
+    "question": "What is naive forecasting?",
+    "answer": "Naive forecasting means simply copying a past value to make a forecast. Generally it means copying the latest known value, but in cases with strong seasonality (like the ridership data), copying the value from the previous week works better."
+  },
+  {
+    "question": "What is autocorrelation in time series?",
+    "answer": "When a time series is correlated with a lagged version of itself, we say that the time series is autocorrelated. This means past values are predictive of future values."
+  },
+  {
+    "question": "What are differencing and its purposes?",
+    "answer": "Differencing involves plotting the difference between values at time t and time t-k (e.g., t-7 for weekly patterns). It's used to remove trend and seasonality from a time series, making it easier to study a stationary time series."
+  },
+  {
+    "question": "What is a stationary time series?",
+    "answer": "A stationary time series is one whose statistical properties remain constant over time, without any seasonality or trends. Differencing is commonly used to make time series more stationary."
+  },
+  {
+    "question": "How does the ARMA model make forecasts?",
+    "answer": "ARMA computes forecasts using a weighted sum of lagged values (autoregressive component) and corrects these forecasts by adding a moving average computed using a weighted sum of the last few forecast errors (moving average component)."
+  },
+  {
+    "question": "What are the three variants in the ARMA model family?",
+    "answer": "1) ARMA: basic autoregressive moving average, 2) ARIMA: adds differencing (d rounds) to make time series more stationary, 3) SARIMA: additionally models seasonal components using the same ARIMA approach."
+  },
+  {
+    "question": "What are the seven hyperparameters of the SARIMA model?",
+    "answer": "p, d, q (same as ARIMA), plus P, D, Q (for seasonal pattern modeling), and s (the period of the seasonal pattern). P, D, Q work like p, d, q but for time series at t-s, t-2s, t-3s, etc."
+  },
+  {
+    "question": "How does tf.keras.utils.timeseries_dataset_from_array() work?",
+    "answer": "It takes a time series as input and builds a tf.data.Dataset containing all windows of desired length along with their corresponding targets. It's useful for preparing training data for sequence models."
+  },
+  {
+    "question": "Why must training windows be shuffled for RNN training?",
+    "answer": "Gradient descent expects instances in the training set to be independent and identically distributed (IID). Shuffling the training windows (but not their contents) helps meet this requirement."
+  },
+  {
+    "question": "What input shape do recurrent layers in Keras expect?",
+    "answer": "Recurrent layers expect 3D inputs of shape [batch size, time steps, dimensionality], where dimensionality is 1 for univariate time series and more for multivariate time series."
+  },
+  {
+    "question": "Why did the simple RNN with one neuron perform poorly?",
+    "answer": "1) It only had a single recurrent neuron with extremely limited memory (just its previous output), and only 3 parameters total. 2) The time series contained values from 0 to 1.4, but the default tanh activation function can only output values between -1 and +1."
+  },
+  {
+    "question": "How can you fix the issues with a simple RNN?",
+    "answer": "Create a model with a larger recurrent layer (e.g., 32 neurons) and add a dense output layer with no activation function. This provides more memory capacity and removes output range constraints."
+  },
+  {
+    "question": "What is the key requirement for stacking recurrent layers in a deep RNN?",
+    "answer": "Set return_sequences=True for all recurrent layers except the last one (if you only care about the last output). This ensures each layer outputs a 3D array containing outputs for all time steps rather than just the last time step."
+  },
+  {
+    "question": "How can you create a multivariate time series model?",
+    "answer": "Change the input shape to accommodate multiple features per time step (e.g., [None, 5] for 5 features). The model can use multiple related time series as input to forecast one or more target series."
+  },
+  {
+    "question": "What are two approaches for forecasting several time steps ahead?",
+    "answer": "1) Iterative: predict one step, add it to inputs, predict next step, repeat (errors accumulate). 2) Direct: train the model to predict multiple future values in one shot (output layer has multiple units for multiple forecasts)."
+  },
+  {
+    "question": "How does a sequence-to-sequence model work for multi-step forecasting?",
+    "answer": "Instead of forecasting only at the last time step, it forecasts at each time step. This provides more error gradients throughout the model, stabilizing and speeding up training. Set return_sequences=True in the recurrent layer."
+  },
+  {
+    "question": "What causes the unstable gradients problem in RNNs?",
+    "answer": "When training RNNs on long sequences, the unrolled network becomes very deep. The same weights used at every time step can cause outputs to explode if gradient descent increases outputs slightly at early time steps, which then amplifies through subsequent time steps."
+  },
+  {
+    "question": "Why might nonsaturating activation functions (like ReLU) worsen RNN instability?",
+    "answer": "If weights are updated to slightly increase outputs at the first time step, the same weights used at subsequent time steps can cause outputs to explode throughout the sequence, and nonsaturating functions don't prevent this explosion."
+  },
+  {
+    "question": "How does layer normalization differ from batch normalization for RNNs?",
+    "answer": "Layer normalization normalizes across the features dimension instead of the batch dimension. It can compute statistics on-the-fly at each time step independently for each instance, behaves the same during training and testing, and works better with RNNs than batch normalization."
+  },
+  {
+    "question": "How do you create a custom memory cell in Keras?",
+    "answer": "Define a custom cell class that inherits from tf.keras.layers.Layer. The call() method takes two arguments: inputs at current time step and hidden states from previous time step. Must have state_size and output_size attributes."
+  },
+  {
+    "question": "What is the short-term memory problem in RNNs?",
+    "answer": "Due to transformations that data goes through when traversing an RNN, some information is lost at each time step. After a while, the RNN's state contains virtually no trace of the first inputs, like Dory the fish trying to translate a long sentence."
+  },
+  {
+    "question": "How does an LSTM cell address the short-term memory problem?",
+    "answer": "LSTM splits state into short-term h(t) and long-term c(t) states. The network learns what to store in long-term state, what to throw away, and what to read from it using forget gates, input gates, and output gates."
+  },
+  {
+    "question": "What are the four fully connected layers in an LSTM cell?",
+    "answer": "1) Main layer g(t): analyzes current inputs and previous state, 2) Forget gate f(t): controls what to erase from long-term state, 3) Input gate i(t): controls what parts of g(t) to add to long-term state, 4) Output gate o(t): controls what to read and output."
+  },
+  {
+    "question": "How does the long-term state flow through an LSTM cell?",
+    "answer": "The long-term state c(t-1) goes through a forget gate (dropping memories), then adds new memories via addition operation (selected by input gate), producing c(t). This state is copied, passed through tanh, and filtered by output gate to produce short-term state h(t)."
+  },
+  {
+    "question": "What are the main simplifications of a GRU cell compared to LSTM?",
+    "answer": "1) Both state vectors are merged into single vector h(t), 2) Single gate controller z(t) controls both forget and input gates, 3) No output gate - full state vector is output at every time step, 4) New gate controller r(t) controls which part of previous state is shown to main layer."
+  },
+  {
+    "question": "How do 1D convolutional layers help with long sequences?",
+    "answer": "1D convolutional layers slide kernels across sequences, detecting short sequential patterns. They can shorten sequences (with stride > 1), potentially helping RNN layers detect longer patterns. Can be mixed with recurrent layers or used alone."
+  },
+  {
+    "question": "What is the WaveNet architecture?",
+    "answer": "WaveNet stacks 1D convolutional layers with doubling dilation rates at every layer. First layer sees 2 time steps, next sees 4, then 8, etc. Lower layers learn short-term patterns while higher layers learn long-term patterns, enabling efficient processing of extremely large sequences."
+  },
+  {
+    "question": "What is causal padding in convolutional layers?",
+    "answer": "Causal padding is like 'same' padding but zeros are appended only at the start of the input sequence, not both sides. This ensures the convolutional layer doesn't peek into the future when making predictions."
+  },
+  {
+    "question": "What are some techniques for monitoring RNN training and preventing issues?",
+    "answer": "Monitor gradient sizes using tools like TensorBoard, use gradient clipping if training is unstable, apply dropout and recurrent_dropout, use layer normalization, and consider MC dropout for uncertainty estimation in forecasts."
+  },
+  {
+    "question": "Why might models trained on historical data fail in production?",
+    "answer": "Models will only work well if patterns learned from the past continue in the future. Events like the Covid-19 pandemic can dramatically change patterns (like public transportation usage), making historical models ineffective. Always verify models work on recent data before deployment."
+  },
+  {
+    "question": "What are the key advantages of LSTM and GRU cells over simple RNNs?",
+    "answer": "LSTM and GRU cells perform much better than basic cells, with training converging faster and ability to detect longer-term patterns. They can tackle much longer sequences than simple RNNs, though still have limited memory for sequences of 100+ time steps."
+  },
+  {
+    "question": "When should you use different RNN architectures (SimpleRNN vs LSTM vs GRU vs 1D Conv)?",
+    "answer": "SimpleRNN for basic tasks with short sequences, LSTM/GRU for longer sequences requiring memory of long-term patterns, 1D convolutional layers for very long sequences or when you want to process sequences without recurrence, and combinations for optimal performance depending on the specific task and data."
+  }
+]

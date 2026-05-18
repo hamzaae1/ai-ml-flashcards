@@ -1,0 +1,170 @@
+[
+  {
+    "question": "What are the main problems encountered when training deep neural networks?",
+    "answer": "1) Vanishing/exploding gradients making lower layers hard to train, 2) Not enough training data or expensive labeling, 3) Extremely slow training, 4) Overfitting risk with millions of parameters"
+  },
+  {
+    "question": "What is the vanishing gradients problem?",
+    "answer": "Gradients get smaller and smaller as the backpropagation algorithm progresses down to lower layers, leaving connection weights virtually unchanged and preventing convergence to a good solution"
+  },
+  {
+    "question": "What is the exploding gradients problem?",
+    "answer": "Gradients grow bigger and bigger until layers get insanely large weight updates and the algorithm diverges. This surfaces most often in recurrent neural networks"
+  },
+  {
+    "question": "What causes unstable gradients according to Glorot and Bengio's 2010 paper?",
+    "answer": "The combination of sigmoid activation function and normal distribution weight initialization (mean=0, std=1) causes variance to increase after each layer until activation functions saturate at top layers"
+  },
+  {
+    "question": "What is Glorot/Xavier initialization?",
+    "answer": "A weight initialization strategy where connection weights are initialized randomly with variance σ² = 1/fanavg, where fanavg = (fanin + fanout)/2. This helps signal flow properly in both forward and backward directions"
+  },
+  {
+    "question": "When should you use He initialization instead of Glorot initialization?",
+    "answer": "Use He initialization with ReLU and its variants (Leaky ReLU, ELU, GELU, Swish, Mish). It uses variance σ² = 2/fanin instead of 1/fanavg"
+  },
+  {
+    "question": "When should you use LeCun initialization?",
+    "answer": "Use LeCun initialization (σ² = 1/fanin) with SELU activation function, preferably with a normal distribution"
+  },
+  {
+    "question": "What is the main advantage of ReLU over sigmoid activation functions?",
+    "answer": "ReLU doesn't saturate for positive values and is very fast to compute, making it behave much better in deep neural networks than sigmoid functions"
+  },
+  {
+    "question": "What is the 'dying ReLUs' problem?",
+    "answer": "Some neurons effectively 'die' during training, meaning they stop outputting anything other than 0. This happens when weights get tweaked so the ReLU input is negative for all training instances"
+  },
+  {
+    "question": "How does Leaky ReLU solve the dying ReLUs problem?",
+    "answer": "Leaky ReLU is defined as LeakyReLUα(z) = max(αz, z), where α defines the slope for z < 0. Having a slope for negative values ensures neurons never completely die"
+  },
+  {
+    "question": "What is the ELU activation function and its advantages?",
+    "answer": "ELU(z) = α(exp(z) - 1) if z < 0, else z. Advantages: takes negative values (helping vanishing gradients), has nonzero gradient for z < 0 (avoiding dead neurons), and is smooth everywhere when α = 1"
+  },
+  {
+    "question": "What makes SELU special compared to other activation functions?",
+    "answer": "SELU enables self-normalization: if you build an MLP using only SELU activation functions, the network will self-normalize with outputs maintaining mean=0 and std=1 during training, solving vanishing/exploding gradients"
+  },
+  {
+    "question": "What are the conditions required for SELU self-normalization to work?",
+    "answer": "1) Input features must be standardized (mean=0, std=1), 2) Use LeCun normal initialization, 3) Network must be plain MLP (no recurrent/skip connections), 4) Cannot use ℓ1/ℓ2 regularization, max-norm, batch-norm, or regular dropout"
+  },
+  {
+    "question": "What is GELU and why is it effective?",
+    "answer": "GELU(z) = z⋅Φ(z) where Φ is standard Gaussian CDF. It's a smooth, non-convex, non-monotonic variant of ReLU that often outperforms other activation functions, especially for complex tasks"
+  },
+  {
+    "question": "What is the main idea behind batch normalization?",
+    "answer": "Add an operation before/after each hidden layer's activation that zero-centers and normalizes inputs, then scales and shifts using learnable parameters γ and β. This helps stabilize gradients during training"
+  },
+  {
+    "question": "How does batch normalization work during training vs. testing?",
+    "answer": "Training: Uses current mini-batch statistics (mean μB, std σB) to normalize. Testing: Uses moving averages of training statistics (final μ and σ) since we may not have batches or they may be unreliable"
+  },
+  {
+    "question": "What are the four parameters learned in each batch normalization layer?",
+    "answer": "γ (output scale vector) and β (output offset vector) learned via backpropagation; μ (final input mean) and σ (final input std) estimated using exponential moving averages during training"
+  },
+  {
+    "question": "What is gradient clipping and when is it used?",
+    "answer": "A technique to mitigate exploding gradients by clipping gradients during backpropagation so they never exceed a threshold. Generally used in recurrent neural networks where batch normalization is tricky"
+  },
+  {
+    "question": "What is the difference between clipvalue and clipnorm in gradient clipping?",
+    "answer": "clipvalue clips each gradient component to a range (e.g., -1.0 to 1.0) but may change gradient direction. clipnorm clips the whole gradient if its ℓ2 norm exceeds threshold, preserving direction"
+  },
+  {
+    "question": "What is transfer learning and when should you use it?",
+    "answer": "Reusing parts of a pretrained neural network (except top layers) for a similar task. Use when you have limited training data and can find a model trained on a similar task with similar low-level features"
+  },
+  {
+    "question": "What is the general strategy for transfer learning?",
+    "answer": "1) Find a pretrained model for similar task, 2) Replace output layer, 3) Freeze reused layers initially, 4) Train with new data, 5) Unfreeze some top layers and fine-tune with reduced learning rate"
+  },
+  {
+    "question": "When should you freeze vs. unfreeze layers in transfer learning?",
+    "answer": "Freeze more layers when tasks are very different or you have little data. Unfreeze more layers when tasks are similar and you have more training data. More similar tasks → reuse more layers"
+  },
+  {
+    "question": "What is unsupervised pretraining?",
+    "answer": "When you can't find a similar pretrained model, train an unsupervised model (autoencoder/GAN) on unlabeled data, then reuse lower layers and add output layer for your supervised task"
+  },
+  {
+    "question": "What is pretraining on an auxiliary task?",
+    "answer": "Train a neural network on an auxiliary task where you can easily obtain labeled data, then reuse lower layers for your actual task. Example: train on 'same person detection' to learn face features for face classification"
+  },
+  {
+    "question": "What is momentum optimization and why does it work?",
+    "answer": "At each iteration, subtract local gradient from momentum vector m (multiplied by learning rate), then update weights by adding momentum vector. Works like a bowling ball gaining speed - helps escape plateaus and go faster in consistent directions"
+  },
+  {
+    "question": "What is the momentum algorithm mathematically?",
+    "answer": "1) m ← βm - η∇θJ(θ), 2) θ ← θ + m. The momentum β is typically 0.9, creating a terminal velocity of η⋅gradient⋅1/(1-β) when gradients are constant"
+  },
+  {
+    "question": "How does Nesterov Accelerated Gradient (NAG) improve on momentum?",
+    "answer": "Instead of computing gradient at current position θ, NAG computes it slightly ahead at θ + βm. This gives more accurate gradients since momentum vector generally points toward optimum"
+  },
+  {
+    "question": "What is AdaGrad and what problem does it solve?",
+    "answer": "AdaGrad scales down gradients by accumulated squared gradients: it adapts learning rate per parameter, reducing it more for steep dimensions. Helps with elongated bowl problems but often stops too early"
+  },
+  {
+    "question": "How does RMSProp improve on AdaGrad?",
+    "answer": "Instead of accumulating all past squared gradients, RMSProp uses exponential decay: s ← ρs + (1-ρ)∇θJ(θ)⊗∇θJ(θ). This prevents learning rate from decreasing too quickly"
+  },
+  {
+    "question": "What is Adam optimization and why is it popular?",
+    "answer": "Adam combines momentum and RMSProp: tracks exponentially decaying averages of both past gradients (first moment) and past squared gradients (second moment). Often works well with default hyperparameters"
+  },
+  {
+    "question": "What are the key hyperparameters in Adam?",
+    "answer": "β1 (momentum decay, typically 0.9), β2 (scaling decay, typically 0.999), η (learning rate, typically 0.001), and ε (smoothing term, typically 10⁻⁷)"
+  },
+  {
+    "question": "What is AdamW and why is it better than Adam with ℓ2 regularization?",
+    "answer": "AdamW properly combines Adam with weight decay. Unlike Adam + ℓ2 regularization, AdamW maintains the mathematical equivalence between weight decay and ℓ2 regularization that exists with SGD"
+  },
+  {
+    "question": "What is learning rate scheduling and why is it beneficial?",
+    "answer": "Changing the learning rate during training - typically starting high then reducing. Can reach better solutions faster than constant learning rate by making fast initial progress then fine-tuning"
+  },
+  {
+    "question": "What is 1cycle scheduling?",
+    "answer": "Start with low learning rate η0, increase linearly to η1 halfway through training, then decrease back to η0, finishing with several orders of magnitude lower. Often achieves 'super-convergence' - better results in fewer epochs"
+  },
+  {
+    "question": "What is dropout regularization and how does it work?",
+    "answer": "At each training step, every neuron (except output) has probability p of being 'dropped out' (ignored). Forces neurons to be useful independently and not co-adapt, creating a more robust network that generalizes better"
+  },
+  {
+    "question": "What is the technical detail about dropout scaling?",
+    "answer": "During training, remaining inputs must be divided by keep probability (1-p) to compensate for the fact that fewer neurons are active. After training, all neurons are active so no scaling is needed"
+  },
+  {
+    "question": "What is Monte Carlo (MC) Dropout?",
+    "answer": "Make multiple predictions with dropout enabled during inference, then average the results. Provides more reliable probability estimates and uncertainty measures without retraining the model"
+  },
+  {
+    "question": "What is max-norm regularization?",
+    "answer": "Constrains weights w of incoming connections to each neuron such that ∥w∥2 ≤ r. Implemented by rescaling weights after each training step if needed: w ← w⋅r/∥w∥2"
+  },
+  {
+    "question": "What is the recommended default configuration for most deep neural networks?",
+    "answer": "He initialization, ReLU (shallow) or Swish (deep) activation, batch normalization (if deep), early stopping + weight decay, Nesterov accelerated gradients or AdamW optimizer, performance scheduling or 1cycle"
+  },
+  {
+    "question": "What configuration should you use for self-normalizing networks?",
+    "answer": "LeCun initialization, SELU activation, no normalization (self-normalizes), alpha dropout if needed, Nesterov accelerated gradients, performance scheduling or 1cycle"
+  },
+  {
+    "question": "When should you use ℓ1 vs ℓ2 regularization in neural networks?",
+    "answer": "Use ℓ1 regularization when you want sparse models (many weights = 0). Use ℓ2 with SGD/momentum but NOT with Adam variants - use AdamW instead for weight decay with Adam"
+  },
+  {
+    "question": "What are the typical dropout rates for different network types?",
+    "answer": "20-30% for recurrent neural networks, 40-50% for convolutional neural networks. Many state-of-the-art architectures only use dropout after the last hidden layer"
+  }
+]

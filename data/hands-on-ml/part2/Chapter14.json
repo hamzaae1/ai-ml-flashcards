@@ -1,0 +1,170 @@
+[
+  {
+    "question": "What inspired the development of Convolutional Neural Networks (CNNs)?",
+    "answer": "CNNs emerged from the study of the brain's visual cortex, particularly research by David H. Hubel and Torsten Wiesel in the 1950s and 1960s who discovered that many neurons in the visual cortex have small local receptive fields and respond to specific patterns like horizontal or vertical lines."
+  },
+  {
+    "question": "Why can't we simply use fully connected layers for image recognition tasks?",
+    "answer": "For larger images, fully connected layers require a huge number of parameters. For example, a 100×100 pixel image with 1,000 neurons in the first layer would need 10 million connections just for the first layer. CNNs solve this using partially connected layers and weight sharing."
+  },
+  {
+    "question": "What are the key characteristics of convolutional layers?",
+    "answer": "Neurons in convolutional layers are not connected to every pixel, but only to pixels in their receptive fields. They use filters (kernels) that slide across the input, and neurons in the same feature map share the same parameters, dramatically reducing the number of parameters."
+  },
+  {
+    "question": "What is zero padding and why is it used?",
+    "answer": "Zero padding involves adding zeros around the input image. It's used so that a layer can have the same height and width as the previous layer, preventing the gradual shrinking of feature maps through the network."
+  },
+  {
+    "question": "What is stride in convolutional layers?",
+    "answer": "Stride is the horizontal or vertical step size from one receptive field to the next. A stride of 2 means the receptive fields are spaced 2 pixels apart, which dramatically reduces the computational complexity and output size."
+  },
+  {
+    "question": "What are filters (kernels) in CNNs and what do they detect?",
+    "answer": "Filters are small matrices (like 7×7) that represent a neuron's weights. For example, a vertical line filter detects vertical edges, while a horizontal line filter detects horizontal edges. During training, the CNN automatically learns useful filters for its task."
+  },
+  {
+    "question": "How do feature maps work in CNNs?",
+    "answer": "A feature map is the output when all neurons in a layer use the same filter. It highlights areas in the input that activate the filter the most. Multiple filters create multiple feature maps, allowing detection of different features simultaneously."
+  },
+  {
+    "question": "Why is weight sharing important in CNNs?",
+    "answer": "Weight sharing dramatically reduces the number of parameters and allows the CNN to recognize patterns anywhere in the input. Once a CNN learns to recognize a pattern in one location, it can recognize it in any other location."
+  },
+  {
+    "question": "What are the two padding options in Keras Conv2D layers?",
+    "answer": "\"valid\" padding means no padding at all - neurons' receptive fields must lie strictly within the input. \"same\" padding adds enough zeros so output feature maps have the same size as inputs (when stride=1)."
+  },
+  {
+    "question": "What is the purpose of pooling layers?",
+    "answer": "Pooling layers subsample the input to reduce computational load, memory usage, and number of parameters. They help limit overfitting and can introduce some translation invariance by aggregating nearby values."
+  },
+  {
+    "question": "How does max pooling work?",
+    "answer": "Max pooling takes the maximum value from each receptive field. For example, with a 2×2 kernel and stride 2, it outputs the highest value from each 2×2 region, reducing the output size to half the input size in each dimension."
+  },
+  {
+    "question": "What are the advantages and disadvantages of max pooling?",
+    "answer": "Advantages: reduces computation, provides translation invariance, preserves strongest features. Disadvantages: very destructive (a 2×2 kernel drops 75% of input values), may hurt tasks requiring spatial precision like semantic segmentation."
+  },
+  {
+    "question": "What is a typical CNN architecture structure?",
+    "answer": "A typical CNN stacks convolutional layers (each followed by ReLU), then a pooling layer, then more convolutional layers, another pooling layer, and so on. At the top, fully connected layers process the features, ending with a softmax output layer."
+  },
+  {
+    "question": "What was significant about LeNet-5?",
+    "answer": "LeNet-5, created by Yann LeCun in 1998, was widely used for handwritten digit recognition on MNIST. It established the basic CNN architecture pattern of alternating convolutional and pooling layers followed by fully connected layers."
+  },
+  {
+    "question": "What made AlexNet revolutionary in 2012?",
+    "answer": "AlexNet won the ILSVRC challenge with a 17% error rate vs 26% for the runner-up. It was much larger and deeper than LeNet-5, first to stack convolutional layers directly, used ReLU activation, dropout regularization, and data augmentation."
+  },
+  {
+    "question": "What is data augmentation and why is it useful?",
+    "answer": "Data augmentation artificially increases training set size by generating realistic variants of each training instance (shifting, rotating, resizing, flipping, changing lighting). It reduces overfitting and forces the model to be more tolerant to variations."
+  },
+  {
+    "question": "What are inception modules in GoogLeNet?",
+    "answer": "Inception modules apply multiple convolutional layers with different kernel sizes (1×1, 3×3, 5×5) in parallel to the same input, then concatenate the outputs. This captures patterns at different scales while using parameters efficiently."
+  },
+  {
+    "question": "What is the purpose of 1×1 convolutional layers?",
+    "answer": "1×1 layers serve three purposes: 1) capture patterns across channels, 2) act as bottleneck layers to reduce dimensionality and computational cost, 3) when paired with larger kernels, act like multi-layer networks sliding across the image."
+  },
+  {
+    "question": "What problem do skip connections in ResNet solve?",
+    "answer": "Skip connections help train very deep networks by allowing the signal to flow directly across layers. They force the network to learn residual functions f(x) = h(x) - x rather than h(x), which speeds training and helps with vanishing gradients."
+  },
+  {
+    "question": "How do skip connections help with the vanishing gradient problem?",
+    "answer": "Skip connections allow gradients to flow directly through the network without being repeatedly multiplied by small weights. Even if several layers haven't started learning, the network can still make progress through the skip connections."
+  },
+  {
+    "question": "What are depthwise separable convolutions in Xception?",
+    "answer": "Depthwise separable convolutions separate spatial and cross-channel pattern detection. First, one spatial filter is applied per input channel, then 1×1 convolutions look for cross-channel patterns. This uses fewer parameters and often performs better."
+  },
+  {
+    "question": "How do SE blocks in SENet work?",
+    "answer": "SE (Squeeze-and-Excitation) blocks analyze feature maps using global average pooling, compress to a low-dimensional representation via a bottleneck, then output recalibration weights. These weights rescale feature maps based on learned feature importance."
+  },
+  {
+    "question": "What is compound scaling in EfficientNet?",
+    "answer": "Compound scaling simultaneously increases depth (layers), width (filters), and resolution (input size) using the formula αᵠ, βᵠ, γᵠ where ϕ represents compute budget and α, β, γ are architecture-specific scaling factors with α + β² + γ² ≈ 2."
+  },
+  {
+    "question": "How do you convert a dense layer to a convolutional layer?",
+    "answer": "Use a convolutional layer where: number of filters equals number of dense units, filter size equals input feature map size, and use \"valid\" padding. This produces the same computations but can handle variable input sizes."
+  },
+  {
+    "question": "What are Fully Convolutional Networks (FCNs)?",
+    "answer": "FCNs replace dense layers with convolutional layers, allowing the network to process images of any size. They're used for tasks like object detection where you need to slide a classifier across the entire image efficiently."
+  },
+  {
+    "question": "How does the YOLO object detection approach work?",
+    "answer": "YOLO divides images into a grid and predicts bounding boxes and class probabilities for each cell. It outputs multiple bounding boxes per cell with objectness scores and uses a single forward pass, making it very fast."
+  },
+  {
+    "question": "What is non-max suppression in object detection?",
+    "answer": "Non-max suppression removes redundant bounding boxes by: 1) removing boxes with low objectness scores, 2) finding the box with highest score, 3) removing overlapping boxes (high IoU), 4) repeating until no more boxes remain."
+  },
+  {
+    "question": "What is the Intersection over Union (IoU) metric?",
+    "answer": "IoU measures bounding box accuracy as the area of overlap between predicted and target boxes divided by the area of their union. It's commonly used to evaluate object detection and localization performance."
+  },
+  {
+    "question": "What is semantic segmentation?",
+    "answer": "Semantic segmentation classifies each pixel in an image according to the object class it belongs to. The challenge is that CNNs lose spatial resolution through pooling and striding, making pixel-level classification difficult."
+  },
+  {
+    "question": "What are transposed convolutional layers used for?",
+    "answer": "Transposed convolutional layers upsample feature maps by stretching inputs (inserting zeros) then applying convolution. They're trainable alternatives to simple interpolation and are commonly used for semantic segmentation upsampling."
+  },
+  {
+    "question": "How do skip connections help in semantic segmentation?",
+    "answer": "Skip connections from lower layers help recover spatial resolution lost in pooling layers. For example, you can upsample by 2×, add a lower layer's output, upsample by 2× again, add another lower layer, then upsample by 8× for total 32× upsampling."
+  },
+  {
+    "question": "What is transfer learning in CNNs?",
+    "answer": "Transfer learning reuses lower layers of a pretrained model (like one trained on ImageNet) for new tasks. You typically freeze the pretrained weights initially, train the new top layers, then optionally unfreeze and fine-tune some lower layers with a lower learning rate."
+  },
+  {
+    "question": "What is the typical transfer learning process?",
+    "answer": "1) Load pretrained model without top layers, 2) Add new layers for your task, 3) Freeze pretrained layers, 4) Train new layers, 5) Optionally unfreeze some pretrained layers, 6) Fine-tune with lower learning rate."
+  },
+  {
+    "question": "What is classification vs localization?",
+    "answer": "Classification identifies what objects are in an image. Localization adds bounding box coordinates (center x,y and height,width) as regression outputs. This requires dual-task learning with classification and regression losses."
+  },
+  {
+    "question": "What is object tracking and how does DeepSORT work?",
+    "answer": "Object tracking follows objects across video frames. DeepSORT combines Kalman filters (predict movement), deep learning (measure appearance similarity), and the Hungarian algorithm (optimally assign detections to tracked objects)."
+  },
+  {
+    "question": "What is mean Average Precision (mAP)?",
+    "answer": "mAP computes average precision for each class (area under precision-recall curve), then averages across classes. For object detection, predictions are only considered correct if IoU > threshold (e.g., mAP@0.5) and class is correct."
+  },
+  {
+    "question": "What is instance segmentation?",
+    "answer": "Instance segmentation combines object detection with semantic segmentation - it identifies individual object instances and provides pixel-level masks for each. Unlike semantic segmentation, it distinguishes between different objects of the same class."
+  },
+  {
+    "question": "What are the key memory challenges in CNN training?",
+    "answer": "CNNs require huge amounts of RAM, especially during training when all intermediate values must be preserved for backpropagation. For example, a single convolutional layer might need 12MB per instance, or 1.2GB for a batch of 100."
+  },
+  {
+    "question": "What are some solutions when CNNs run out of GPU memory?",
+    "answer": "Reduce mini-batch size, use stride to reduce dimensionality, remove layers, use 16-bit instead of 32-bit floats, or distribute the CNN across multiple devices."
+  },
+  {
+    "question": "What is global average pooling and when is it used?",
+    "answer": "Global average pooling computes the mean of each entire feature map, outputting one number per feature map. It's very destructive but useful before output layers as it eliminates spatial information while dramatically reducing parameters."
+  },
+  {
+    "question": "What is depthwise max pooling?",
+    "answer": "Depthwise max pooling pools along the channel dimension instead of spatial dimensions. It can help CNNs learn invariance to features like rotation by learning multiple filters for the same pattern and taking the maximum response."
+  },
+  {
+    "question": "How do modern CNN architectures differ from early ones?",
+    "answer": "Modern CNNs are deeper, use smaller kernels (3×3 instead of large ones), employ skip connections, use batch normalization, have more efficient architectures like depthwise separable convolutions, and often include attention mechanisms."
+  }
+]

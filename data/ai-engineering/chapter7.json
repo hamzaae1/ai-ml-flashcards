@@ -1,0 +1,174 @@
+[
+  {
+    "question": "What is finetuning and how does it differ from prompt-based methods?",
+    "answer": "Finetuning is the process of adapting a model to a specific task by further training the whole model or part of the model, adjusting its weights. This differs from prompt-based methods (Chapters 5 and 6) which adapt a model by giving it instructions, context, and tools without changing the model's weights."
+  },
+  {
+    "question": "What is the main challenge that makes finetuning expensive and difficult at the scale of today's foundation models?",
+    "answer": "Memory requirements. At the scale of today's foundation models, naive finetuning often requires more memory than what's available on a single GPU, making it expensive and challenging to do. This is why reducing memory requirements is a primary motivation for many finetuning techniques."
+  },
+  {
+    "question": "What is transfer learning and how does it relate to finetuning?",
+    "answer": "Transfer learning is a concept introduced by Bozinovski and Fulgosi in 1976 that focuses on how to transfer knowledge gained from one task to accelerate learning for a new, related task. Finetuning is one way to do transfer learning - for LLMs, knowledge from pre-training on text completion is transferred to specialized tasks like legal question answering."
+  },
+  {
+    "question": "What is sample efficiency and why is it important in finetuning?",
+    "answer": "Sample efficiency means a model can learn the same behavior with fewer examples. Transfer learning improves sample efficiency - while training a model from scratch for legal question answering may need millions of examples, finetuning a good base model might only require a few hundred examples."
+  },
+  {
+    "question": "What is continued pre-training and when is it used?",
+    "answer": "Continued pre-training (also called self-supervised finetuning) is when you finetune a pre-trained model with self-supervision using cheap task-related data before finetuning with expensive task-specific data. For example, before finetuning on expensive annotated legal Q&A data, you first finetune on raw legal documents."
+  },
+  {
+    "question": "What are the two main types of finetuning discussed in Chapter 2?",
+    "answer": "Supervised finetuning and preference finetuning. Supervised finetuning uses high-quality annotated (input, output) pairs to refine the model to align with human usage. Preference finetuning uses reinforcement learning with comparative data in the format (instruction, winning response, losing response) to maximize human preference."
+  },
+  {
+    "question": "When should you consider finetuning over prompt-based methods?",
+    "answer": "Finetuning should be considered after extensive experiments with prompt-based methods have proven insufficient. It's generally attempted when prompt engineering cannot achieve the desired performance, especially for improving structured output formats, domain-specific capabilities, or when you need consistent behavior that prompting alone cannot provide."
+  },
+  {
+    "question": "What is the primary reason for finetuning?",
+    "answer": "The primary reason for finetuning is to improve a model's quality, in terms of both general capabilities and task-specific capabilities. Finetuning is commonly used to improve a model's ability to generate outputs following specific structures, such as JSON or YAML formats."
+  },
+  {
+    "question": "What did the comparison between BloombergGPT and GPT-4-0314 demonstrate about domain-specific models?",
+    "answer": "It demonstrated that general-purpose models can outperform domain-specific models in their own domains. GPT-4-0314 significantly outperformed BloombergGPT across various financial benchmarks, despite BloombergGPT being specifically trained for financial tasks at a cost of $1.3-2.6 million."
+  },
+  {
+    "question": "What is the key decision framework for choosing between finetuning and RAG?",
+    "answer": "The answer depends on whether your model's failures are information-based or behavior-based. If the model fails because it lacks information (factually wrong or outdated outputs), use RAG. If the model has behavioral issues (correct but irrelevant outputs, wrong format), use finetuning. In short: finetuning is for form, RAG is for facts."
+  },
+  {
+    "question": "What did Ovadia et al. (2024) find about RAG vs finetuning for current events?",
+    "answer": "For tasks requiring up-to-date information like current events, RAG outperformed finetuned models. Additionally, RAG with the base model outperformed RAG with finetuned models, indicating that finetuning can lead to performance decline in other areas."
+  },
+  {
+    "question": "What are the key contributors to a model's memory footprint during finetuning?",
+    "answer": "The key contributors are: 1) The model's number of parameters, 2) The number of trainable parameters, and 3) The numerical representations (bits per parameter). The more trainable parameters, the higher the memory footprint, which is why reducing trainable parameters is the motivation for PEFT."
+  },
+  {
+    "question": "What is the memory calculation formula for inference?",
+    "answer": "For inference: N × M × 1.2, where N is the model's parameter count, M is memory per parameter, and 1.2 accounts for activation values and key-value vectors (assumed to be 20% of model weights). For example, a 13B-parameter model with 2 bytes per parameter needs 13B × 2 × 1.2 = 31.2 GB."
+  },
+  {
+    "question": "How much additional memory does training require compared to inference?",
+    "answer": "Training requires significantly more memory: model weights + activations + gradients + optimizer states. Each trainable parameter needs additional memory for gradients (1 value) and optimizer states (0-2 values depending on optimizer). For example, Adam optimizer needs 3 values per trainable parameter."
+  },
+  {
+    "question": "What are the main numerical formats used in neural networks and their bit sizes?",
+    "answer": "FP32 (32 bits/4 bytes) - single precision, FP64 (64 bits/8 bytes) - double precision, FP16 (16 bits/2 bytes) - half precision, BF16 (16 bits) - designed for TPUs, TF32 (19 bits) - designed for GPUs, and integer formats like INT8 (8 bits) and INT4 (4 bits)."
+  },
+  {
+    "question": "What is quantization and how does it reduce memory footprint?",
+    "answer": "Quantization is converting a model from a format with more bits to fewer bits. It's a straightforward way to reduce memory footprint - a 10B-parameter model in 32-bit format requires 40 GB, but the same model in 16-bit format requires only 20 GB. It can also improve computation speed."
+  },
+  {
+    "question": "What is the difference between full finetuning and parameter-efficient finetuning (PEFT)?",
+    "answer": "Full finetuning updates all model parameters (trainable parameters = total parameters), requiring massive memory. PEFT achieves performance close to full finetuning while using several orders of magnitude fewer trainable parameters, making finetuning accessible on limited hardware."
+  },
+  {
+    "question": "What did Houlsby et al. (2019) discover about partial finetuning efficiency?",
+    "answer": "They found that partial finetuning is parameter-inefficient - with BERT large, you'd need to update approximately 25% of parameters to achieve performance comparable to full finetuning. This led to the development of PEFT techniques that can achieve similar performance with much fewer trainable parameters."
+  },
+  {
+    "question": "What are the two main categories of PEFT techniques?",
+    "answer": "1) Adapter-based methods: Add additional modules to the model weights (additive methods) like LoRA, BitFit, IA3. 2) Soft prompt-based methods: Modify how the model processes input by introducing special trainable tokens alongside input tokens, like prefix-tuning, P-Tuning, and prompt tuning."
+  },
+  {
+    "question": "How do soft prompts differ from hard prompts?",
+    "answer": "Hard prompts are human-readable discrete tokens like 'write' and 'code', are static and not trainable. Soft prompts are continuous vectors (like embeddings), are not human-readable, and can be optimized through backpropagation during tuning, allowing them to be adjusted for specific tasks."
+  },
+  {
+    "question": "What is LoRA and how does it work?",
+    "answer": "LoRA (Low-Rank Adaptation) decomposes a weight matrix W into the product of two smaller matrices A and B, then updates only A and B during finetuning while keeping W intact. The new weight matrix is W' = W + (α/r)W_AB, where r is the LoRA rank and α determines the contribution."
+  },
+  {
+    "question": "What is the key advantage of LoRA over earlier adapter methods?",
+    "answer": "Unlike earlier adapter methods that add extra layers and increase inference latency, LoRA incorporates additional parameters in a way that doesn't incur extra inference latency. The LoRA modules can be merged back into the original layers, maintaining the same computational structure."
+  },
+  {
+    "question": "Why does LoRA work despite using so few parameters?",
+    "answer": "LoRA works because LLMs have very low intrinsic dimensions despite having many parameters. Pre-training implicitly minimizes the model's intrinsic dimension, and larger models tend to have lower intrinsic dimensions after pre-training. This suggests pre-training acts as a compression framework for downstream tasks."
+  },
+  {
+    "question": "What weight matrices in transformer models are commonly targeted for LoRA application?",
+    "answer": "LoRA is most commonly applied to the four weight matrices in attention modules: query (Wq), key (Wk), value (Wv), and output projection (Wo) matrices. When finetuning GPT-3 175B, applying LoRA to all four matrices with rank=2 yielded the best performance."
+  },
+  {
+    "question": "What are the two ways to serve a LoRA-finetuned model?",
+    "answer": "1) Merge LoRA weights A and B into the original model W to create W' before serving (no extra latency, better for single model). 2) Keep W, A, and B separate during serving, merging during inference (adds latency but better for multi-LoRA serving with shared base model)."
+  },
+  {
+    "question": "What is QLoRA and how does it improve upon LoRA?",
+    "answer": "QLoRA (Quantized LoRA) stores the model's weights in 4 bits using NF4 format but dequantizes them to BF16 for forward/backward passes. It uses paged optimizers for CPU-GPU memory transfer. This allows a 65B-parameter model to be finetuned on a single 48GB GPU while maintaining competitive performance."
+  },
+  {
+    "question": "What is model merging and what value does it provide?",
+    "answer": "Model merging combines multiple models to create a single model that provides more value than using constituent models separately. Value can come from improved performance (combining models good at different aspects) or reduced memory footprint (one model doing multiple tasks instead of separate models)."
+  },
+  {
+    "question": "What are the three main approaches to model merging?",
+    "answer": "1) Summing: Adding weight values together (linear combination, SLERP). 2) Layer stacking: Taking different layers from different models and stacking them (passthrough/frankenmerging). 3) Concatenation: Combining parameters where merged component has sum of all constituent parameters."
+  },
+  {
+    "question": "What is task arithmetic and how does it work with task vectors?",
+    "answer": "Task vectors capture the essence of a task by subtracting the base model from a finetuned model. Task arithmetic allows adding task vectors to combine capabilities or subtracting them to reduce specific capabilities (like removing biases or invasive capabilities like facial recognition)."
+  },
+  {
+    "question": "What is SLERP and how does it differ from linear combination?",
+    "answer": "SLERP (Spherical Linear Interpolation) treats each component as a point on a sphere and merges by finding points along the shortest path between them on the sphere's surface. Unlike linear combination which can merge multiple vectors simultaneously, SLERP can only merge two vectors at a time."
+  },
+  {
+    "question": "What did TIES and DARE demonstrate about redundant parameters in model merging?",
+    "answer": "They showed that many parameters adjusted during finetuning are redundant and don't significantly contribute to performance. TIES and DARE first prune these redundant parameters from task vectors before merging, which significantly improves the quality of final merged models, especially when merging many models."
+  },
+  {
+    "question": "What is frankenmerging and what was the success story of Goliath-120B?",
+    "answer": "Frankenmerging (layer stacking) takes different layers from different models and stacks them together. Goliath-120B was created by taking 72 out of 80 layers from each of two finetuned Llama 2-70B models (Xwin and Euryale) and merging them together, creating a successful merged model."
+  },
+  {
+    "question": "How can layer stacking be used for model upscaling?",
+    "answer": "Model upscaling creates larger models using fewer resources. SOLAR 10.7B was created from a 7B model by: 1) Making a copy of the original model, 2) Merging by summing 16 layers and stacking the rest (32×2-16=48 layers), 3) Further training the upscaled model toward target performance."
+  },
+  {
+    "question": "What is the progression path for finetuning development according to OpenAI?",
+    "answer": "1) Test finetuning code using cheapest/fastest model to ensure code works, 2) Test data by finetuning a middling model (if training loss doesn't decrease, something's wrong), 3) Run experiments with best model to push performance, 4) Train all models to map price/performance frontier and select optimal model."
+  },
+  {
+    "question": "What is the distillation path for finetuning?",
+    "answer": "1) Start with small dataset and strongest affordable model to train the best possible model, 2) Use this finetuned model to generate more training data, 3) Use the new dataset to train a cheaper model. This leverages the strong base model's ability to learn from less data."
+  },
+  {
+    "question": "What are the key considerations when choosing between LoRA and full finetuning?",
+    "answer": "Consider data volume (full finetuning needs thousands+ examples, LoRA works with hundreds), performance requirements (full finetuning typically performs better), serving needs (LoRA enables efficient multi-model serving), and available compute resources (LoRA requires much less memory)."
+  },
+  {
+    "question": "What is gradient accumulation and why is it used in finetuning?",
+    "answer": "Gradient accumulation addresses the problem of small batch sizes due to memory constraints. Instead of updating model weights after each batch, gradients are accumulated across several batches and weights are updated once enough reliable gradients are accumulated, leading to more stable training."
+  },
+  {
+    "question": "What is prompt loss weight in instruction finetuning?",
+    "answer": "Prompt loss weight determines how much prompts contribute to the model's loss compared to responses during training. Since models only need to generate responses during inference, response tokens should contribute more to the loss. Typically set to 10%, meaning the model learns some from prompts but mostly from responses."
+  },
+  {
+    "question": "What are the key hyperparameters to consider when finetuning?",
+    "answer": "Learning rate (determines speed of parameter changes, typically 1e-7 to 1e-3), batch size (number of examples per update step, affects stability and memory), number of epochs (passes over training data), and prompt loss weight (for instruction finetuning, how much prompts vs responses contribute to loss)."
+  },
+  {
+    "question": "How can loss curves help determine appropriate learning rates?",
+    "answer": "If the loss curve fluctuates a lot, the learning rate is likely too big. If the loss curve is stable but takes a long time to decrease, the learning rate is likely too small. The goal is to increase the learning rate as high as possible while keeping the loss curve stable."
+  },
+  {
+    "question": "What are the signs of overfitting vs underfitting during finetuning?",
+    "answer": "If both training loss and validation loss steadily decrease, the model can benefit from more epochs and data. If training loss decreases but validation loss increases, the model is overfitting to training data and you should reduce the number of epochs."
+  },
+  {
+    "question": "What is the recommended workflow for adapting a model to a task?",
+    "answer": "1) Define evaluation criteria and pipeline, 2) Try prompting alone with best practices, 3) Add more examples to prompt (1-50), 4) If missing information, connect to data sources (RAG), 5) For behavioral issues try finetuning, for information issues try advanced RAG, 6) Combine both RAG and finetuning."
+  },
+  {
+    "question": "What makes finetuning more accessible today compared to early foundation model days?",
+    "answer": "The proliferation of high-quality open source models of all sizes tailored for various domains, along with mature finetuning frameworks (LLaMA-Factory, unsloth, PEFT, Axolotl, LitGPT) that support various PEFT methods with sensible defaults, making finetuning much more viable and attractive."
+  }
+]

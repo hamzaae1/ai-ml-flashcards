@@ -1,0 +1,166 @@
+[
+  {
+    "question": "What are text embeddings and why are they important in NLP?",
+    "answer": "Text embeddings are numerical representations of textual data created by embedding models. They convert unstructured text into vectors that can be easily processed, visualized, and used to create actionable results. They are foundational to many NLP applications including text generation, classification, semantic search, and giving memory to models like ChatGPT."
+  },
+  {
+    "question": "What does it mean for an embedding model to be 'accurate in representation'?",
+    "answer": "An accurate embedding model captures the semantic nature—the meaning—of documents. It ensures that vectors of documents with similar meanings are similar to one another, while embeddings of documents discussing entirely different topics are dissimilar. This allows the model to understand what documents are about."
+  },
+  {
+    "question": "How can embedding models be trained for different purposes beyond semantic similarity?",
+    "answer": "Embedding models can be fine-tuned for specific tasks like sentiment analysis. Instead of grouping documents by semantic similarity, they can be trained to cluster documents based on sentiment, where documents with similar emotional tone (positive/negative) are closer in vector space regardless of their semantic content."
+  },
+  {
+    "question": "What is contrastive learning in the context of embedding models?",
+    "answer": "Contrastive learning is a technique that trains embedding models by presenting examples of similar and dissimilar document pairs. The model learns to make similar documents closer in vector space while pushing dissimilar documents further apart. It's similar to the word2vec method and helps models learn what makes documents different or similar."
+  },
+  {
+    "question": "How does contrastive learning relate to contrastive explanation?",
+    "answer": "Contrastive learning mirrors contrastive explanation, where understanding comes from contrasts. Just as asking 'Why did you rob a bank (instead of obeying the law)?' provides better understanding than 'Why did you rob a bank?', showing a model similar and dissimilar pairs helps it learn the distinctive features that define concepts."
+  },
+  {
+    "question": "What is SBERT (Sentence-BERT) and what problem does it solve?",
+    "answer": "SBERT is a framework that fixes the computational overhead problem of using BERT for sentence embeddings. Traditional cross-encoders require n·(n−1)/2 computations for comparing sentence pairs, which becomes prohibitively expensive. SBERT uses a Siamese architecture with mean pooling to generate embeddings efficiently."
+  },
+  {
+    "question": "What is the difference between a cross-encoder and a bi-encoder (SBERT)?",
+    "answer": "A cross-encoder processes two sentences simultaneously and outputs a similarity score but doesn't generate embeddings. A bi-encoder (SBERT) processes sentences separately through identical models with shared weights, then uses pooling to create embeddings that can be compared using cosine similarity."
+  },
+  {
+    "question": "How does the SBERT training process work?",
+    "answer": "SBERT uses a Siamese architecture with two identical BERT models sharing the same weights. During training, embeddings from both sentences are concatenated with their difference, then optimized through a softmax classifier. The models learn to generate embeddings that reflect sentence similarity through contrastive learning."
+  },
+  {
+    "question": "What are Natural Language Inference (NLI) datasets and how are they used for embedding training?",
+    "answer": "NLI datasets contain premise-hypothesis pairs labeled as entailment, contradiction, or neutral. They're used for contrastive learning by treating entailments as positive examples (similar pairs) and contradictions as negative examples (dissimilar pairs), providing the similar/dissimilar pairs needed for training."
+  },
+  {
+    "question": "What is the MNLI dataset and how is it used in the chapter examples?",
+    "answer": "MNLI (Multi-Genre Natural Language Inference) is part of the GLUE benchmark, containing 392,702 sentence pairs annotated with entailment labels. The chapter uses a subset of 50,000 pairs to create training examples, where entailment=1 (similar) and neutral/contradiction=0 (dissimilar)."
+  },
+  {
+    "question": "What is cosine similarity loss and when is it most effective?",
+    "answer": "Cosine similarity loss calculates the cosine similarity between two text embeddings and compares it to a labeled similarity score (0-1). It works best with data containing sentence pairs and continuous similarity labels, teaching the model to recognize degrees of similarity rather than just binary similar/dissimilar classifications."
+  },
+  {
+    "question": "What is Multiple Negatives Ranking (MNR) loss and how does it work?",
+    "answer": "MNR loss uses positive pairs of sentences plus additional unrelated sentences as negatives. It constructs negative pairs by mixing positive pairs with other positive pairs (in-batch negatives). The model learns to distinguish between related and unrelated pairs using cross-entropy loss, treating it as a classification task."
+  },
+  {
+    "question": "What are the three types of negatives in contrastive learning?",
+    "answer": "1. Easy negatives: randomly sampled, completely unrelated documents. 2. Semi-hard negatives: found using cosine similarity on embeddings, somewhat related but not question/answer pairs. 3. Hard negatives: very similar to the question but wrong answers, often requiring manual labeling or generative models to create."
+  },
+  {
+    "question": "Why are hard negatives more effective than easy negatives in training?",
+    "answer": "Hard negatives make the embedding model's task more difficult by providing examples that are very related to the question but not the correct answer. This forces the model to learn more nuanced representations to distinguish between subtle differences, generally improving performance significantly."
+  },
+  {
+    "question": "What is supervised fine-tuning of embedding models?",
+    "answer": "Supervised fine-tuning involves taking a pretrained embedding model (like 'all-MiniLM-L6-v2') and training it further on your specific dataset using labeled examples. This is more efficient than training from scratch as it leverages existing knowledge while adapting to your domain or use case."
+  },
+  {
+    "question": "What is Augmented SBERT and what problem does it address?",
+    "answer": "Augmented SBERT addresses the problem of requiring massive amounts of training data (often billions of sentence pairs). It uses a small labeled dataset (gold) to train a cross-encoder, which then labels a larger unlabeled dataset (silver), creating enough data to train a bi-encoder effectively."
+  },
+  {
+    "question": "What are the four steps of the Augmented SBERT process?",
+    "answer": "1. Fine-tune a cross-encoder (BERT) on a small annotated gold dataset. 2. Create new sentence pairs. 3. Label the new pairs with the fine-tuned cross-encoder to create a silver dataset. 4. Train a bi-encoder (SBERT) on the combined gold + silver dataset."
+  },
+  {
+    "question": "What is the difference between gold and silver datasets in Augmented SBERT?",
+    "answer": "A gold dataset is small but fully annotated with ground truth labels. A silver dataset is larger and fully annotated but not necessarily ground truth, as it was generated through predictions of the cross-encoder rather than human annotation."
+  },
+  {
+    "question": "What is TSDAE and how does it enable unsupervised embedding training?",
+    "answer": "TSDAE (Transformer-based Sequential Denoising Auto-Encoder) adds noise to input sentences by removing words, then trains an encoder-decoder system to reconstruct the original sentence from the damaged version. The encoder learns to create meaningful embeddings without requiring any labeled data."
+  },
+  {
+    "question": "How does TSDAE work technically?",
+    "answer": "TSDAE randomly removes words from input sentences, passes the 'damaged' sentence through an encoder with pooling to create sentence embeddings, then uses a decoder to reconstruct the original sentence. The more accurate the embedding, the better the reconstruction, forcing the encoder to learn meaningful representations."
+  },
+  {
+    "question": "Why does TSDAE use [CLS] token pooling instead of mean pooling?",
+    "answer": "According to the TSDAE paper, [CLS] token pooling is more effective than mean pooling because mean pooling loses position information, while the [CLS] token preserves it. This positional information is important for the reconstruction task."
+  },
+  {
+    "question": "What is domain adaptation in the context of embedding models?",
+    "answer": "Domain adaptation aims to update existing embedding models to work effectively on a specific textual domain that contains different subjects or vocabulary from the source domain. It helps models generalize from one domain (in-domain) to another (out-domain/target domain)."
+  },
+  {
+    "question": "What is adaptive pretraining for domain adaptation?",
+    "answer": "Adaptive pretraining starts by pretraining on domain-specific corpus using unsupervised techniques like TSDAE or masked language modeling, then fine-tuning that model using training data that can be from either the target domain or outside domain. This two-step process adapts models to new domains effectively."
+  },
+  {
+    "question": "What is the Massive Text Embedding Benchmark (MTEB)?",
+    "answer": "MTEB is a unified evaluation framework for embedding models that spans 8 embedding tasks covering 58 datasets and 112 languages. It includes a public leaderboard comparing state-of-the-art embedding models across all tasks, providing comprehensive performance metrics including evaluation time."
+  },
+  {
+    "question": "What are the key parameters in SentenceTransformerTrainingArguments?",
+    "answer": "Key parameters include: num_train_epochs (training rounds), per_device_train_batch_size (samples per device during training), per_device_eval_batch_size (samples per device during evaluation), warmup_steps (learning rate warm-up period), and fp16 (mixed precision training for memory efficiency)."
+  },
+  {
+    "question": "Why do larger batch sizes work better with MNR loss?",
+    "answer": "Larger batch sizes make the task more difficult for MNR loss because the model needs to find the best matching sentence from a larger set of potential pairs. This increased difficulty forces the model to learn better representations, generally improving performance."
+  },
+  {
+    "question": "What is the relationship between word2vec and contrastive learning?",
+    "answer": "Word2vec is actually one of the earliest examples of contrastive learning in NLP. It learns word representations by treating words close to a target word in a sentence as positive pairs, while randomly sampled words that are not neighbors constitute negative pairs."
+  },
+  {
+    "question": "How do you convert NLI labels for cosine similarity loss training?",
+    "answer": "For cosine similarity loss, convert NLI labels to continuous values: entailment (0) becomes 1 (high similarity), while both neutral (1) and contradiction (2) become 0 (dissimilarity). This creates the 0-1 similarity scores that cosine similarity loss requires."
+  },
+  {
+    "question": "What was the performance progression shown in the chapter's experiments?",
+    "answer": "Starting from scratch with softmax loss achieved 0.59 Pearson cosine. Cosine similarity loss improved to 0.72. MNR loss reached 0.80. Fine-tuning a pretrained model achieved 0.85. Augmented SBERT with limited data achieved 0.71, and TSDAE (unsupervised) achieved 0.70."
+  },
+  {
+    "question": "What is the sentence-transformers framework?",
+    "answer": "Sentence-transformers is a popular framework that popularized contrastive learning in NLP. It provides tools for training and fine-tuning embedding models, offering various loss functions, evaluation methods, and supporting both supervised and unsupervised training approaches."
+  },
+  {
+    "question": "How does the training data size affect embedding model stability?",
+    "answer": "Smaller datasets make training or fine-tuning embedding models more unstable. The chapter notes that while they used 50,000 examples for illustration, larger datasets are preferred for more stable training, assuming the data quality remains high."
+  },
+  {
+    "question": "What is the DenoisingAutoEncoderDataset used for?",
+    "answer": "DenoisingAutoEncoderDataset is used in TSDAE training to automatically add noise to input sentences by randomly removing words. It creates pairs of damaged and original sentences that the model uses to learn meaningful representations through reconstruction."
+  },
+  {
+    "question": "Why is parameter tying used in TSDAE?",
+    "answer": "Parameter tying in TSDAE means the encoder's embedding layer and decoder's output layer share the same weights. Any updates to weights in one layer are reflected in the other, which helps the model learn more consistent representations during the reconstruction task."
+  },
+  {
+    "question": "What is the significance of in-batch negatives in MNR loss?",
+    "answer": "In-batch negatives are created by mixing positive pairs within the same training batch. While computationally efficient, they can be 'easy' negatives that are completely unrelated to the question, making the task too simple and potentially limiting model performance compared to hard negatives."
+  },
+  {
+    "question": "What evaluation metric is primarily used throughout the chapter?",
+    "answer": "The chapter primarily uses the Semantic Textual Similarity Benchmark (STSB) with Pearson cosine correlation as the main evaluation metric. This measures how well the model's similarity scores correlate with human-labeled sentence pair similarities (scaled 0-1)."
+  },
+  {
+    "question": "What are some alternative embedding model architectures mentioned?",
+    "answer": "The chapter mentions several alternatives: 'microsoft/mpnet-base' often gives good results as a word embedding model, 'all-MiniLM-L6-v2' performs well across many use cases and is fast due to its small size, and various loss functions like MarginMSE for cross-encoders."
+  },
+  {
+    "question": "What is the main advantage of bi-encoders over cross-encoders?",
+    "answer": "Bi-encoders are much faster and generate actual embeddings that can be stored and compared efficiently. Cross-encoders are more accurate but computationally expensive (requiring quadratic comparisons) and only output similarity scores rather than reusable embeddings."
+  },
+  {
+    "question": "How can you generate more training data when you have limited labeled examples?",
+    "answer": "You can randomly sample sentence pairs by taking premises from one row and hypotheses from another. For better quality, use a pretrained embedding model to find top-k similar sentences through semantic search, creating more meaningful pairs than random sampling."
+  },
+  {
+    "question": "What is the key insight behind using embedding models for semantic search?",
+    "answer": "Embedding models convert text to numerical vectors where semantic similarity is reflected by vector proximity. This allows for efficient similarity comparisons using mathematical operations like cosine similarity, enabling semantic search where meaning matters more than exact word matches."
+  },
+  {
+    "question": "What practical considerations are mentioned for training embedding models?",
+    "answer": "Key considerations include: restarting notebooks to clear VRAM between experiments, using appropriate batch sizes for different loss functions, enabling fp16 for memory efficiency, setting proper evaluation steps, and ensuring sufficient warmup steps for stable training."
+  },
+  {
+    "question": "What is the relationship between embedding quality and reconstruction accuracy in TSDAE?",
+    "answer": "In TSDAE, there's a direct relationship: the more accurate the sentence embedding captured by the encoder, the more accurately the decoder can reconstruct the original sentence from the damaged input. This forces the encoder to learn meaningful, information-rich representations."
+  }
+]

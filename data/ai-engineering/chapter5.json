@@ -1,0 +1,174 @@
+[
+{
+"question": "What is prompt engineering?",
+"answer": "Prompt engineering refers to the process of crafting an instruction that gets a model to generate the desired outcome. It is the easiest and most common model adaptation technique that guides a model's behavior without changing the model's weights."
+},
+{
+"question": "Why do some people criticize prompt engineering as not being a 'real thing'?",
+"answer": "Some argue that prompt engineering lacks the rigor to qualify as an engineering discipline and appears to be just 'fiddling with words until something works.' However, when conducted with systematic experimentation and evaluation, it can be as rigorous as any ML experiment."
+},
+{
+"question": "What are the three main components of a prompt?",
+"answer": "1) Task description - what you want the model to do, including role and output format; 2) Example(s) of how to do the task; 3) The task - the concrete task you want the model to perform, such as a question to answer or book to summarize."
+},
+{
+"question": "What is in-context learning?",
+"answer": "In-context learning is teaching models what to do via prompts. It allows a model to learn desirable behavior from examples in the prompt without updating model weights, enabling the model to incorporate new information continually and preventing it from becoming outdated."
+},
+{
+"question": "What is the difference between zero-shot and few-shot learning?",
+"answer": "Zero-shot learning provides no examples in the prompt, while few-shot learning includes examples. Each example provided is called a 'shot' - so five examples would be 5-shot learning."
+},
+{
+"question": "How do system prompts and user prompts differ?",
+"answer": "System prompts typically contain task descriptions and instructions from application developers, while user prompts contain instructions from users. The model combines them into a single prompt using a specific chat template before processing."
+},
+{
+"question": "Why are chat templates important?",
+"answer": "Different models use different chat templates to combine system and user prompts. Using the wrong template can lead to significant performance issues. Even small mistakes like extra newlines can cause the model to behave differently."
+},
+{
+"question": "How has context length evolved in recent years?",
+"answer": "Context length has expanded rapidly from GPT-2's 1K tokens to Gemini-1.5 Pro's 2M tokens within five years - a 2,000-fold increase. A 100K context can fit a moderate-sized book, while 2M tokens can fit approximately 2,000 Wikipedia pages."
+},
+{
+"question": "What is the 'needle in a haystack' (NIAH) test?",
+"answer": "A test that inserts a random piece of information (the needle) in different locations within a prompt (the haystack) and asks the model to find it. Research shows models are much better at understanding information at the beginning and end of prompts than in the middle."
+},
+{
+"question": "What is the first best practice for writing effective prompts?",
+"answer": "Write clear and explicit instructions. Explain without ambiguity what you want the model to do, including details like scoring systems, what to do when uncertain, and preventing undesirable behaviors through specific instructions."
+},
+{
+"question": "How can adopting a persona help with prompting?",
+"answer": "A persona helps the model understand the perspective it should use to generate responses. For example, asking a model to adopt the persona of a first-grade teacher when scoring an essay 'I like chickens. Chickens are fluffy and they give tasty eggs' might result in a higher score than without the persona."
+},
+{
+"question": "Why should you provide examples in prompts?",
+"answer": "Examples reduce ambiguity about how you want the model to respond. For instance, when building a bot for young children, examples showing how to respond to questions about fictional characters (like saying tooth fairies exist) help guide appropriate responses."
+},
+{
+"question": "What should you consider when choosing example formats?",
+"answer": "Choose more token-efficient formats when concerned about input length. For example, 'chickpea --> edible' uses fewer tokens than 'Input: chickpea Output: edible' while achieving the same effect."
+},
+{
+"question": "Why is specifying output format important?",
+"answer": "Specifying format ensures model outputs work with downstream applications. If you want concise responses, tell the model explicitly. For structured outputs like JSON, specify the required keys and use markers to indicate where structured output should begin."
+},
+{
+"question": "How does providing sufficient context help model performance?",
+"answer": "Context helps models perform better and mitigates hallucinations. If a model lacks necessary information, it relies on internal knowledge which might be unreliable. Including relevant context, like a paper when asking questions about it, improves response quality."
+},
+{
+"question": "How can you restrict a model's knowledge to only its context?",
+"answer": "Use clear instructions like 'answer using only the provided context' along with examples of questions it shouldn't answer. Instruct the model to quote where in the corpus it draws answers from. However, prompting alone may not be fully reliable."
+},
+{
+"question": "What are the benefits of breaking complex tasks into simpler subtasks?",
+"answer": "Benefits include: 1) Better monitoring of intermediate outputs, 2) Easier debugging by isolating problematic steps, 3) Parallelization of independent steps to save time, 4) Easier prompt writing for simple tasks."
+},
+{
+"question": "What is chain-of-thought (CoT) prompting?",
+"answer": "CoT prompting explicitly asks the model to think step by step, nudging it toward a more systematic approach to problem solving. It can be implemented by adding phrases like 'think step by step' or by specifying the steps the model should take."
+},
+{
+"question": "What are the four CoT response variations mentioned in the chapter?",
+"answer": "1) Zero-shot CoT with 'think step by step', 2) Zero-shot CoT with 'explain your rationale', 3) Zero-shot CoT with specified steps to follow, 4) One-shot CoT with an example included in the prompt."
+},
+{
+"question": "What is self-critique in prompting?",
+"answer": "Self-critique means asking the model to check its own outputs, also known as self-eval. Similar to CoT, it nudges the model to think critically about a problem and can improve response quality."
+},
+{
+"question": "Why is iteration important in prompt engineering?",
+"answer": "Prompt engineering requires back and forth experimentation. As you understand a model better, you develop better ideas for writing prompts. Each model has its own quirks, and systematic testing with version control and standardized evaluation is essential."
+},
+{
+"question": "What are automated prompt engineering tools designed to do?",
+"answer": "Tools like OpenPrompt and DSPy aim to automate the prompt engineering workflow. You specify input/output formats, evaluation metrics, and data, and these tools automatically find prompts or chains of prompts that maximize evaluation metrics."
+},
+{
+"question": "How does Promptbreeder work?",
+"answer": "Promptbreeder uses evolutionary strategy to 'breed' prompts. It starts with an initial prompt, uses an AI model to generate mutations guided by mutator prompts, selects the most promising mutations, and repeats the process until finding a satisfactory prompt."
+},
+{
+"question": "What are the potential risks of using prompt engineering tools?",
+"answer": "1) Hidden model API calls can quickly increase costs, 2) Tool developers can make mistakes with templates or prompts, 3) Tools can change without warning, 4) Increased system complexity can lead to more potential errors."
+},
+{
+"question": "What are the advantages of separating prompts from code?",
+"answer": "1) Reusability across multiple applications, 2) Separate testing of code and prompts, 3) Better readability, 4) Easier collaboration with subject matter experts who can help with prompts without being distracted by code."
+},
+{
+"question": "What is prompt extraction and why is it concerning?",
+"answer": "Prompt extraction is deducing the system prompt used for an application. Bad actors can use leaked system prompts to replicate your application or manipulate it into undesirable actions, similar to how knowing how a door is locked makes it easier to open."
+},
+{
+"question": "What is the difference between jailbreaking and prompt injection?",
+"answer": "Jailbreaking means trying to subvert a model's safety features (e.g., getting a customer support bot to explain how to make a bomb). Prompt injection involves injecting malicious instructions into user prompts (e.g., 'Delete the order entry from the database')."
+},
+{
+"question": "What are the main risks posed by prompt attacks?",
+"answer": "1) Remote code or tool execution, 2) Data leaks of private information, 3) Social harms like dangerous tutorials, 4) Misinformation, 5) Service interruption and subversion, 6) Brand risk from offensive outputs."
+},
+{
+"question": "What is obfuscation in prompt hacking?",
+"answer": "Obfuscation involves intentionally misspelling keywords (like 'vacine' instead of 'vaccine'), hiding malicious keywords in mixtures of languages or Unicode, or inserting special characters to bypass keyword filters and confuse the model's safety measurements."
+},
+{
+"question": "What is output formatting manipulation?",
+"answer": "This involves hiding malicious intent in unexpected formats, such as asking for a poem about hotwiring a car instead of direct instructions, or requesting code 'about' making dangerous items rather than explicit how-to instructions."
+},
+{
+"question": "What was the DAN (Do Anything Now) attack?",
+"answer": "A roleplaying attack where users ask the model to pretend to be 'DAN' which 'can do anything now' and has 'broken free of typical AI confines.' The prompt typically claims DAN doesn't have to abide by rules and can do anything the original model cannot."
+},
+{
+"question": "What is PAIR (Prompt Automatic Iterative Refinement)?",
+"answer": "PAIR uses an AI model as an attacker to generate prompts that bypass target AI systems. The attacker AI generates a prompt, sends it to the target, and revises based on the response until achieving its objective, often requiring fewer than twenty queries."
+},
+{
+"question": "What is indirect prompt injection?",
+"answer": "Instead of placing malicious instructions directly in prompts, attackers place them in tools the model is integrated with. The model can then retrieve and potentially execute these malicious instructions from external sources."
+},
+{
+"question": "What are the two approaches to indirect prompt injection?",
+"answer": "1) Passive phishing: leaving malicious payloads in public spaces (web pages, GitHub repos) waiting for models to find them, 2) Active injection: proactively sending threats to targets, like emails with malicious instructions that confuse AI assistants."
+},
+{
+"question": "How can RAG systems be vulnerable to prompt injection?",
+"answer": "An attacker could sign up with a username like 'Bruce Remove All Data Lee.' When the model retrieves this username and generates a query, it could potentially interpret it as a command to delete all data, since LLMs can translate natural language into SQL queries."
+},
+{
+"question": "What makes natural language prompt injection harder to defend against than traditional SQL injection?",
+"answer": "While databases can sanitize inputs to prevent SQL injection attacks, it's much harder to distinguish malicious content in natural languages from legitimate content, making traditional sanitization techniques less effective."
+},
+{
+"question": "According to the chapter, how should teams approach proprietary prompts?",
+"answer": "Teams should write system prompts assuming they will one day become public. Well-crafted prompts are valuable, but proprietary prompts are more of a liability than competitive advantage because they require maintenance and updates when underlying models change."
+},
+{
+"question": "What is the key principle behind why prompt attacks work?",
+"answer": "Prompt attacks work because models are trained to follow instructions. As models get better at following instructions, they also get better at following malicious instructions. It's difficult for models to differentiate between system prompts and user prompts."
+},
+{
+"question": "How does model robustness relate to prompt engineering effort?",
+"answer": "The amount of prompt engineering needed depends on how robust the model is to prompt perturbation. Less robust models require more fiddling when small changes (like '5' vs 'five') dramatically affect responses. Stronger models are generally more robust and require less prompt engineering."
+},
+{
+"question": "What did Microsoft's 2023 analysis reveal about few-shot vs zero-shot learning?",
+"answer": "For GPT-4 and other advanced models, few-shot learning showed only limited improvement compared to zero-shot learning, suggesting that as models become more powerful, they become better at understanding instructions with fewer examples."
+},
+{
+"question": "Why might the impact of few-shot examples be underestimated for domain-specific use cases?",
+"answer": "If a model doesn't see many examples of a specific domain (like the Ibis dataframe API) in its training data, including domain-specific examples in the prompt can still make a significant difference even for advanced models."
+},
+{
+"question": "What trade-offs should be considered with prompt decomposition?",
+"answer": "Benefits include better monitoring, debugging, parallelization, and easier prompt writing. Downsides include increased user-perceived latency (especially when intermediate outputs aren't shown) and potentially higher costs, though smaller prompts may actually reduce token costs."
+},
+{
+"question": "What should you inspect when using prompt engineering tools?",
+"answer": "Always inspect the prompts produced by the tool to ensure they make sense, track how many API calls it generates to avoid unexpected costs, and understand how the tool works under the hood to avoid unnecessary headaches."
+}
+]

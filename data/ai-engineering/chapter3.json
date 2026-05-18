@@ -1,0 +1,174 @@
+[
+{
+"question": "According to Greg Brockman's 2023 tweet, what are surprisingly often all you need for AI development?",
+"answer": "Evals (evaluations)"
+},
+{
+"question": "What is the biggest hurdle teams face when bringing AI applications to reality?",
+"answer": "Evaluation - figuring out how to evaluate AI systems can take up the majority of the development effort"
+},
+{
+"question": "What are the four main reasons why evaluating foundation models is more challenging than traditional ML models?",
+"answer": "1) The more intelligent AI models become, the harder they are to evaluate; 2) Open-ended nature undermines traditional ground truth evaluation; 3) Most foundation models are treated as black boxes; 4) Publicly available evaluation benchmarks become saturated quickly"
+},
+{
+"question": "What happened to the GLUE benchmark after it was released in 2018?",
+"answer": "It became saturated in just one year, necessitating the introduction of SuperGLUE in 2019"
+},
+{
+"question": "How did the number of LLM evaluation papers change in the first half of 2023?",
+"answer": "They grew exponentially from 2 papers per month to almost 35 papers per month"
+},
+{
+"question": "What is perplexity and how does it relate to entropy?",
+"answer": "Perplexity is the exponential of entropy and cross entropy. It measures the amount of uncertainty a model has when predicting the next token - higher uncertainty means there are more possible options for the next token"
+},
+{
+"question": "What does a language model's cross entropy on a dataset measure?",
+"answer": "How difficult it is for the language model to predict what comes next in the dataset"
+},
+{
+"question": "What are the two qualities that determine a model's cross entropy on training data?",
+"answer": "1) The training data's predictability (measured by entropy); 2) How the distribution captured by the language model diverges from the true distribution of the training data"
+},
+{
+"question": "What are bits-per-character (BPC) and bits-per-byte (BPB)?",
+"answer": "Variations of cross entropy that standardize comparison across models with different tokenization methods. BPC is the number of bits needed per character, while BPB is the number of bits needed per byte of original training data"
+},
+{
+"question": "What are three general rules about perplexity values?",
+"answer": "1) More structured data gives lower expected perplexity; 2) The bigger the vocabulary, the higher the perplexity; 3) The longer the context length, the lower the perplexity"
+},
+{
+"question": "How can perplexity be used to detect data contamination?",
+"answer": "If a model's perplexity on a benchmark's data is low, this benchmark was likely included in the model's training data, making the model's performance on this benchmark less trustworthy"
+},
+{
+"question": "What is functional correctness evaluation?",
+"answer": "Evaluating a system based on whether it performs the intended functionality - for example, checking if generated code executes correctly and produces expected outputs"
+},
+{
+"question": "What is the pass@k metric used in code generation evaluation?",
+"answer": "The fraction of problems solved when k code samples are generated per problem. A model solves a problem if any of the k samples pass all test cases"
+},
+{
+"question": "What are the four ways to measure similarity between two open-ended texts?",
+"answer": "1) Asking an evaluator to judge if two texts are the same; 2) Exact match; 3) Lexical similarity; 4) Semantic similarity"
+},
+{
+"question": "What is the main limitation of exact match evaluation?",
+"answer": "It rarely works beyond simple tasks because there are multiple possible correct responses for most inputs, and it's impossible to create an exhaustive set of all possible correct responses"
+},
+{
+"question": "What does lexical similarity measure and what are its common metrics?",
+"answer": "Lexical similarity measures how much two texts overlap in terms of tokens. Common metrics include BLEU, ROUGE, METEOR++, TER, and CIDEr"
+},
+{
+"question": "What is the difference between lexical similarity and semantic similarity?",
+"answer": "Lexical similarity measures whether two texts look similar, while semantic similarity measures whether they have the same meaning. For example, 'What's up?' and 'How are you?' are lexically different but semantically similar"
+},
+{
+"question": "What is an embedding and what are typical embedding sizes?",
+"answer": "An embedding is a numerical vector representation that aims to capture the meaning of original data. Typical embedding sizes range from 100 to 10,000 elements"
+},
+{
+"question": "What is CLIP and what makes it significant?",
+"answer": "CLIP is one of the first major models that could map data of different modalities (text and images) into a joint embedding space, enabling cross-modal comparisons and text-based image search"
+},
+{
+"question": "What is AI as a judge and when did it become practical?",
+"answer": "AI as a judge is the approach of using AI to evaluate AI responses. It became practical around 2020 with the release of GPT-3, when AI models became capable enough to make reliable judgments"
+},
+{
+"question": "What percentage of evaluations on LangChain's platform in 2023 were done by AI judges?",
+"answer": "58%"
+},
+{
+"question": "What are the main advantages of AI as a judge?",
+"answer": "AI judges are fast, easy to use, relatively cheap compared to human evaluators, can work without reference data, and can evaluate based on any criteria while providing explanations for their decisions"
+},
+{
+"question": "What agreement rate did GPT-4 achieve with humans on MT-Bench evaluation?",
+"answer": "85%, which was higher than the agreement among humans (81%)"
+},
+{
+"question": "What are the three main ways to use AI as a judge?",
+"answer": "1) Evaluate the quality of a response by itself; 2) Compare a generated response to a reference response; 3) Compare two generated responses to determine which is better"
+},
+{
+"question": "What scoring systems work best for AI judges?",
+"answer": "Language models work better with text than numbers. Classification works better than numerical scoring, and discrete scoring (1-5) works better than continuous scoring"
+},
+{
+"question": "What are the main limitations of AI as a judge?",
+"answer": "Inconsistency (probabilistic nature), criteria ambiguity (non-standardized metrics), increased costs and latency, and various biases"
+},
+{
+"question": "What is self-bias in AI judges?",
+"answer": "A model favoring its own responses over responses generated by other models. GPT-4 shows a 10% higher win rate for itself, while Claude-v1 shows a 25% higher win rate"
+},
+{
+"question": "What are position bias and verbosity bias in AI judges?",
+"answer": "Position bias: AI judges may favor the first answer in comparisons. Verbosity bias: AI judges favor lengthier answers regardless of quality, sometimes preferring longer responses with errors over shorter correct ones"
+},
+{
+"question": "What are the three types of specialized AI judges mentioned?",
+"answer": "1) Reward models (score prompt-response pairs); 2) Reference-based judges (evaluate against reference responses); 3) Preference models (predict which of two responses users prefer)"
+},
+{
+"question": "What is self-evaluation or self-critique in AI judgment?",
+"answer": "Using a model to judge itself. While it may seem like cheating due to self-bias, it can be useful for sanity checks and can nudge models to revise and improve their responses"
+},
+{
+"question": "What is comparative evaluation and how does it differ from pointwise evaluation?",
+"answer": "Comparative evaluation evaluates models against each other to compute rankings from comparison results, while pointwise evaluation evaluates each model independently then ranks by scores"
+},
+{
+"question": "When was comparative evaluation first used in AI and by whom?",
+"answer": "It was first used in 2021 by Anthropic to rank different models, and it also powers the popular LMSYS Chatbot Arena leaderboard"
+},
+{
+"question": "What is a key limitation when using preference-based voting for model comparison?",
+"answer": "Not all questions should be answered by preference - many should be answered by correctness instead. Preference voting only works if voters are knowledgeable in the subject"
+},
+{
+"question": "What rating algorithms are commonly used for comparative evaluation?",
+"answer": "Algorithms adapted from sports and gaming, such as Elo, Bradley-Terry, and TrueSkill. LMSYS Chatbot Arena switched from Elo to Bradley-Terry because Elo was sensitive to the order of evaluators and prompts"
+},
+{
+"question": "What is the scalability bottleneck of comparative evaluation?",
+"answer": "It's data-intensive - the number of model pairs to compare grows quadratically with the number of models. For 57 models, there are 1,596 possible pairs requiring many comparisons"
+},
+{
+"question": "What quality control challenges exist with crowdsourced comparative evaluation?",
+"answer": "Lack of standardization (anyone can use any prompt), no quality control over evaluators, potential for gaming, and simple prompts that don't differentiate model performance well"
+},
+{
+"question": "What was notable about the simple prompts in LMSYS Chatbot Arena's 2023 data?",
+"answer": "Among 33,000 prompts, 180 were just 'hello' and 'hi' (0.55% of data), and the brainteaser 'X has 3 sisters, each has a brother. How many brothers does X have?' was asked 44 times"
+},
+{
+"question": "What is a key limitation when converting comparative evaluation results to absolute performance?",
+"answer": "Comparative evaluation tells you which model is better but not how good a model is or whether it's good enough for your use case. A 1% change in win rate can mean vastly different performance improvements across applications"
+},
+{
+"question": "What are the main benefits of comparative evaluation despite its limitations?",
+"answer": "It's easier to compare outputs than score them individually, captures human preference, never gets saturated like benchmarks, is hard to game, and provides discriminating signals about models"
+},
+{
+"question": "What is the main difference between exact evaluation and subjective evaluation?",
+"answer": "Exact evaluation produces judgment without ambiguity (like multiple choice answers), while subjective evaluation depends on who does the evaluation (like essay grading or AI as a judge)"
+},
+{
+"question": "Why should you not trust an AI judge if you can't see the model and prompt?",
+"answer": "AI judges are systems that include both a model and a prompt. Changes to either component result in a different judge, and without transparency, you can't determine if evaluation changes are due to your application or changes in the judge"
+},
+{
+"question": "What approach does Scale use to address standardization issues in comparative evaluation?",
+"answer": "They use only evaluators they can trust - training evaluators on criteria for comparing responses and teaching them to use practical prompts and sophisticated prompting techniques, though this is expensive"
+},
+{
+"question": "According to the chapter, what is the relationship between investment in evaluation versus other AI engineering areas?",
+"answer": "Investment in evaluation lags significantly behind other areas - there are fewer tools for evaluation compared to modeling, training, and AI orchestration, leading to inadequate infrastructure for systematic evaluation"
+}
+]

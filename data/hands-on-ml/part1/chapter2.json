@@ -1,0 +1,170 @@
+[
+{
+"question": "What are the 8 main steps of a machine learning project?",
+"answer": "1. Look at the big picture, 2. Get the data, 3. Explore and visualize the data to gain insights, 4. Prepare the data for machine learning algorithms, 5. Select a model and train it, 6. Fine-tune your model, 7. Present your solution, 8. Launch, monitor, and maintain your system."
+},
+{
+"question": "What is the California Housing Prices dataset and what does it contain?",
+"answer": "A dataset based on data from the 1990 California census containing metrics such as population, median income, and median housing price for each block group in California. Block groups are the smallest geographical unit for which the US Census Bureau publishes sample data (typically 600 to 3,000 people)."
+},
+{
+"question": "What type of machine learning problem is the housing price prediction task?",
+"answer": "It's a supervised learning task (has labeled examples), a regression task (predicting a value), specifically a multiple regression problem (uses multiple features) and a univariate regression problem (predicts a single value per district). It uses batch learning since there's no continuous flow of data."
+},
+{
+"question": "What is RMSE and how is it calculated?",
+"answer": "Root Mean Square Error (RMSE) is a typical performance measure for regression problems. It gives an idea of how much error the system typically makes in its predictions, with higher weight given to large errors. Formula: RMSE(X,h) = √(1/m × Σ(h(x^(i)) - y^(i))^2)"
+},
+{
+"question": "What is MAE and when might you prefer it over RMSE?",
+"answer": "Mean Absolute Error (MAE) is the average absolute deviation. Formula: MAE(X,h) = 1/m × Σ|h(x^(i)) - y^(i)|. You might prefer MAE when there are many outlier districts, as RMSE is more sensitive to outliers than MAE."
+},
+{
+"question": "Why is it important to create a test set early in the process?",
+"answer": "Your brain is prone to overfitting - if you look at the test set, you may stumble upon seemingly interesting patterns that lead you to select a particular model. When you estimate generalization error using the test set, your estimate will be too optimistic, and you'll launch a system that won't perform as well as expected. This is called data snooping bias."
+},
+{
+"question": "What is stratified sampling and why is it important?",
+"answer": "Stratified sampling divides the population into homogeneous subgroups called strata, and samples the right number of instances from each stratum to guarantee the test set is representative of the overall population. This is important when you want to ensure your test set represents various categories (e.g., income levels) in the same proportions as the overall dataset."
+},
+{
+"question": "What insights can you gain from creating histograms of numerical attributes?",
+"answer": "Histograms reveal: 1) Scale differences between attributes (e.g., median income vs total rooms), 2) Capped attributes that may be problematic for your target, 3) Skewed distributions that may need transformation, 4) The general shape and spread of your data distributions."
+},
+{
+"question": "What does a correlation coefficient tell you and what are its limitations?",
+"answer": "The correlation coefficient ranges from -1 to 1. Close to 1 means strong positive correlation, close to -1 means strong negative correlation, close to 0 means no linear correlation. Limitation: it only measures linear correlations and may completely miss nonlinear relationships."
+},
+{
+"question": "Why should you experiment with attribute combinations?",
+"answer": "Raw attributes may not be as useful as combinations. For example, total rooms isn't very useful without knowing the number of households - what you really want is rooms per household. The chapter shows that bedrooms_ratio, rooms_per_house, and people_per_house were more correlated with median house value than the original attributes."
+},
+{
+"question": "What are the three options for handling missing features in machine learning?",
+"answer": "1. Get rid of the corresponding instances (districts), 2. Get rid of the whole attribute, 3. Set the missing values to some value (zero, mean, median, etc.) - this is called imputation. Option 3 is often preferred as it's the least destructive."
+},
+{
+"question": "What is SimpleImputer and what are its advantages over manual imputation?",
+"answer": "SimpleImputer is a Scikit-Learn class that stores the computed median (or mean/most frequent) value of each feature, making it possible to impute missing values not only on the training set, but also on validation set, test set, and any new data fed to the model."
+},
+{
+"question": "What is the difference between ordinal encoding and one-hot encoding?",
+"answer": "Ordinal encoding converts categories to numbers (0,1,2,3...) but ML algorithms assume nearby values are more similar. One-hot encoding creates one binary attribute per category where only one attribute equals 1 (hot) while others are 0 (cold). One-hot encoding is better when categories don't have a natural order."
+},
+{
+"question": "What are the two common approaches to feature scaling?",
+"answer": "1. Min-max scaling (normalization): values are shifted and rescaled to range from 0 to 1 by subtracting min and dividing by (max-min). 2. Standardization: subtracts mean value then divides by standard deviation, resulting in zero mean and unit standard deviation. Standardization is less affected by outliers."
+},
+{
+"question": "When should you transform features before scaling them?",
+"answer": "When features have heavy-tailed distributions, both min-max scaling and standardization will squash most values into a small range. First transform the feature to shrink the heavy tail (e.g., compute square root or logarithm for positive features with right-heavy tails) to make the distribution more symmetrical before scaling."
+},
+{
+"question": "What is the difference between FunctionTransformer and creating a custom transformer class?",
+"answer": "FunctionTransformer is for transformations that don't require training - you just provide a function that transforms NumPy arrays. For trainable transformers that need to learn parameters in fit() and use them in transform(), you need to create a custom class with fit(), transform(), and fit_transform() methods."
+},
+{
+"question": "What are the main design principles of Scikit-Learn's API?",
+"answer": "Consistency (all objects share consistent interface), Nonproliferation of classes (uses NumPy arrays/SciPy matrices, not custom classes), Composition (reuses existing building blocks), Sensible defaults (reasonable default values for most parameters). Key concepts: Estimators (fit()), Transformers (transform()), Predictors (predict())."
+},
+{
+"question": "What is a Pipeline and why is it useful?",
+"answer": "A Pipeline is a sequence of transformations followed by a final estimator. It's useful because: 1) You can reproduce transformations easily on any dataset, 2) You build a reusable library of transformation functions, 3) You can use it in live systems, 4) You can easily try various transformation combinations."
+},
+{
+"question": "What is ColumnTransformer and when do you use it?",
+"answer": "ColumnTransformer applies different transformations to different columns (e.g., numerical vs categorical attributes). It takes a list of triplets (name, transformer, column list) and applies each transformer to its specified columns, then concatenates the results horizontally."
+},
+{
+"question": "What happened when you trained a LinearRegression model on the housing data?",
+"answer": "The linear regression model achieved an RMSE of about 68,628, which is not very satisfying since most district values range between $120,000 and $265,000. This is an example of underfitting - the model is not powerful enough to capture the underlying patterns in the data."
+},
+{
+"question": "What happened when you trained a DecisionTreeRegressor on the training set?",
+"answer": "The decision tree achieved 0.0 error on the training set, which indicates severe overfitting rather than a perfect model. The model memorized the training data but failed to generalize - this was confirmed by cross-validation showing RMSE around 66,868."
+},
+{
+"question": "What is k-fold cross-validation and why is it better than a single validation set?",
+"answer": "K-fold cross-validation randomly splits the training set into k nonoverlapping subsets (folds), then trains and evaluates the model k times, using a different fold for evaluation each time. It gives you not only performance estimate but also measure of precision (standard deviation). However, it costs k times more training time."
+},
+{
+"question": "How did RandomForestRegressor perform compared to other models?",
+"answer": "RandomForestRegressor achieved much better results with mean RMSE of about 47,019 (vs 66,868 for decision tree and 69,858 for linear regression). However, training set RMSE was about 17,474, indicating still quite a lot of overfitting, but much better than the decision tree."
+},
+{
+"question": "What is GridSearchCV and how does it work?",
+"answer": "GridSearchCV searches for the best combination of hyperparameter values automatically. You provide hyperparameters to experiment with and values to try, and it uses cross-validation to evaluate all possible combinations. It finds the best combination and can retrain on the whole training set with the best parameters."
+},
+{
+"question": "What are the advantages of RandomizedSearchCV over GridSearchCV?",
+"answer": "RandomizedSearchCV is better when the hyperparameter search space is large because: 1) It explores more values for continuous hyperparameters, 2) Adding irrelevant hyperparameters doesn't slow it down, 3) You can run for any number of iterations instead of being forced to try all combinations."
+},
+{
+"question": "How can you analyze the best models to gain insights?",
+"answer": "RandomForestRegressor provides feature_importances_ attribute showing relative importance of each attribute for making accurate predictions. You can sort these to see which features are most/least useful, potentially dropping less useful features to simplify the model."
+},
+{
+"question": "What was the final test set performance and what does the confidence interval tell you?",
+"answer": "The final RMSE on the test set was 41,424. The 95% confidence interval ranged from 39,275 to 43,467, giving an idea of how precise this estimate is. A fairly large interval indicates some uncertainty in the generalization error estimate."
+},
+{
+"question": "What are the key steps for deploying a model to production?",
+"answer": "1) Save the model (using joblib), 2) Transfer to production environment, 3) Load the model and any custom classes/functions it depends on, 4) Use model.predict() on new data. You can deploy as a web service, cloud service (like Google Vertex AI), or integrate directly into applications."
+},
+{
+"question": "Why is monitoring important after deployment?",
+"answer": "Model performance can drop quickly (component breaks) or slowly due to model rot (world changes while model stays the same). You need monitoring code to check live performance and trigger alerts. Performance can be monitored through downstream metrics or human analysis, depending on the application."
+},
+{
+"question": "What should you automate in a production ML system?",
+"answer": "1) Collect fresh data regularly and label it, 2) Script to train model and fine-tune hyperparameters automatically, 3) Script to evaluate new vs previous model on updated test set and deploy if performance doesn't decrease, 4) Monitor input data quality, 5) Keep backups of models and datasets for rollback capability."
+},
+{
+"question": "What is the difference between min-max scaling and standardization in terms of outlier sensitivity?",
+"answer": "Min-max scaling is very sensitive to outliers - a single outlier can crush all other values into a tiny range. Standardization is much less affected by outliers because it uses mean and standard deviation rather than min/max values."
+},
+{
+"question": "What is data snooping bias?",
+"answer": "Data snooping bias occurs when you look at the test set during development and stumble upon seemingly interesting patterns that lead you to select a particular model. This makes your generalization error estimate too optimistic because the model was indirectly trained on the test set through your selection process."
+},
+{
+"question": "What is model rot and how do you address it?",
+"answer": "Model rot (or data drift) occurs when a model's performance decays over time because the world continues to evolve while the model remains unchanged. Address it by regularly retraining the model on up-to-date data and monitoring live performance to detect when retraining is needed."
+},
+{
+"question": "What are some key insights from exploring the California housing data?",
+"answer": "1) Median income is the strongest predictor of housing prices, 2) Housing prices are related to location (proximity to ocean) and population density, 3) Some attributes were capped which could be problematic, 4) Many attributes had different scales requiring scaling, 5) Creating ratio features (like bedrooms_ratio) improved correlation with target."
+},
+{
+"question": "What is the purpose of the income category attribute created in the chapter?",
+"answer": "The income_cat attribute was created to enable stratified sampling, ensuring the test set is representative of various income categories in the whole dataset. It divided median income into 5 categories, with each category containing sufficient instances to avoid bias in the estimates."
+},
+{
+"question": "What does it mean when Scikit-Learn cross-validation uses 'neg_root_mean_squared_error'?",
+"answer": "Scikit-Learn's cross-validation features expect a utility function (greater is better) rather than a cost function (lower is better), so the scoring function returns the negative RMSE. You need to switch the sign of the output to get the actual RMSE scores."
+},
+{
+"question": "How do you handle the case where categorical attributes have many possible categories?",
+"answer": "If a categorical attribute has many categories, one-hot encoding creates many input features which may slow training and degrade performance. Solutions include: 1) Replace with numerical features related to categories (e.g., distance to ocean instead of ocean_proximity), 2) Use encoders from category_encoders package, 3) For neural networks, use learnable embeddings."
+},
+{
+"question": "What is the ClusterSimilarity custom transformer and what does it do?",
+"answer": "ClusterSimilarity is a custom transformer that uses KMeans clustering in fit() to identify main clusters in training data, then in transform() uses rbf_kernel() to measure how similar each sample is to each cluster center. It adds features representing geographic similarity to cluster centers, which can be more useful than raw latitude/longitude."
+},
+{
+"question": "What are ensemble methods and why do they work well?",
+"answer": "Ensemble methods combine multiple models that perform best. The group often performs better than the best individual model (like random forests perform better than individual decision trees), especially if individual models make very different types of errors. Example: combine k-nearest neighbors with random forest by predicting their mean."
+},
+{
+"question": "What preprocessing steps were included in the final comprehensive pipeline?",
+"answer": "1) Missing value imputation with median for numerical, most frequent for categorical, 2) One-hot encoding for categorical features, 3) Ratio features (bedrooms_ratio, rooms_per_house, people_per_house), 4) Cluster similarity features, 5) Log transformation for heavy-tailed features, 6) Standardization of all numerical features."
+},
+{
+"question": "What are some important considerations for monitoring ML systems in production?",
+"answer": "1) Monitor live performance through downstream metrics or human evaluation, 2) Set up alerts for performance drops, 3) Monitor input data quality for drift, 4) Automate retraining on fresh data, 5) Keep backups of models and datasets, 6) Have rollback procedures ready, 7) Evaluate models on various subsets to ensure fairness across different groups."
+},
+{
+"question": "What is the main takeaway about the balance between algorithms and process in machine learning?",
+"answer": "Much of the work is in data preparation, building monitoring tools, setting up human evaluation pipelines, and automating regular model training. It's better to be comfortable with the overall process and know 3-4 algorithms well rather than spend all your time exploring advanced algorithms. The infrastructure and process are often more work than building and training the model."
+}
+]

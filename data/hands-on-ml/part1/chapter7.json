@@ -1,0 +1,166 @@
+[
+  {
+    "question": "What is the wisdom of the crowd and how does it relate to ensemble learning?",
+    "answer": "The wisdom of the crowd is the phenomenon where aggregating answers from thousands of random people often produces better results than an expert's answer. Similarly, if you aggregate predictions of a group of predictors (classifiers or regressors), you often get better predictions than with the best individual predictor. A group of predictors is called an ensemble, and this technique is called ensemble learning."
+  },
+  {
+    "question": "What is a random forest and how does it work?",
+    "answer": "A random forest is an ensemble of decision trees, where you train a group of decision tree classifiers each on a different random subset of the training set. You then obtain predictions of all individual trees, and the class that gets the most votes is the ensemble's prediction. Despite its simplicity, this is one of the most powerful machine learning algorithms available today."
+  },
+  {
+    "question": "What is a hard voting classifier?",
+    "answer": "A hard voting classifier is a majority-vote classifier that aggregates the predictions of each classifier in an ensemble. The class that gets the most votes becomes the ensemble's prediction. This simple approach can often achieve higher accuracy than the best individual classifier in the ensemble."
+  },
+  {
+    "question": "Under what conditions can ensemble methods work effectively?",
+    "answer": "Ensemble methods work effectively when predictors are as independent from one another as possible. Even if each classifier is a weak learner (doing only slightly better than random guessing), the ensemble can still be a strong learner (achieving high accuracy), provided there are sufficient numbers of weak learners and they are sufficiently diverse."
+  },
+  {
+    "question": "What is the law of large numbers analogy for ensemble learning?",
+    "answer": "The law of large numbers analogy uses a biased coin with 51% chance of heads. If you toss it 1,000 times, you'll generally get about 510 heads and 490 tails (majority heads) with about 75% probability. Similarly, with 1,000 classifiers that are individually 51% accurate, you can hope for up to 75% ensemble accuracy through majority voting."
+  },
+  {
+    "question": "What is soft voting and when is it used?",
+    "answer": "Soft voting predicts the class with the highest class probability, averaged over all individual classifiers. It's used when all classifiers can estimate class probabilities (have a predict_proba() method). Soft voting often achieves higher performance than hard voting because it gives more weight to highly confident votes."
+  },
+  {
+    "question": "What is the difference between bagging and pasting?",
+    "answer": "Both bagging and pasting train multiple predictors on different random subsets of the training set. The difference is in sampling: bagging performs sampling with replacement (bootstrap aggregating), while pasting performs sampling without replacement. Only bagging allows training instances to be sampled several times for the same predictor."
+  },
+  {
+    "question": "How do bagging and pasting affect bias and variance?",
+    "answer": "Each individual predictor has higher bias than if trained on the original training set, but aggregation reduces both bias and variance. Generally, the ensemble has similar bias but lower variance than a single predictor trained on the original training set. Bagging introduces more diversity, resulting in slightly higher bias but lower variance compared to pasting."
+  },
+  {
+    "question": "What is out-of-bag (OOB) evaluation?",
+    "answer": "With bagging, about 63% of training instances are sampled on average for each predictor, leaving 37% as out-of-bag instances. A bagging ensemble can be evaluated using these OOB instances without needing a separate validation set. Each instance becomes an OOB instance for several estimators, allowing fair ensemble predictions for evaluation."
+  },
+  {
+    "question": "What are random patches and random subspaces methods?",
+    "answer": "Random patches method samples both training instances and features for each predictor. Random subspaces method keeps all training instances but samples features (by setting bootstrap=False, max_samples=1.0, but bootstrap_features=True and/or max_features<1.0). Both techniques are useful for high-dimensional inputs and increase predictor diversity."
+  },
+  {
+    "question": "How does RandomForestClassifier differ from using BaggingClassifier with decision trees?",
+    "answer": "RandomForestClassifier is more convenient and optimized for decision trees. It introduces extra randomness by searching for the best feature among a random subset of features when splitting nodes (by default √n features), rather than searching among all features. This increases tree diversity, trading higher bias for lower variance."
+  },
+  {
+    "question": "What are extra-trees (extremely randomized trees)?",
+    "answer": "Extra-trees use random thresholds for each feature rather than searching for the best possible thresholds. You create them by setting splitter='random' in DecisionTreeClassifier. This trades more bias for lower variance and makes training much faster since finding optimal thresholds is time-consuming."
+  },
+  {
+    "question": "How do random forests measure feature importance?",
+    "answer": "Random forests measure feature importance by looking at how much tree nodes using each feature reduce impurity on average across all trees. It's a weighted average where each node's weight equals the number of training samples associated with it. Scikit-Learn scales results so all importances sum to 1."
+  },
+  {
+    "question": "What is boosting and how does it work?",
+    "answer": "Boosting refers to ensemble methods that combine several weak learners into a strong learner. The general idea is to train predictors sequentially, with each trying to correct its predecessor. The most popular methods are AdaBoost (adaptive boosting) and gradient boosting."
+  },
+  {
+    "question": "How does AdaBoost work?",
+    "answer": "AdaBoost trains a base classifier and increases the relative weight of misclassified training instances. It then trains a second classifier using updated weights, makes predictions, updates weights again, and repeats. Each predictor focuses more on the hard cases that previous predictors got wrong."
+  },
+  {
+    "question": "What are the key equations in AdaBoost?",
+    "answer": "Weighted error rate: rⱼ = Σ w⁽ⁱ⁾ for instances where ŷⱼ⁽ⁱ⁾ ≠ y⁽ⁱ⁾, divided by m. Predictor weight: αⱼ = η log((1-rⱼ)/rⱼ). Weight update: multiply w⁽ⁱ⁾ by exp(αⱼ) for misclassified instances. Final prediction uses weighted majority vote of all predictors."
+  },
+  {
+    "question": "What is the main drawback of AdaBoost compared to bagging?",
+    "answer": "AdaBoost cannot be parallelized since each predictor can only be trained after the previous predictor has been trained and evaluated. This sequential learning technique doesn't scale as well as bagging or pasting, which can train predictors in parallel."
+  },
+  {
+    "question": "How does gradient boosting differ from AdaBoost?",
+    "answer": "Instead of tweaking instance weights at every iteration like AdaBoost, gradient boosting tries to fit new predictors to the residual errors made by the previous predictor. Each new predictor is trained on the errors of the ensemble so far."
+  },
+  {
+    "question": "What is the gradient boosting training process?",
+    "answer": "1) Train first predictor on original dataset 2) Train second predictor on residual errors from first predictor 3) Train third predictor on residual errors from second predictor 4) Continue this process 5) Make predictions by adding up predictions from all predictors in the ensemble."
+  },
+  {
+    "question": "What is the learning_rate hyperparameter in gradient boosting?",
+    "answer": "The learning_rate hyperparameter scales the contribution of each tree. Setting it to a low value (like 0.05) requires more trees but predictions usually generalize better. This is a regularization technique called shrinkage that helps prevent overfitting."
+  },
+  {
+    "question": "What is early stopping in gradient boosting?",
+    "answer": "Early stopping automatically stops adding trees when the last n trees (set by n_iter_no_change) didn't improve performance. The method splits training data into training and validation sets to evaluate performance after each tree. This prevents overfitting and reduces training time."
+  },
+  {
+    "question": "What is histogram-based gradient boosting (HGB)?",
+    "answer": "HGB is optimized for large datasets by binning input features and replacing them with integers (max 255 bins). This reduces possible thresholds to evaluate, uses faster integer operations, and eliminates need for sorting features. Computational complexity becomes O(b×m) instead of O(n×m×log(m))."
+  },
+  {
+    "question": "What are the key differences of HGB classes from regular gradient boosting?",
+    "answer": "1) Early stopping automatically activated for >10,000 instances 2) No subsampling support 3) n_estimators renamed to max_iter 4) Only max_leaf_nodes, min_samples_leaf, max_depth can be tweaked 5) Support for categorical features and missing values 6) Much faster training on large datasets."
+  },
+  {
+    "question": "What is stacking and how does it work?",
+    "answer": "Stacking (stacked generalization) trains a model to perform aggregation instead of using trivial functions like hard voting. A blender (meta learner) takes predictions from base predictors as inputs and makes the final prediction. The blender is trained using cross-validation predictions from base predictors."
+  },
+  {
+    "question": "How do you train a blender in stacking?",
+    "answer": "1) Use cross_val_predict() on each predictor to get out-of-sample predictions for the training set 2) Use these predictions as input features for the blending training set 3) Copy targets from original training set 4) Train the blender on this blending set 5) Retrain base predictors on full original training set."
+  },
+  {
+    "question": "What does StackingClassifier do by default for predictions?",
+    "answer": "For each predictor, StackingClassifier calls predict_proba() if available; if not, it falls back to decision_function(), or as last resort calls predict(). If no final estimator is provided, it uses LogisticRegression for classification and RidgeCV for regression."
+  },
+  {
+    "question": "How does the VotingClassifier work with different estimator types?",
+    "answer": "VotingClassifier clones every estimator and fits the clones. Original estimators are in the estimators attribute, fitted clones in estimators_. For hard voting, it performs majority vote. For soft voting (voting='soft'), it averages class probabilities if all estimators have predict_proba() method."
+  },
+  {
+    "question": "What is the computational advantage of bagging and pasting?",
+    "answer": "Predictors can all be trained in parallel via different CPU cores or servers. Similarly, predictions can be made in parallel. This scalability is one of the main reasons bagging and pasting are popular methods - they scale very well with available computing resources."
+  },
+  {
+    "question": "What hyperparameters control BaggingClassifier behavior?",
+    "answer": "n_estimators (number of predictors), max_samples (instances per predictor), bootstrap (True for bagging, False for pasting), n_jobs (CPU cores to use, -1 for all), max_features and bootstrap_features (for feature sampling), and oob_score (for out-of-bag evaluation)."
+  },
+  {
+    "question": "When does BaggingClassifier automatically perform soft voting?",
+    "answer": "BaggingClassifier automatically performs soft voting instead of hard voting if the base classifier can estimate class probabilities (i.e., if it has a predict_proba() method). This is the case with decision tree classifiers."
+  },
+  {
+    "question": "What is a decision stump in AdaBoost?",
+    "answer": "A decision stump is a decision tree with max_depth=1 - a tree composed of a single decision node plus two leaf nodes. This is the default base estimator for the AdaBoostClassifier class, providing simple weak learners that can be combined into a strong ensemble."
+  },
+  {
+    "question": "What is stochastic gradient boosting?",
+    "answer": "Stochastic gradient boosting uses the subsample hyperparameter to specify the fraction of training instances for each tree. For example, subsample=0.25 means each tree trains on 25% of instances selected randomly. This trades higher bias for lower variance and speeds up training considerably."
+  },
+  {
+    "question": "How do you prevent overfitting in AdaBoost?",
+    "answer": "If AdaBoost ensemble is overfitting, you can try reducing the number of estimators (n_estimators) or more strongly regularizing the base estimator (e.g., increasing max_depth, min_samples_split, or other regularization parameters of the base classifier)."
+  },
+  {
+    "question": "How do you handle overfitting vs underfitting in gradient boosting?",
+    "answer": "If gradient boosting overfits, decrease the learning rate (requires more trees but better generalization). If it underfits, you can increase learning rate, add more estimators, or reduce regularization. The learning rate and number of estimators typically need to be balanced."
+  },
+  {
+    "question": "What are the advantages and disadvantages of ensemble methods?",
+    "answer": "Advantages: Often achieve better performance than individual predictors, can turn weak learners into strong learners, reduce overfitting through variance reduction. Disadvantages: More complex, longer training time (especially for sequential methods like boosting), require more computational resources, less interpretable than single models."
+  },
+  {
+    "question": "What makes ensemble methods particularly effective for tabular data?",
+    "answer": "Ensemble methods like random forests, AdaBoost, and gradient boosting require very little preprocessing and are particularly effective with heterogeneous tabular data. They're great for getting prototypes running quickly since they handle mixed data types well and don't require extensive feature engineering."
+  },
+  {
+    "question": "What is SAMME in scikit-learn's AdaBoost implementation?",
+    "answer": "SAMME (Stagewise Additive Modeling using a Multiclass Exponential loss function) is scikit-learn's multiclass version of AdaBoost. When there are just two classes, SAMME is equivalent to AdaBoost. SAMME.R is a variant that relies on class probabilities rather than predictions and generally performs better."
+  },
+  {
+    "question": "Can you create multilayer stacking ensembles?",
+    "answer": "Yes, you can train several different blenders (e.g., one using linear regression, another using random forest) to get a whole layer of blenders, then add another blender on top to produce the final prediction. This may squeeze out more performance but costs training time and system complexity."
+  },
+  {
+    "question": "What is the key principle for successful ensemble learning?",
+    "answer": "The key principle is diversity among predictors. Ensemble methods work best when predictors are as independent as possible, making different types of errors. One way to achieve this is training them using very different algorithms, which increases the chance they'll make different types of errors."
+  },
+  {
+    "question": "How do you determine the optimal number of trees in gradient boosting?",
+    "answer": "You can use cross-validation with GridSearchCV or RandomizedSearchCV, or use early stopping by setting n_iter_no_change to stop when the last n trees don't improve performance. Early stopping automatically splits training data into train/validation sets to monitor performance."
+  },
+  {
+    "question": "What alternative gradient boosting libraries are mentioned?",
+    "answer": "XGBoost, CatBoost, and LightGBM are mentioned as specialized gradient boosting libraries with APIs similar to scikit-learn. They provide additional features including GPU acceleration. TensorFlow Random Forests library also provides optimized implementations of various random forest algorithms including GBRT."
+  }
+]

@@ -1,0 +1,170 @@
+[
+  {
+    "question": "What are autoencoders and what are they designed to do?",
+    "answer": "Autoencoders are artificial neural networks capable of learning dense representations of input data, called latent representations or codings, without any supervision. They are designed to copy their inputs to their outputs, but various constraints force them to learn efficient data representations."
+  },
+  {
+    "question": "What are the two main parts of an autoencoder and what do they do?",
+    "answer": "An autoencoder consists of an encoder (or recognition network) that converts inputs to a latent representation, and a decoder (or generative network) that converts the internal representation back to outputs that should resemble the inputs."
+  },
+  {
+    "question": "What is an undercomplete autoencoder and why is this constraint important?",
+    "answer": "An undercomplete autoencoder has an internal representation with lower dimensionality than the input data. This constraint prevents the autoencoder from trivially copying inputs to outputs, forcing it to learn the most important features in the input data and drop unimportant ones."
+  },
+  {
+    "question": "What happens when an autoencoder uses only linear activations and MSE loss?",
+    "answer": "When an autoencoder uses only linear activations and the mean squared error (MSE) cost function, it ends up performing principal component analysis (PCA)."
+  },
+  {
+    "question": "What are stacked autoencoders and what advantage do they provide?",
+    "answer": "Stacked autoencoders (or deep autoencoders) have multiple hidden layers. Adding more layers helps the autoencoder learn more complex codings, but care must be taken not to make the autoencoder too powerful or it might learn trivial mappings."
+  },
+  {
+    "question": "What is the typical architecture pattern for stacked autoencoders?",
+    "answer": "Stacked autoencoders typically have a symmetrical architecture with regard to the central hidden layer (coding layer). It looks like a sandwich, for example: 784 inputs → 100 neurons → 30 neurons (coding layer) → 100 neurons → 784 outputs."
+  },
+  {
+    "question": "How can autoencoders be used for unsupervised pretraining?",
+    "answer": "If you have a large dataset but most is unlabeled, you can first train a stacked autoencoder using all the data, then reuse the lower layers to create a neural network for your actual task and train it using the labeled data. This helps when you don't have much labeled training data."
+  },
+  {
+    "question": "What is weight tying in autoencoders and what are its benefits?",
+    "answer": "Weight tying is when decoder layer weights are tied to encoder layer weights (specifically WL = WN–L+1⊺). This halves the number of weights in the model, speeds up training, and limits the risk of overfitting."
+  },
+  {
+    "question": "What are convolutional autoencoders and when should they be used?",
+    "answer": "Convolutional autoencoders use convolutional layers instead of dense layers and are much better suited for working with images. The encoder is a regular CNN that reduces spatial dimensions while increasing depth, and the decoder reverses this process using transpose convolutional layers."
+  },
+  {
+    "question": "What are denoising autoencoders and how do they work?",
+    "answer": "Denoising autoencoders add noise to their inputs during training and learn to recover the original, noise-free inputs. The noise can be Gaussian noise or randomly switched-off inputs (like dropout). This forces the autoencoder to learn useful features and can be used to remove noise from images."
+  },
+  {
+    "question": "What are sparse autoencoders and how do they encourage sparsity?",
+    "answer": "Sparse autoencoders add a sparsity constraint to the cost function that pushes the autoencoder to reduce the number of active neurons in the coding layer. This can be achieved using L1 regularization or by measuring actual sparsity and penalizing deviations from target sparsity using KL divergence."
+  },
+  {
+    "question": "What is the KL divergence formula for sparse autoencoders?",
+    "answer": "For sparse autoencoders, the KL divergence between target sparsity p and actual sparsity q is: DKL(p ∥ q) = p log(p/q) + (1-p) log((1-p)/(1-q)). This provides stronger gradients than mean squared error for sparsity control."
+  },
+  {
+    "question": "What makes variational autoencoders (VAEs) different from other autoencoders?",
+    "answer": "VAEs are probabilistic and generative autoencoders. Instead of directly producing a coding, the encoder produces a mean μ and standard deviation σ, then the actual coding is sampled from a Gaussian distribution. They can generate new instances that look like training data."
+  },
+  {
+    "question": "What are the two components of the VAE cost function?",
+    "answer": "The VAE cost function has two parts: 1) reconstruction loss that pushes the autoencoder to reproduce its inputs (like MSE), and 2) latent loss that pushes the codings to look like they were sampled from a simple Gaussian distribution (using KL divergence)."
+  },
+  {
+    "question": "What is the latent loss formula for variational autoencoders?",
+    "answer": "The latent loss is: ℒ = -½ Σ(1 + log(σi²) - σi² - μi²) where n is the coding dimensionality, and μi and σi are the mean and standard deviation of the ith component of the codings."
+  },
+  {
+    "question": "What is semantic interpolation in VAEs?",
+    "answer": "Semantic interpolation in VAEs means interpolating between images at the codings level rather than the pixel level. This creates smooth transitions between different concepts, like gradually transforming pants into sweaters in the latent space."
+  },
+  {
+    "question": "What are the two neural networks in a GAN and what do they do?",
+    "answer": "A GAN consists of: 1) Generator - takes random input (typically Gaussian) and outputs data (like images), trying to produce realistic fake data, and 2) Discriminator - takes real or fake data as input and tries to distinguish between real and fake data."
+  },
+  {
+    "question": "How does GAN training work with its two-phase process?",
+    "answer": "Phase 1: Train discriminator with batch of real images (labeled 1) and fake images from generator (labeled 0). Phase 2: Train generator by creating fake images and setting all labels to 1 (real), forcing generator to fool discriminator. Discriminator weights are frozen in phase 2."
+  },
+  {
+    "question": "What is mode collapse in GANs?",
+    "answer": "Mode collapse is when the generator's outputs gradually become less diverse. For example, if the generator gets better at producing shoes, it may focus increasingly on shoes and forget how to produce other classes, cycling through a few classes without mastering any."
+  },
+  {
+    "question": "What is a Nash equilibrium in the context of GANs?",
+    "answer": "A Nash equilibrium in GANs is the theoretical optimal state where no player would be better off changing their strategy. For GANs, this occurs when the generator produces perfectly realistic images and the discriminator is forced to guess randomly (50% real, 50% fake)."
+  },
+  {
+    "question": "What are the main guidelines for building Deep Convolutional GANs (DCGANs)?",
+    "answer": "DCGAN guidelines: 1) Replace pooling with strided convolutions (discriminator) and transposed convolutions (generator), 2) Use batch normalization except in generator output and discriminator input layers, 3) Remove fully connected hidden layers, 4) Use ReLU in generator (tanh for output), 5) Use leaky ReLU in discriminator."
+  },
+  {
+    "question": "What is progressive growing of GANs?",
+    "answer": "Progressive growing is a technique where you start by generating small images (4×4) at the beginning of training, then gradually add convolutional layers to both generator and discriminator to produce larger images (8×8, 16×16, ..., up to 1024×1024), with fade-in/fade-out transitions."
+  },
+  {
+    "question": "What is the mini-batch standard deviation layer in progressive GANs?",
+    "answer": "This layer computes the standard deviation across all channels and instances in the batch for each position, then adds an extra feature map filled with this value to each instance. It helps the discriminator detect when the generator produces images with little variety, encouraging more diverse outputs."
+  },
+  {
+    "question": "What is equalized learning rate in progressive GANs?",
+    "answer": "Instead of using He initialization, all weights are initialized from N(0,1) and scaled down at runtime by the He factor (divided by √n_inputs). This ensures all parameters have the same dynamic range throughout training, so they learn at the same speed, speeding up and stabilizing training."
+  },
+  {
+    "question": "What are the two networks in a StyleGAN generator?",
+    "answer": "StyleGAN generator has: 1) Mapping network - an 8-layer MLP that maps latent representations z to style vectors w through multiple affine transformations, controlling different style levels, and 2) Synthesis network - generates images using constant learned input, with noise injection and adaptive instance normalization (AdaIN) layers."
+  },
+  {
+    "question": "Why does StyleGAN add noise independently from the codings?",
+    "answer": "Adding independent noise prevents the generator from wasting representational power storing random details like freckle positions in the codings. It avoids the need for noise to flow through the entire network and prevents visual artifacts from using the same noise at different levels."
+  },
+  {
+    "question": "What is the core idea behind diffusion models?",
+    "answer": "Diffusion models are trained to learn the reverse of a diffusion process. The forward process gradually adds Gaussian noise to images until they become pure noise. The model learns to reverse this by removing tiny amounts of noise at each step, eventually generating new images from random noise."
+  },
+  {
+    "question": "What is the forward diffusion process in DDPMs?",
+    "answer": "The forward process starts with a clean image x0 and at each time step t adds Gaussian noise with variance βt while scaling by √(1-βt). This continues for T steps (typically 1000-4000) until the image becomes pure Gaussian noise. The variance schedule βt controls how quickly the signal fades."
+  },
+  {
+    "question": "What is the shortcut formula for the forward diffusion process?",
+    "answer": "Instead of computing x1, x2, ..., xt-1 sequentially, you can directly sample xt from x0 using: q(xt|x0) = N(√α̅t x0, (1-α̅t)I), where α̅t is the cumulative product of (1-βt) terms up to time t."
+  },
+  {
+    "question": "What does a DDPM model predict and why not predict the original image directly?",
+    "answer": "DDPM models predict the noise that should be subtracted from the input image to get closer to the original image. The authors found that predicting noise works better than directly predicting the original image."
+  },
+  {
+    "question": "What is the reverse diffusion process equation?",
+    "answer": "The reverse process equation is: xt-1 = (1/√αt)(xt - βt/√(1-α̅t) * εθ(xt,t)) + √(1-αt) * z, where εθ(xt,t) is the noise predicted by the model and z is additional Gaussian noise (except for the final step)."
+  },
+  {
+    "question": "What architecture do DDPMs typically use?",
+    "answer": "DDPMs typically use a modified U-Net architecture that gradually downsamples input images then upsamples them with skip connections. Time steps are encoded using positional encodings like in transformers and fed to the network at every level, often with multi-head attention layers."
+  },
+  {
+    "question": "What is the main advantage and disadvantage of diffusion models compared to GANs?",
+    "answer": "Advantages: DDPMs are much easier to train than GANs and generate more diverse, higher-quality images. Disadvantage: They are much slower to generate images since the model must be called thousands of times (once for each reverse step)."
+  },
+  {
+    "question": "What are latent diffusion models and what advantages do they provide?",
+    "answer": "Latent diffusion models perform the diffusion process in a compressed latent space rather than pixel space, using an autoencoder to compress/decompress. This considerably speeds up image generation, reduces training time and costs, while maintaining outstanding image quality."
+  },
+  {
+    "question": "What is Stable Diffusion and why is it significant?",
+    "answer": "Stable Diffusion is a powerful pretrained latent diffusion model open-sourced in August 2022. It was ported to TensorFlow and included in KerasCV, allowing anyone to generate high-quality images from text prompts for free, even on regular laptops."
+  },
+  {
+    "question": "What applications do conditioning techniques enable in diffusion models?",
+    "answer": "Conditioning techniques allow guidance using text prompts, images, or other inputs to control the generation process. This enables applications like text-to-image generation, outpainting (extending images beyond borders), and inpainting (filling holes in images)."
+  },
+  {
+    "question": "How can autoencoders be used for dimensionality reduction and visualization?",
+    "answer": "Autoencoders can reduce dataset dimensionality by using the encoder to compress data, then apply other dimensionality reduction algorithms like t-SNE for final visualization. This strategy works well for large datasets with many instances and features."
+  },
+  {
+    "question": "What is the chess memory experiment analogy for autoencoders?",
+    "answer": "Chess experts can memorize realistic game positions quickly because they recognize patterns, but struggle with random positions. Similarly, autoencoders are constrained to find patterns in data - they can't just memorize everything, so they must learn efficient representations by recognizing important patterns."
+  },
+  {
+    "question": "What is mixing regularization in StyleGAN?",
+    "answer": "Mixing regularization (or style mixing) generates a percentage of images using two different codings c1 and c2. The synthesis network uses styles w1 for early levels and w2 for later levels, with a random cutoff. This prevents the network from assuming adjacent styles are correlated and encourages locality."
+  },
+  {
+    "question": "What was the key breakthrough that made diffusion models competitive with GANs?",
+    "answer": "In 2020-2021, researchers showed that DDPMs could generate more diverse and higher-quality images than GANs while being much easier to train. The main innovation was the denoising approach and proper variance scheduling, though they remain slower for generation."
+  },
+  {
+    "question": "What are the main uses of autoencoders mentioned in the chapter?",
+    "answer": "Main uses include: 1) Dimensionality reduction for visualization, 2) Feature detection and extraction, 3) Unsupervised pretraining of deep neural networks, 4) Generative modeling (creating new data similar to training data), and 5) Denoising (removing noise from images)."
+  },
+  {
+    "question": "What is experience replay in GAN training?",
+    "answer": "Experience replay stores images produced by the generator at each iteration in a replay buffer (gradually dropping older images) and trains the discriminator using real images plus fake images from this buffer rather than just current generator outputs. This reduces overfitting to the latest generator outputs."
+  }
+]

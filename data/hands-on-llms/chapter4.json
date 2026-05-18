@@ -1,0 +1,166 @@
+[
+{
+"question": "What is the goal of text classification in natural language processing?",
+"answer": "The goal of text classification is to train a model to assign a label or class to some input text. It's used for applications like sentiment analysis, intent detection, extracting entities, and detecting language."
+},
+{
+"question": "What are the two main types of language models that can be used for text classification?",
+"answer": "The two main types are representation models (like BERT) and generative models (like GPT). Representation models output numerical values/classes, while generative models output text sequences."
+},
+{
+"question": "What dataset is used in this chapter for exploring text classification techniques?",
+"answer": "The 'rotten_tomatoes' dataset from Hugging Face Hub, which contains 5,331 positive and 5,331 negative movie reviews from Rotten Tomatoes for binary sentiment classification."
+},
+{
+"question": "What are the two flavors of classification with pretrained representation models?",
+"answer": "1) Using a task-specific model (like a BERT model fine-tuned for sentiment analysis) and 2) Using an embedding model to generate general-purpose embeddings that feed into a classifier."
+},
+{
+"question": "What is a task-specific model in the context of representation models?",
+"answer": "A task-specific model is a representation model (such as BERT) that has been fine-tuned for a specific task, like sentiment analysis. It directly outputs classifications for that particular task."
+},
+{
+"question": "What is an embedding model and how does it differ from task-specific models?",
+"answer": "An embedding model generates general-purpose embeddings that can be used for various tasks, not limited to classification. Unlike task-specific models, it requires a separate classifier to make predictions."
+},
+{
+"question": "What are some well-known BERT-like models mentioned as good baselines?",
+"answer": "BERT base model (uncased), RoBERTa base model, DistilBERT base model (uncased), DeBERTa base model, bert-tiny, and ALBERT base v2."
+},
+{
+"question": "Which task-specific model was chosen for the sentiment analysis example and why?",
+"answer": "The Twitter-RoBERTa-base for Sentiment Analysis model was chosen. It's a RoBERTa model fine-tuned on tweets for sentiment analysis, used to explore how well it generalizes to movie reviews."
+},
+{
+"question": "What is the MTEB leaderboard and why is it useful?",
+"answer": "The MTEB leaderboard contains open and closed source models benchmarked across several embedding tasks. It's useful for selecting embedding models, though performance isn't the only consideration - inference speed is also important."
+},
+{
+"question": "What F1 score did the Twitter-RoBERTa model achieve on the movie review classification task?",
+"answer": "The Twitter-RoBERTa model achieved an F1 score of 0.80, which is impressive for a model not trained specifically on movie review data."
+},
+{
+"question": "What are the four key metrics described in the classification report?",
+"answer": "1) Precision: how many items found are relevant, 2) Recall: how many relevant classes were found, 3) Accuracy: how many correct predictions out of all predictions, 4) F1 score: balances precision and recall for overall performance."
+},
+{
+"question": "What is the two-step approach used with embedding models for classification?",
+"answer": "Step 1: Use an embedding model to convert textual input to numerical embeddings (feature extraction). Step 2: Train a classifier (like logistic regression) on these embeddings to make predictions."
+},
+{
+"question": "What embedding dimension did the sentence-transformers/all-mpnet-base-v2 model produce?",
+"answer": "The model produced embeddings with 768 dimensions, meaning each of the 8,530 input documents was represented by a vector containing 768 numerical values."
+},
+{
+"question": "What F1 score was achieved using embeddings with a logistic regression classifier?",
+"answer": "An F1 score of 0.85 was achieved by training a logistic regression classifier on top of the embeddings, demonstrating the effectiveness of this lightweight approach."
+},
+{
+"question": "What is zero-shot classification?",
+"answer": "Zero-shot classification is predicting labels for input text without having any labeled training data. You only have the definition/names of the labels but no labeled examples to support them."
+},
+{
+"question": "How can embeddings be used for zero-shot classification?",
+"answer": "By describing labels textually (e.g., 'This is a negative movie review'), embedding both the labels and documents, then using cosine similarity to find the best matching label for each document."
+},
+{
+"question": "What is cosine similarity and how is it calculated?",
+"answer": "Cosine similarity measures the angle between two vectors/embeddings. It's calculated through the dot product of the embeddings divided by the product of their lengths."
+},
+{
+"question": "What F1 score was achieved using zero-shot classification with embeddings?",
+"answer": "An F1 score of 0.78 was achieved, which is impressive considering no labeled data was used at all, demonstrating the versatility of embeddings."
+},
+{
+"question": "How do generative models differ from task-specific models in their input/output?",
+"answer": "Task-specific models generate numerical values (classes) from token sequences, while generative models generate token sequences from token sequences (sequence-to-sequence models)."
+},
+{
+"question": "What is prompt engineering?",
+"answer": "Prompt engineering is the process of iteratively improving the instruction or prompt given to a generative model to guide it toward producing the desired output for a specific task."
+},
+{
+"question": "What is the T5 (Text-to-Text Transfer Transformer) model architecture?",
+"answer": "T5 uses an encoder-decoder architecture similar to the original Transformer, with 12 encoders and 12 decoders stacked together. It's a sequence-to-sequence generative model."
+},
+{
+"question": "How was T5 pretrained differently from BERT?",
+"answer": "Instead of masking individual tokens like BERT, T5 used span masking where sets of tokens (token spans) were masked during pretraining."
+},
+{
+"question": "What makes Flan-T5 special compared to the original T5?",
+"answer": "Flan-T5 was fine-tuned on more than a thousand tasks that closely follow instructions (like GPT models), benefiting from this large variety of instruction-following tasks during training."
+},
+{
+"question": "What prompt was used with Flan-T5 for sentiment classification?",
+"answer": "The prompt 'Is the following sentence positive or negative?' was prefixed to each document to instruct the model to perform sentiment classification."
+},
+{
+"question": "What F1 score did the Flan-T5 model achieve on the sentiment classification task?",
+"answer": "The Flan-T5 model achieved an F1 score of 0.84, demonstrating the capabilities of generative models for classification tasks."
+},
+{
+"question": "What training procedure did OpenAI use to create ChatGPT?",
+"answer": "OpenAI used a two-step process: 1) Instruction-tuning with manually created desired outputs, 2) Preference tuning using manually ranked outputs from best to worst to align with human preferences."
+},
+{
+"question": "What is the advantage of using preference data over instruction data?",
+"answer": "Preference data represents nuance by demonstrating the difference between good and better outputs, helping the generative model learn to generate text that resembles human preference."
+},
+{
+"question": "How do you access ChatGPT for classification tasks?",
+"answer": "Unlike open source models, ChatGPT is accessed through OpenAI's API. You need to create an account, get an API key, and make API calls rather than loading the model locally."
+},
+{
+"question": "What F1 score did ChatGPT achieve on the movie review classification task?",
+"answer": "ChatGPT achieved an F1 score of 0.91, showing impressive performance, though the results should be interpreted carefully since the training data is unknown."
+},
+{
+"question": "What are the main categories of models explored in this chapter for text classification?",
+"answer": "1) Task-specific representation models, 2) Embedding models with classifiers, 3) Open source generative models (Flan-T5), and 4) Closed source generative models (ChatGPT)."
+},
+{
+"question": "What is the benefit of the two-step approach with embedding models?",
+"answer": "The major benefit is that you don't need to fine-tune the embedding model (which can be costly). Instead, you can train a lightweight classifier like logistic regression on the CPU."
+},
+{
+"question": "What is a confusion matrix and what does it describe?",
+"answer": "A confusion matrix describes four types of predictions: True Positive (correct positive), False Positive (incorrect positive), True Negative (correct negative), and False Negative (incorrect negative)."
+},
+{
+"question": "Why might external APIs like OpenAI's become costly?",
+"answer": "External APIs charge per request/usage. Running large datasets can quickly become expensive. At the time of writing, running the test dataset with GPT-3.5-turbo cost 3 cents."
+},
+{
+"question": "What is exponential backoff in the context of API usage?",
+"answer": "Exponential backoff is a retry strategy for handling rate limit errors. It performs increasingly longer sleeps between retry attempts until the request succeeds or maximum retries are reached."
+},
+{
+"question": "What considerations should you keep in mind when selecting models for text classification?",
+"answer": "Consider language compatibility, underlying architecture, model size, performance metrics, and importantly, inference speed for real-life solutions. Don't focus solely on performance."
+},
+{
+"question": "What is the key difference between encoder-only and decoder-only model architectures?",
+"answer": "Encoder-only models (like BERT) excel at representation tasks and are smaller, while decoder-only models (like GPT) are generative. Both can be used for classification but with different approaches."
+},
+{
+"question": "What package was used throughout the chapter for loading datasets?",
+"answer": "The 'datasets' package was used throughout the book for loading datasets, including the Rotten Tomatoes dataset from Hugging Face Hub."
+},
+{
+"question": "What is the advantage of tokens in language models for handling unknown words?",
+"answer": "Tokens can be combined to generate representations even for words not in the training data, by breaking unknown words into subword tokens that the model has seen before."
+},
+{
+"question": "Why is the weighted average F1 score used for evaluation in this chapter?",
+"answer": "The weighted average F1 score is used to ensure each class is treated equally in the evaluation, providing a balanced measure of model performance across all classes."
+},
+{
+"question": "What creative improvement was suggested for zero-shot classification labels?",
+"answer": "Instead of using generic labels like 'A negative/positive review', use more specific labels like 'A very negative/positive movie review' to make embeddings more concrete and focused on extremes."
+},
+{
+"question": "What warning does the chapter give about evaluating closed source models like ChatGPT?",
+"answer": "Since we don't know what data the model was trained on, standard metrics may not be reliable for evaluation - the model might have actually been trained on the test dataset."
+}
+]

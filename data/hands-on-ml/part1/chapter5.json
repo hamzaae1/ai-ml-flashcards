@@ -1,0 +1,162 @@
+[
+{
+"question": "What is a Support Vector Machine (SVM) and what types of tasks can it perform?",
+"answer": "A Support Vector Machine (SVM) is a powerful and versatile machine learning model capable of performing linear or nonlinear classification, regression, and even novelty detection. SVMs excel with small to medium-sized nonlinear datasets (hundreds to thousands of instances), especially for classification tasks, but don't scale well to very large datasets."
+},
+{
+"question": "What is the fundamental idea behind SVMs and what is large margin classification?",
+"answer": "The fundamental idea behind SVMs is to fit the widest possible street between classes. An SVM classifier finds the decision boundary that not only separates classes but also stays as far away from the closest training instances as possible. This is called large margin classification - the SVM tries to maximize the margin (width of the street) between classes."
+},
+{
+"question": "What are support vectors in the context of SVMs?",
+"answer": "Support vectors are the training instances located on the edge of the margin (street). These instances fully determine the decision boundary - adding more training instances 'off the street' will not affect the decision boundary at all, as it is fully determined by these support vectors on the margin's edge."
+},
+{
+"question": "Why is feature scaling important for SVMs?",
+"answer": "SVMs are sensitive to feature scales. When features have very different scales (e.g., vertical scale much larger than horizontal), the widest possible margin becomes distorted. Feature scaling (e.g., using StandardScaler) ensures the decision boundary is properly oriented and the algorithm performs optimally."
+},
+{
+"question": "What is the difference between hard margin and soft margin classification?",
+"answer": "Hard margin classification requires all instances to be off the street and on the correct side - it only works with linearly separable data and is sensitive to outliers. Soft margin classification is more flexible, allowing some margin violations to find a good balance between keeping the street large and limiting violations. This makes it work with non-linearly separable data."
+},
+{
+"question": "How does the hyperparameter C affect SVM behavior?",
+"answer": "The hyperparameter C controls the trade-off between margin width and margin violations. A low C value creates a wider street but allows more margin violations (more regularization, less risk of overfitting). A high C value creates fewer margin violations but a narrower street (less regularization, higher risk of overfitting)."
+},
+{
+"question": "How do you implement a linear SVM classifier using Scikit-Learn?",
+"answer": "Use a pipeline with StandardScaler for feature scaling followed by LinearSVC: svm_clf = make_pipeline(StandardScaler(), LinearSVC(C=1, random_state=42)). The pipeline first scales features, then applies the linear SVM classifier with the specified C value for regularization."
+},
+{
+"question": "What is the difference between LinearSVC's decision_function() and predict_proba() methods?",
+"answer": "LinearSVC has decision_function() which returns signed distances from the decision boundary, but it doesn't have predict_proba() to estimate class probabilities. To get probabilities, you need to use SVC class with probability=True, which fits an extra model using 5-fold cross-validation, significantly slowing training."
+},
+{
+"question": "How can you make SVMs work with nonlinear datasets?",
+"answer": "Add more features such as polynomial features to make the dataset linearly separable in the higher-dimensional space. For example, adding x₂ = (x₁)² as a second feature can make a 1D non-linearly separable dataset linearly separable in 2D space."
+},
+{
+"question": "What is the polynomial kernel and how does it work?",
+"answer": "The polynomial kernel allows SVMs to get the same result as adding polynomial features without actually computing them, avoiding the combinatorial explosion of features. It's implemented in SVC as: SVC(kernel='poly', degree=3, coef0=1, C=5). The degree controls polynomial degree, and coef0 controls influence of high-degree vs low-degree terms."
+},
+{
+"question": "What are similarity features and how do they work with landmarks?",
+"answer": "Similarity features measure how much each instance resembles particular landmarks using a similarity function (like Gaussian RBF). For example, with landmarks at x₁=-2 and x₁=1, an instance at x₁=-1 gets features x₂=exp(-0.3×1²)≈0.74 and x₃=exp(-0.3×2²)≈0.30, transforming the dataset to make it linearly separable."
+},
+{
+"question": "What is the Gaussian RBF kernel and how do its hyperparameters affect the model?",
+"answer": "The Gaussian RBF kernel applies the kernel trick to similarity features. Increasing gamma (γ) makes the bell curve narrower, creating more irregular decision boundaries (higher variance, potential overfitting). Decreasing γ makes the curve wider, creating smoother boundaries (acts like regularization). It's used as: SVC(kernel='rbf', gamma=5, C=0.001)."
+},
+{
+"question": "How do you choose between different SVM classes in Scikit-Learn?",
+"answer": "LinearSVC: fastest for linear SVMs, no kernel trick, O(m×n) complexity. SVC: supports kernel trick, slower O(m²×n) to O(m³×n), best for small/medium nonlinear datasets. SGDClassifier: O(m×n) complexity, supports out-of-core learning, good for very large datasets. Always try linear first, then RBF kernel if dataset isn't too large."
+},
+{
+"question": "How do SVMs work for regression tasks?",
+"answer": "SVM regression reverses the objective: instead of fitting the largest possible street between classes while limiting margin violations, it tries to fit as many instances as possible ON the street while limiting margin violations (instances off the street). The street width is controlled by hyperparameter ε (epsilon)."
+},
+{
+"question": "What does ε-insensitive mean in SVM regression?",
+"answer": "ε-insensitive means the model ignores errors smaller than ε. Adding training instances within the margin (street) won't affect predictions. Reducing ε increases the number of support vectors, which regularizes the model. The model only cares about instances outside the ε-tube around the prediction line."
+},
+{
+"question": "How do you implement linear and nonlinear SVM regression?",
+"answer": "Linear: LinearSVR(epsilon=0.5) with StandardScaler. Nonlinear: SVR(kernel='poly', degree=2, C=0.01, epsilon=0.1) for polynomial kernel. SVR supports kernel trick like SVC, while LinearSVR scales linearly with training set size like LinearSVC."
+},
+{
+"question": "How does a linear SVM classifier make predictions mathematically?",
+"answer": "A linear SVM computes the decision function w⊺x + b, where w is the feature weights vector and b is the bias term. If the result is positive, the predicted class is positive (1); otherwise it's negative (0). This is similar to logistic regression but uses different training objectives."
+},
+{
+"question": "What is the relationship between margin width and the weight vector w?",
+"answer": "To maximize the margin width, we need to minimize the weight vector w. The margin boundaries are defined where w⊺x + b = ±1. Smaller weights create wider margins. The bias term b shifts the margin without affecting its width. This leads to the optimization objective of minimizing ½w⊺w."
+},
+{
+"question": "What is the hard margin linear SVM optimization problem?",
+"answer": "Minimize ½w⊺w subject to t⁽ⁱ⁾(w⊺x⁽ⁱ⁾ + b) ≥ 1 for all instances i, where t⁽ⁱ⁾ = -1 for negative class and t⁽ⁱ⁾ = 1 for positive class. This ensures all instances are on the correct side of the margin while maximizing the margin width."
+},
+{
+"question": "What is the soft margin linear SVM optimization problem?",
+"answer": "Minimize ½w⊺w + C∑ζᵢ subject to t⁽ⁱ⁾(w⊺x⁽ⁱ⁾ + b) ≥ 1 - ζᵢ and ζᵢ ≥ 0, where ζᵢ are slack variables measuring margin violations. The C hyperparameter balances margin maximization against violation minimization."
+},
+{
+"question": "What are hinge loss and squared hinge loss?",
+"answer": "Hinge loss is 0 when instance is correctly classified with sufficient margin, otherwise grows linearly with distance from margin. Squared hinge loss grows quadratically, making it more sensitive to outliers but faster to converge with clean data. LinearSVC uses squared hinge by default, SGDClassifier uses hinge loss."
+},
+{
+"question": "What is the dual problem in SVM optimization?",
+"answer": "The dual problem is an alternative formulation that gives the same solution as the primal problem. For SVMs, the dual problem: minimizes ½∑∑αᵢαⱼtᵢtⱼx⁽ⁱ⁾⊺x⁽ⁱ⁾ - ∑αᵢ subject to αᵢ ≥ 0 and ∑αᵢtᵢ = 0. The dual is faster when instances < features and enables the kernel trick."
+},
+{
+"question": "How do you convert from dual solution to primal solution?",
+"answer": "From dual solution α, compute: w = ∑αᵢtᵢx⁽ⁱ⁾ and b = (1/nₛ)∑(tᵢ - w⊺x⁽ⁱ⁾) where the sum is over support vectors (αᵢ > 0) and nₛ is the number of support vectors. Only support vectors contribute to the final model."
+},
+{
+"question": "What is the kernel trick and why is it important?",
+"answer": "The kernel trick allows computing dot products in transformed feature space without explicitly computing the transformation. For example, the second-degree polynomial kernel K(a,b) = (a⊺b)² gives the same result as transforming to polynomial features and computing dot products, but much more efficiently."
+},
+{
+"question": "What is the second-degree polynomial mapping and its kernel trick?",
+"answer": "The mapping φ(x) = [x₁², √2x₁x₂, x₂²] transforms 2D to 3D. The kernel trick shows φ(a)⊺φ(b) = (a⊺b)², so we can replace dot products of transformed vectors with the square of original dot products, avoiding explicit transformation while getting the same result."
+},
+{
+"question": "What are the common kernel functions used in SVMs?",
+"answer": "Linear: K(a,b) = a⊺b; Polynomial: K(a,b) = (γa⊺b + r)^d; Gaussian RBF: K(a,b) = exp(-γ‖a-b‖²); Sigmoid: K(a,b) = tanh(γa⊺b + r). Each kernel implicitly maps data to different feature spaces without computing the transformation."
+},
+{
+"question": "What is Mercer's theorem and its significance for kernels?",
+"answer": "Mercer's theorem states that if a function K(a,b) satisfies certain conditions (continuous, symmetric, positive semidefinite), then there exists a transformation φ such that K(a,b) = φ(a)⊺φ(b). This guarantees we can use K as a kernel even without knowing φ explicitly."
+},
+{
+"question": "How do you make predictions with a kernelized SVM?",
+"answer": "The prediction function becomes: h(xⁿ) = ∑αᵢtᵢK(x⁽ⁱ⁾, xⁿ) + b, where the sum is only over support vectors (αᵢ > 0). This avoids computing w explicitly and only requires kernel evaluations between the new instance and support vectors."
+},
+{
+"question": "What is the computational complexity comparison between SVM classes?",
+"answer": "LinearSVC: O(m×n), scales linearly, no kernel trick. SVC: O(m²×n) to O(m³×n), supports kernels, slow for large datasets. SGDClassifier: O(m×n), supports out-of-core learning, very scalable. LinearSVC fastest for linear problems, SVC best for small nonlinear problems, SGDClassifier for large datasets."
+},
+{
+"question": "When should you use different SVM implementations?",
+"answer": "Use LinearSVC for linear problems, especially with many features or large datasets. Use SVC with RBF kernel for small/medium nonlinear problems. Use SGDClassifier for very large datasets or out-of-core learning. Always try linear kernel first, then RBF if dataset isn't too large."
+},
+{
+"question": "How does SVM regression differ from classification in terms of support vectors?",
+"answer": "In SVM regression, support vectors are instances that lie on the margin boundaries (at distance ε from the prediction line) or are margin violations (outside the ε-tube). Instances inside the ε-tube don't affect the model. Reducing ε increases support vectors, adding regularization."
+},
+{
+"question": "What are the key hyperparameters for polynomial kernel SVMs?",
+"answer": "degree: controls polynomial degree (higher = more complex, potential overfitting). coef0: controls influence of high-degree vs low-degree terms. C: regularization parameter (lower = more regularization). gamma: coefficient in polynomial kernel formula (affects curve shape)."
+},
+{
+"question": "What are the key hyperparameters for RBF kernel SVMs?",
+"answer": "gamma (γ): controls bell curve width - higher γ creates narrower curves and more irregular boundaries (overfitting risk), lower γ creates wider curves and smoother boundaries (regularization effect). C: controls regularization - higher C allows fewer margin violations."
+},
+{
+"question": "How do you diagnose and fix overfitting/underfitting in RBF SVMs?",
+"answer": "If overfitting: decrease γ (wider bell curves, smoother boundaries) or decrease C (more regularization). If underfitting: increase γ (narrower bell curves, more flexible boundaries) or increase C (less regularization). γ acts like a regularization parameter similar to C."
+},
+{
+"question": "What is the bias term calculation using the kernel trick?",
+"answer": "b = (1/nₛ)∑[tᵢ - ∑αⱼtⱼK(x⁽ⁱ⁾, x⁽ʲ⁾)] where the outer sum is over support vectors and inner sum is over all support vectors. This avoids computing w explicitly by using kernel evaluations between support vectors."
+},
+{
+"question": "What are some specialized kernels mentioned in the chapter?",
+"answer": "String kernels for text documents or DNA sequences (using string subsequence kernel or Levenshtein distance-based kernels). These are specialized for specific data structures. The sigmoid kernel is mentioned as not fully satisfying Mercer's conditions but working well in practice."
+},
+{
+"question": "What is the practical rule of thumb for kernel selection?",
+"answer": "Always try linear kernel first (LinearSVC is much faster than SVC with linear kernel). If dataset isn't too large, try Gaussian RBF kernel which often works well. If you have spare time and computing power, experiment with other kernels. Consider specialized kernels if available for your data structure."
+},
+{
+"question": "How does the kernel trick enable infinite-dimensional feature spaces?",
+"answer": "The Gaussian RBF kernel maps instances to infinite-dimensional space, but the kernel trick lets us work in this space without computing the infinite-dimensional transformation. We only need kernel evaluations K(a,b) = exp(-γ‖a-b‖²), making the impossible computationally feasible."
+},
+{
+"question": "What are the limitations of SVMs for large datasets?",
+"answer": "SVC has O(m²×n) to O(m³×n) complexity, becoming very slow with hundreds of thousands of instances. For large nonlinear problems, consider random forests or neural networks instead. LinearSVC and SGDClassifier scale better with O(m×n) complexity for linear problems."
+},
+{
+"question": "What makes the dual formulation particularly useful for SVMs?",
+"answer": "The dual formulation is faster when instances < features, but more importantly, it makes the kernel trick possible while the primal formulation does not. The dual problem involves dot products between instances, which can be replaced with kernel functions for nonlinear transformations."
+}
+]

@@ -1,0 +1,174 @@
+[
+  {
+    "question": "What is unsupervised learning and why is it important according to Yann LeCun's analogy?",
+    "answer": "Unsupervised learning works with unlabeled data (input features X without labels y). Yann LeCun said 'if intelligence was a cake, unsupervised learning would be the cake, supervised learning would be the icing on the cake, and reinforcement learning would be the cherry on the cake' - meaning unsupervised learning has huge untapped potential."
+  },
+  {
+    "question": "What are the three main unsupervised learning tasks covered in this chapter?",
+    "answer": "1. Clustering - grouping similar instances together into clusters\n2. Anomaly detection (outlier detection) - learning what 'normal' data looks like to detect abnormal instances\n3. Density estimation - estimating the probability density function of the dataset"
+  },
+  {
+    "question": "How does clustering differ from classification?",
+    "answer": "In classification, each instance gets assigned to a group and you have labeled data with known classes. In clustering, instances are also assigned to groups, but it's unsupervised - you don't have labels and the algorithm must identify similar instances and group them automatically."
+  },
+  {
+    "question": "What are the main applications of clustering algorithms?",
+    "answer": "Customer segmentation, data analysis, dimensionality reduction (using cluster affinities), feature engineering, anomaly detection, semi-supervised learning, search engines (image similarity), and image segmentation."
+  },
+  {
+    "question": "How does the k-means algorithm work?",
+    "answer": "1. Start by placing k centroids randomly\n2. Label instances by assigning each to the closest centroid\n3. Update centroids by computing the mean of instances in each cluster\n4. Repeat steps 2-3 until centroids stop moving\nThe algorithm minimizes the mean squared distance between instances and their closest centroids."
+  },
+  {
+    "question": "What is the computational complexity of k-means?",
+    "answer": "Generally linear with respect to the number of instances m, clusters k, and dimensions n: O(mkn). However, in worst-case scenarios without clustering structure, complexity can increase exponentially with the number of instances."
+  },
+  {
+    "question": "What is the difference between hard clustering and soft clustering?",
+    "answer": "Hard clustering assigns each instance to a single cluster (like k-means predict()). Soft clustering gives each instance a score/probability for each cluster (like k-means transform() method which returns distances to all centroids)."
+  },
+  {
+    "question": "What is inertia in k-means and why can't it be used alone to choose the number of clusters?",
+    "answer": "Inertia is the sum of squared distances between instances and their closest centroids. It can't be used alone because it keeps getting lower as k increases - more clusters mean instances are closer to centroids, but this leads to overfitting."
+  },
+  {
+    "question": "What is the elbow method for selecting the number of clusters?",
+    "answer": "Plot inertia as a function of k. The curve often contains an inflection point called the 'elbow' where inertia drops quickly up to a point, then decreases much more slowly. The elbow point suggests a good choice for k."
+  },
+  {
+    "question": "What is the silhouette coefficient and how is it calculated?",
+    "answer": "The silhouette coefficient = (b - a) / max(a, b), where:\na = mean distance to other instances in the same cluster (intra-cluster distance)\nb = mean distance to instances of the next closest cluster (nearest-cluster distance)\nIt ranges from -1 to +1, with +1 being ideal."
+  },
+  {
+    "question": "What is k-means++ and why is it better than random initialization?",
+    "answer": "k-means++ is a smarter initialization method that selects centroids that are distant from one another:\n1. Choose first centroid randomly\n2. Choose subsequent centroids with probability proportional to squared distance from nearest chosen centroid\n3. Repeat until k centroids are chosen\nThis reduces the likelihood of converging to suboptimal solutions."
+  },
+  {
+    "question": "What are the limitations of k-means?",
+    "answer": "1. Must specify number of clusters k in advance\n2. Sensitive to initialization (needs multiple runs)\n3. Doesn't work well with clusters of varying sizes, densities, or non-spherical shapes\n4. Assumes clusters are roughly spherical\n5. Can be affected by outliers"
+  },
+  {
+    "question": "How does mini-batch k-means differ from regular k-means?",
+    "answer": "Mini-batch k-means uses small random batches of data at each iteration instead of the full dataset, moving centroids slightly at each step. This makes it 3-4x faster and allows handling of huge datasets that don't fit in memory, though with slightly higher inertia."
+  },
+  {
+    "question": "What is DBSCAN and how does it define clusters?",
+    "answer": "DBSCAN (Density-Based Spatial Clustering of Applications with Noise) defines clusters as continuous regions of high density. It uses two parameters: ε (epsilon) for neighborhood radius and min_samples for minimum instances in a neighborhood to be considered a core instance."
+  },
+  {
+    "question": "How does DBSCAN classify different types of instances?",
+    "answer": "1. Core instances: have at least min_samples instances in their ε-neighborhood\n2. Border instances: not core instances but have a core instance in their neighborhood\n3. Anomalies: instances that are neither core nor border (labeled as -1)"
+  },
+  {
+    "question": "Why doesn't DBSCAN have a predict() method?",
+    "answer": "DBSCAN doesn't have a predict() method because different classification algorithms can be better for different tasks. The authors let users choose which classifier to use. You can train a separate classifier (like KNeighborsClassifier) on the core instances to predict cluster membership for new instances."
+  },
+  {
+    "question": "What are the advantages and disadvantages of DBSCAN?",
+    "answer": "Advantages: Can find any number of clusters of any shape, robust to outliers, only two hyperparameters\nDisadvantages: Struggles when density varies significantly across clusters, computational complexity O(m²n), doesn't scale well to large datasets"
+  },
+  {
+    "question": "What is a Gaussian Mixture Model (GMM)?",
+    "answer": "A GMM is a probabilistic model that assumes instances were generated from a mixture of several Gaussian distributions with unknown parameters. Each Gaussian distribution represents a cluster that typically looks like an ellipsoid with different shapes, sizes, densities, and orientations."
+  },
+  {
+    "question": "How does the Expectation-Maximization (EM) algorithm work in GMMs?",
+    "answer": "EM is like a generalization of k-means:\n1. Initialize cluster parameters randomly\n2. Expectation step: estimate probability that each instance belongs to each cluster\n3. Maximization step: update clusters using all instances, weighted by their estimated probabilities\n4. Repeat until convergence\nUnlike k-means, EM uses soft assignments based on probabilities."
+  },
+  {
+    "question": "What parameters does a Gaussian Mixture Model estimate?",
+    "answer": "1. Weights ϕ(j) - probability of choosing each cluster\n2. Means μ(j) - center of each Gaussian distribution\n3. Covariance matrices Σ(j) - shape, size, and orientation of each cluster\nThese define the location, size, shape, orientation, and relative weight of each cluster."
+  },
+  {
+    "question": "What are the different covariance_type constraints in GMMs?",
+    "answer": "1. 'full' (default): each cluster can have any shape, size, orientation\n2. 'spherical': all clusters must be spherical but can have different diameters\n3. 'diag': clusters can be ellipsoidal but axes must be parallel to coordinate axes\n4. 'tied': all clusters must have the same ellipsoidal shape, size, and orientation"
+  },
+  {
+    "question": "How can Gaussian Mixture Models be used for anomaly detection?",
+    "answer": "Any instance located in a low-density region can be considered an anomaly. You define a density threshold (e.g., the 4th percentile lowest density) and flag instances below this threshold as anomalies. The threshold can be adjusted based on the known ratio of defective products or desired precision/recall trade-off."
+  },
+  {
+    "question": "What are the Bayesian Information Criterion (BIC) and Akaike Information Criterion (AIC)?",
+    "answer": "BIC = log(m)p - 2log(ℒ)\nAIC = 2p - 2log(ℒ)\nWhere m = number of instances, p = number of parameters, ℒ = maximized likelihood value\nBoth penalize models with more parameters and reward models that fit data well. BIC tends to select simpler models than AIC."
+  },
+  {
+    "question": "What is the difference between probability and likelihood in statistics?",
+    "answer": "Probability describes how plausible a future outcome x is (given known parameters θ). Likelihood describes how plausible particular parameter values θ are after observing outcome x. PDF is a function of x with θ fixed; likelihood function is a function of θ with x fixed."
+  },
+  {
+    "question": "What is Bayesian Gaussian Mixture and how does it automatically select the number of clusters?",
+    "answer": "BayesianGaussianMixture can automatically determine the optimal number of clusters by giving weights close to zero to unnecessary clusters. You set n_components to a value larger than expected optimal clusters, and the algorithm eliminates unnecessary clusters automatically."
+  },
+  {
+    "question": "How is k-means used for image segmentation?",
+    "answer": "1. Reshape image array to get a list of RGB colors for each pixel\n2. Cluster these colors using k-means\n3. Replace each pixel's color with its cluster's mean color (centroid)\n4. Reshape back to original image dimensions\nThis reduces the number of colors and segments the image based on color similarity."
+  },
+  {
+    "question": "How can clustering be used for semi-supervised learning?",
+    "answer": "1. Cluster the training data\n2. Label representative instances (e.g., those closest to centroids) manually\n3. Propagate these labels to all instances in the same cluster\n4. Optionally remove outliers (instances farthest from cluster centers)\n5. Train a supervised model on this expanded labeled dataset"
+  },
+  {
+    "question": "What is active learning and how does uncertainty sampling work?",
+    "answer": "Active learning involves human experts providing labels for specific instances when the algorithm requests them. Uncertainty sampling works as follows:\n1. Train model on labeled instances\n2. Make predictions on unlabeled instances\n3. Give instances with lowest estimated probability to expert for labeling\n4. Iterate until performance improvement stops being worthwhile"
+  },
+  {
+    "question": "What are the main applications of image segmentation?",
+    "answer": "1. Color segmentation - pixels with similar colors assigned to same segment\n2. Semantic segmentation - pixels of same object type assigned to same segment (e.g., all pedestrians)\n3. Instance segmentation - pixels of same individual object assigned to same segment (e.g., each pedestrian separately)"
+  },
+  {
+    "question": "What is agglomerative clustering?",
+    "answer": "A hierarchy of clusters built from bottom up. Starts with individual instances and gradually connects nearest pairs of clusters until there's one big group. It can capture clusters of various shapes, produces a flexible cluster tree, and can use any pairwise distance. Scales well with connectivity matrix but not without one."
+  },
+  {
+    "question": "What is BIRCH clustering?",
+    "answer": "Balanced Iterative Reducing and Clustering using Hierarchies algorithm designed for very large datasets. It can be faster than batch k-means with similar results (for <20 features). It builds a tree structure with just enough information to quickly assign new instances without storing all instances."
+  },
+  {
+    "question": "How does mean-shift clustering work?",
+    "answer": "1. Place a circle centered on each instance\n2. Compute mean of all instances within each circle\n3. Shift circles to be centered on the mean\n4. Repeat until circles stop moving\n5. Instances whose circles settled in same place are assigned to same cluster\nIt shifts circles toward higher density regions until finding local density maxima."
+  },
+  {
+    "question": "What is affinity propagation clustering?",
+    "answer": "Instances repeatedly exchange messages until every instance elects another instance (or itself) to represent it. Elected instances are called exemplars. Each exemplar and instances that elected it form one cluster. Like voting in politics - you choose someone similar to you but also popular enough to win."
+  },
+  {
+    "question": "What is spectral clustering?",
+    "answer": "Takes a similarity matrix between instances, creates a low-dimensional embedding from it, then uses another clustering algorithm (like k-means) in the low-dimensional space. Can capture complex cluster structures and cut graphs (e.g., friend clusters in social networks). Doesn't scale well or handle very different cluster sizes well."
+  },
+  {
+    "question": "What is isolation forest anomaly detection?",
+    "answer": "Builds a random forest where each decision tree is grown randomly - at each node, picks a random feature and random threshold to split data. Anomalies are usually far from other instances, so they tend to get isolated in fewer steps than normal instances across all trees."
+  },
+  {
+    "question": "What is Local Outlier Factor (LOF)?",
+    "answer": "Compares the density of instances around a given instance to the density around its neighbors. An anomaly is often more isolated than its k-nearest neighbors. Good for outlier detection by comparing local densities."
+  },
+  {
+    "question": "What is one-class SVM for novelty detection?",
+    "answer": "Instead of separating two classes, one-class SVM tries to separate instances from the origin in high-dimensional space. In original space, this finds a small region encompassing all instances. New instances outside this region are anomalies. Works great with high-dimensional data but doesn't scale to large datasets."
+  },
+  {
+    "question": "What is Fast-MCD (Elliptic Envelope)?",
+    "answer": "Minimum Covariance Determinant algorithm assumes normal instances are generated from a single Gaussian distribution contaminated with outliers. When estimating the Gaussian distribution parameters, it carefully ignores instances most likely to be outliers, giving better estimation of the elliptic envelope around inliers."
+  },
+  {
+    "question": "How can PCA be used for anomaly detection?",
+    "answer": "Compare reconstruction error of instances - anomalies usually have much larger reconstruction errors than normal instances. After reducing dimensionality with PCA and reconstructing, anomalies will have poor reconstruction because PCA tries to reconstruct normal patterns."
+  },
+  {
+    "question": "What is the computational complexity of GMM training?",
+    "answer": "Depends on instances m, dimensions n, clusters k, and covariance constraints:\n- 'spherical' or 'diag': O(kmn)\n- 'tied' or 'full': O(kmn² + kn³)\nThe more complex covariance types don't scale well to large numbers of features."
+  },
+  {
+    "question": "What is the difference between anomaly detection and novelty detection?",
+    "answer": "Novelty detection assumes the algorithm is trained on a 'clean' dataset uncontaminated by outliers, whereas anomaly detection makes no such assumption. Anomaly detection is often used to clean up datasets, while novelty detection detects new patterns in clean data."
+  },
+  {
+    "question": "Why is it important to scale features before applying k-means?",
+    "answer": "Without scaling, clusters may be very stretched and k-means will perform poorly because it uses Euclidean distance. Features with larger scales will dominate the distance calculations. Scaling doesn't guarantee spherical clusters but generally helps k-means performance."
+  },
+  {
+    "question": "What is label propagation in clustering?",
+    "answer": "After clustering and manually labeling representative instances (like centroids), you propagate these labels to all other instances in the same clusters. This expands your labeled dataset from a few representative examples to many more instances for supervised learning."
+  }
+]

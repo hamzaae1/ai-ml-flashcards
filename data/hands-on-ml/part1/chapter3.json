@@ -1,0 +1,162 @@
+[
+{
+"question": "What is the MNIST dataset and why is it significant in machine learning?",
+"answer": "The MNIST dataset is a collection of 70,000 small images of digits handwritten by high school students and employees of the US Census Bureau. Each image is labeled with the digit it represents (0-9). It's often called the hello world of machine learning because it's commonly used as a benchmark when people develop new classification algorithms."
+},
+{
+"question": "What are the dimensions and characteristics of MNIST images?",
+"answer": "MNIST images are 28 × 28 pixels, resulting in 784 features per image. Each feature represents one pixel's intensity, ranging from 0 (white) to 255 (black). The dataset contains 70,000 images total."
+},
+{
+"question": "How is the MNIST dataset typically split for training and testing?",
+"answer": "The MNIST dataset is already split into a training set (first 60,000 images) and a test set (last 10,000 images). The training set is already shuffled, which is important for cross-validation and preventing learning algorithms from performing poorly on similar consecutive instances."
+},
+{
+"question": "What is a binary classifier and how does it work?",
+"answer": "A binary classifier distinguishes between just two classes. For example, a 5-detector that classifies images as either 5 or not 5. It creates target vectors where True represents the positive class and False represents the negative class."
+},
+{
+"question": "What is the SGDClassifier and why is it suitable for large datasets?",
+"answer": "SGDClassifier is a stochastic gradient descent classifier that handles very large datasets efficiently. It deals with training instances independently, one at a time, making it well-suited for online learning. It's a good starting point for classification tasks."
+},
+{
+"question": "Why is accuracy often not the preferred performance measure for classifiers?",
+"answer": "Accuracy can be misleading, especially with skewed datasets where some classes are much more frequent than others. For example, a dummy classifier that always predicts not 5 achieves over 90% accuracy on MNIST simply because only about 10% of images are 5s, but this classifier is not useful."
+},
+{
+"question": "What is a confusion matrix and what information does it provide?",
+"answer": "A confusion matrix counts the number of times instances of class A are classified as class B for all A/B pairs. Each row represents an actual class, while each column represents a predicted class. It shows true negatives, false positives, false negatives, and true positives."
+},
+{
+"question": "How do you interpret the values in a confusion matrix?",
+"answer": "Using a 2x2 matrix: True negatives (top-left) are correctly classified negative instances, false positives (top-right) are incorrectly classified as positive, false negatives (bottom-left) are incorrectly classified as negative, and true positives (bottom-right) are correctly classified positive instances."
+},
+{
+"question": "What is precision and how is it calculated?",
+"answer": "Precision is the accuracy of positive predictions, calculated as TP/(TP + FP), where TP is true positives and FP is false positives. It answers: Of all instances predicted as positive, how many were actually positive?"
+},
+{
+"question": "What is recall and how is it calculated?",
+"answer": "Recall (also called sensitivity or true positive rate) is the ratio of positive instances correctly detected by the classifier, calculated as TP/(TP + FN), where FN is false negatives. It answers: Of all actual positive instances, how many were correctly identified?"
+},
+{
+"question": "What is the F1 score and why is it useful?",
+"answer": "The F1 score is the harmonic mean of precision and recall, calculated as 2 × (precision × recall)/(precision + recall). It's useful when you need a single metric to compare classifiers, as it only gives a high score when both precision and recall are high."
+},
+{
+"question": "What is the precision/recall trade-off?",
+"answer": "Increasing precision reduces recall, and vice versa. This occurs because classifiers use decision thresholds - raising the threshold increases precision (fewer false positives) but decreases recall (more false negatives), while lowering the threshold has the opposite effect."
+},
+{
+"question": "How does adjusting the decision threshold affect classifier predictions?",
+"answer": "Classifiers compute a score for each instance and assign it to the positive class if the score exceeds a threshold. Raising the threshold makes the classifier more selective (higher precision, lower recall), while lowering it makes it more inclusive (lower precision, higher recall)."
+},
+{
+"question": "What is the precision_recall_curve() function used for?",
+"answer": "The precision_recall_curve() function computes precision and recall for all possible thresholds. It helps visualize the precision/recall trade-off and allows you to select an appropriate threshold based on your requirements."
+},
+{
+"question": "What is the ROC curve and what does it plot?",
+"answer": "The ROC (Receiver Operating Characteristic) curve plots the true positive rate (recall) against the false positive rate for various threshold values. The false positive rate is the ratio of negative instances incorrectly classified as positive, equal to 1 - specificity."
+},
+{
+"question": "How do you interpret ROC AUC scores?",
+"answer": "ROC AUC (Area Under the Curve) measures the area under the ROC curve. A perfect classifier has ROC AUC = 1, while a purely random classifier has ROC AUC = 0.5. Higher values indicate better performance."
+},
+{
+"question": "When should you prefer the precision/recall curve over the ROC curve?",
+"answer": "Prefer the precision/recall curve when the positive class is rare or when you care more about false positives than false negatives. Otherwise, use the ROC curve. PR curves better highlight performance issues with imbalanced datasets."
+},
+{
+"question": "What is multiclass classification and how does it differ from binary classification?",
+"answer": "Multiclass classification (also called multinomial classification) distinguishes between more than two classes, while binary classification only handles two classes. Some algorithms handle multiclass natively, while others require special strategies."
+},
+{
+"question": "What is the One-versus-the-Rest (OvR) strategy?",
+"answer": "OvR trains one binary classifier for each class (e.g., 0-detector, 1-detector, etc.). When classifying an image, it runs all classifiers and selects the class whose classifier outputs the highest score. Also called One-versus-All (OvA)."
+},
+{
+"question": "What is the One-versus-One (OvO) strategy?",
+"answer": "OvO trains a binary classifier for every pair of classes. For N classes, you need N × (N-1)/2 classifiers. When classifying, you run the image through all classifiers and select the class that wins the most duels."
+},
+{
+"question": "When is OvO preferred over OvR?",
+"answer": "OvO is preferred for algorithms that scale poorly with training set size (like SVMs) because it's faster to train many classifiers on small training sets than few classifiers on large sets. For most algorithms, OvR is preferred."
+},
+{
+"question": "How does Scikit-Learn handle multiclass classification automatically?",
+"answer": "When you use a binary classification algorithm for a multiclass task, Scikit-Learn automatically runs OvR or OvO depending on the algorithm. For example, SVC uses OvO while SGDClassifier uses OvR."
+},
+{
+"question": "What happens when you call decision_function() on a multiclass classifier?",
+"answer": "For multiclass classifiers, decision_function() returns multiple scores per instance. For OvO strategy, each class gets a score equal to the number of won duels (plus small adjustments for tie-breaking). For OvR, it returns one score per class."
+},
+{
+"question": "Why is scaling inputs important for classification performance?",
+"answer": "Scaling inputs can significantly improve performance. In the example, simply scaling the MNIST inputs increased SGDClassifier accuracy from about 85.8% to above 89.1%, demonstrating the importance of data preprocessing."
+},
+{
+"question": "What is error analysis and why is it important?",
+"answer": "Error analysis involves examining the types of errors a classifier makes to find ways to improve it. This includes analyzing confusion matrices, looking at individual error cases, and understanding patterns in misclassifications."
+},
+{
+"question": "How do you normalize a confusion matrix and why would you do this?",
+"answer": "Normalize by dividing each value by the total number of images in the corresponding class (row normalization) or predicted class (column normalization). This helps compare error rates across classes and compensates for class imbalance."
+},
+{
+"question": "What insights can you gain from analyzing individual classification errors?",
+"answer": "Individual error analysis can reveal why classifiers fail. For example, examining misclassified 3s and 5s shows that linear models like SGDClassifier are sensitive to small pixel differences and may confuse digits that differ by only a few pixels."
+},
+{
+"question": "What is data augmentation and how can it help with classification?",
+"answer": "Data augmentation involves creating slightly modified versions of training images (e.g., shifted or rotated) to expand the training set. This forces the model to learn tolerance to such variations, potentially reducing errors from image positioning or rotation."
+},
+{
+"question": "What is multilabel classification?",
+"answer": "Multilabel classification is when a classifier outputs multiple classes for each instance. For example, a face recognition system might output [True, False, True] meaning it recognizes Alice and Charlie but not Bob in the same picture."
+},
+{
+"question": "How do you create a multilabel classification dataset?",
+"answer": "Create multiple target labels for each instance. In the example, y_multilabel contains two labels per digit: whether it's large (7, 8, or 9) and whether it's odd, creating targets like [False, True] for digit 5."
+},
+{
+"question": "How do you evaluate multilabel classifiers?",
+"answer": "One approach is to measure the F1 score for each individual label, then compute the average score. You can use average=macro for equal weighting or average=weighted to give more weight to labels with more instances."
+},
+{
+"question": "What is a ClassifierChain and when is it useful?",
+"answer": "ClassifierChain organizes models in a sequence where each model uses input features plus predictions from previous models in the chain. This helps capture dependencies between labels that single models might miss."
+},
+{
+"question": "What is multioutput classification?",
+"answer": "Multioutput classification is a generalization of multilabel classification where each label can be multiclass (having more than two possible values). For example, predicting pixel intensities (0-255) for each pixel in an image."
+},
+{
+"question": "How does the noise removal example demonstrate multioutput classification?",
+"answer": "The system takes noisy digit images as input and outputs clean images. Each pixel is a label that can have multiple values (0-255 intensity), making it multioutput. The classifier predicts 784 labels (pixels) per image."
+},
+{
+"question": "What is the difference between classification and regression in multioutput systems?",
+"answer": "The line can be blurry - predicting pixel intensities could be considered regression rather than classification. Multioutput systems aren't limited to classification and can output both class labels and continuous values."
+},
+{
+"question": "Why should you always create a test set before inspecting data closely?",
+"answer": "You should set aside a test set before detailed data inspection to avoid data snooping bias. The test set should only be used at the very end when you have a classifier ready to launch, ensuring unbiased performance evaluation."
+},
+{
+"question": "What is cross_val_predict() and how does it differ from cross_val_score()?",
+"answer": "cross_val_predict() performs k-fold cross-validation but returns predictions instead of evaluation scores. It provides clean out-of-sample predictions for each training instance, which can then be used to compute confusion matrices."
+},
+{
+"question": "What does StratifiedKFold do in cross-validation?",
+"answer": "StratifiedKFold performs stratified sampling to create folds that contain a representative ratio of each class. This ensures that each fold is similar in class distribution, which is important for reliable cross-validation results."
+},
+{
+"question": "How do predict_proba() and decision_function() differ?",
+"answer": "predict_proba() returns class probabilities for each instance (e.g., [0.11, 0.89] for negative/positive), while decision_function() returns decision scores. RandomForestClassifier has predict_proba() but not decision_function()."
+},
+{
+"question": "What are the key steps in building a classification system?",
+"answer": "Key steps include: 1) Create and set aside test set, 2) Choose appropriate performance metrics, 3) Train classifiers using cross-validation, 4) Analyze errors and confusion matrices, 5) Fine-tune using techniques like scaling, 6) Evaluate on test set when ready to launch."
+}
+]

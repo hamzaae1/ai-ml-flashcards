@@ -1,0 +1,170 @@
+[
+  {
+    "question": "What are decision trees capable of performing?",
+    "answer": "Decision trees are versatile machine learning algorithms that can perform both classification and regression tasks, and even multioutput tasks."
+  },
+  {
+    "question": "What are decision trees the fundamental components of?",
+    "answer": "Decision trees are the fundamental components of random forests, which are among the most powerful machine learning algorithms available today."
+  },
+  {
+    "question": "In the iris dataset example, what two features are used to train the DecisionTreeClassifier?",
+    "answer": "Petal length (cm) and petal width (cm) are used as the two features."
+  },
+  {
+    "question": "How do you visualize a trained decision tree in scikit-learn?",
+    "answer": "Use the export_graphviz() function to output a graph definition file, then use graphviz.Source.from_file() to load and display the file in a Jupyter notebook."
+  },
+  {
+    "question": "How does a decision tree make predictions for classification?",
+    "answer": "Start at the root node and follow decision paths based on feature values. At each node, check if the feature value satisfies the condition. Continue until reaching a leaf node, which provides the predicted class."
+  },
+  {
+    "question": "What does a node's 'samples' attribute tell you?",
+    "answer": "A node's samples attribute counts how many training instances it applies to."
+  },
+  {
+    "question": "What does a node's 'value' attribute represent?",
+    "answer": "A node's value attribute tells you how many training instances of each class this node applies to."
+  },
+  {
+    "question": "What does a node's 'gini' attribute measure?",
+    "answer": "A node's gini attribute measures its Gini impurity. A node is 'pure' (gini=0) if all training instances it applies to belong to the same class."
+  },
+  {
+    "question": "What is the formula for Gini impurity?",
+    "answer": "Gi = 1 - Σ(pi,k)² where Gi is the Gini impurity of the ith node and pi,k is the ratio of class k instances among the training instances in the ith node."
+  },
+  {
+    "question": "What type of trees does the CART algorithm produce?",
+    "answer": "The CART algorithm produces only binary trees, meaning trees where split nodes always have exactly two children (questions only have yes/no answers)."
+  },
+  {
+    "question": "What is a key advantage of decision trees regarding data preparation?",
+    "answer": "Decision trees require very little data preparation. They don't require feature scaling or centering at all."
+  },
+  {
+    "question": "What is the difference between white box and black box models?",
+    "answer": "White box models (like decision trees) are intuitive and their decisions are easy to interpret. Black box models (like random forests and neural networks) make great predictions but it's usually hard to explain in simple terms why the predictions were made."
+  },
+  {
+    "question": "How does a decision tree estimate class probabilities?",
+    "answer": "A decision tree traverses to find the leaf node for an instance, then returns the ratio of training instances of class k in that node as the probability for class k."
+  },
+  {
+    "question": "What algorithm does scikit-learn use to train decision trees?",
+    "answer": "Scikit-learn uses the Classification and Regression Tree (CART) algorithm to train decision trees."
+  },
+  {
+    "question": "How does the CART algorithm choose splits?",
+    "answer": "It searches for the pair (k, tk) that produces the purest subsets, weighted by their size, using a cost function that minimizes impurity."
+  },
+  {
+    "question": "What is the CART cost function for classification?",
+    "answer": "J(k,tk) = (mleft/m)Gleft + (mright/m)Gright, where G measures impurity and m represents the number of instances in each subset."
+  },
+  {
+    "question": "Why is the CART algorithm called a greedy algorithm?",
+    "answer": "It greedily searches for an optimum split at the top level, then repeats the process at each subsequent level. It does not check whether the split will lead to the lowest possible impurity several levels down."
+  },
+  {
+    "question": "What is the computational complexity of making predictions with decision trees?",
+    "answer": "Making predictions requires O(log₂(m)) time, where m is the number of training instances, because you traverse from root to leaf through roughly log₂(m) nodes."
+  },
+  {
+    "question": "What is the training complexity of decision trees?",
+    "answer": "The training complexity is O(n × m log₂(m)), where n is the number of features and m is the number of instances, because it compares all features on all samples at each node."
+  },
+  {
+    "question": "What are the two main impurity measures used in decision trees?",
+    "answer": "Gini impurity (the default) and entropy. Both lead to similar trees, but Gini is slightly faster to compute."
+  },
+  {
+    "question": "What is the formula for entropy?",
+    "answer": "Hi = -Σ pi,k log₂(pi,k) for all k where pi,k ≠ 0, measuring the average information content where entropy is zero when all instances belong to one class."
+  },
+  {
+    "question": "What is the difference between parametric and nonparametric models?",
+    "answer": "Parametric models have a predetermined number of parameters, limiting their degrees of freedom. Nonparametric models (like decision trees) have a number of parameters not determined prior to training, so they can stick closely to the data."
+  },
+  {
+    "question": "What is the main regularization hyperparameter for decision trees in scikit-learn?",
+    "answer": "max_depth controls the maximum depth of the decision tree. The default value is None (unlimited), and reducing it will regularize the model."
+  },
+  {
+    "question": "What does the max_features hyperparameter control?",
+    "answer": "max_features controls the maximum number of features that are evaluated for splitting at each node."
+  },
+  {
+    "question": "What does min_samples_split control?",
+    "answer": "min_samples_split sets the minimum number of samples a node must have before it can be split."
+  },
+  {
+    "question": "What does min_samples_leaf control?",
+    "answer": "min_samples_leaf sets the minimum number of samples a leaf node must have to be created."
+  },
+  {
+    "question": "How does regularization affect decision tree hyperparameters?",
+    "answer": "Increasing min_* hyperparameters or reducing max_* hyperparameters will regularize the model and reduce overfitting."
+  },
+  {
+    "question": "What is pruning in decision trees?",
+    "answer": "Pruning is a technique where unnecessary nodes are deleted after training. A node is considered unnecessary if the purity improvement it provides is not statistically significant, often tested using chi-squared tests."
+  },
+  {
+    "question": "How do decision trees work for regression tasks?",
+    "answer": "For regression, instead of predicting a class in each node, the tree predicts a value. The prediction is the average target value of the training instances in that leaf node."
+  },
+  {
+    "question": "What cost function does CART use for regression?",
+    "answer": "J(k,tk) = (mleft/m)MSEleft + (mright/m)MSEright, where MSEnode = Σ(ŷnode - yi)²/mnode and ŷnode is the average target value in the node."
+  },
+  {
+    "question": "What is a major limitation of decision trees regarding data orientation?",
+    "answer": "Decision trees love orthogonal decision boundaries (all splits are perpendicular to an axis), which makes them sensitive to the data's orientation. Rotation of the dataset can make the decision boundary unnecessarily convoluted."
+  },
+  {
+    "question": "How can you address the axis orientation sensitivity issue?",
+    "answer": "Scale the data, then apply a Principal Component Analysis (PCA) transformation, which rotates the data to reduce correlation between features."
+  },
+  {
+    "question": "What is the main issue with decision trees in terms of variance?",
+    "answer": "Decision trees have quite a high variance: small changes to hyperparameters or data may produce very different models. Even retraining on the same data can produce different models due to the stochastic nature of the algorithm."
+  },
+  {
+    "question": "How can the high variance problem of decision trees be addressed?",
+    "answer": "By averaging predictions over many trees, it's possible to reduce variance significantly. Such an ensemble of trees is called a random forest."
+  },
+  {
+    "question": "What is the approximate depth of a decision tree trained without restrictions on one million instances?",
+    "answer": "Approximately log₂(1,000,000) ≈ 20 levels deep, since decision trees are generally approximately balanced."
+  },
+  {
+    "question": "Is a node's Gini impurity generally lower or higher than its parent's?",
+    "answer": "It is generally lower or equal, but not always. The CART algorithm splits nodes to reduce weighted average impurity, but individual child nodes may have higher impurity than their parent."
+  },
+  {
+    "question": "If a decision tree is overfitting, should you decrease max_depth?",
+    "answer": "Yes, decreasing max_depth is a good idea as it will regularize the model and reduce overfitting."
+  },
+  {
+    "question": "If a decision tree is underfitting, should you try scaling input features?",
+    "answer": "No, scaling input features will not help with underfitting in decision trees since they are not sensitive to feature scaling. Instead, you should reduce regularization constraints."
+  },
+  {
+    "question": "How does training time scale with the number of instances for decision trees?",
+    "answer": "Training complexity is O(n × m log₂(m)). If training takes 1 hour for 1 million instances, it would take roughly 10 × log₂(10)/log₂(1) ≈ 33 hours for 10 million instances."
+  },
+  {
+    "question": "How does training time change when you double the number of features?",
+    "answer": "Training time roughly doubles because the complexity is O(n × m log₂(m)), so doubling n (features) doubles the training time."
+  },
+  {
+    "question": "What is the key difference between decision tree classification and regression?",
+    "answer": "In classification, each leaf node predicts a class based on majority vote. In regression, each leaf node predicts a continuous value that is the average of target values of training instances in that node."
+  },
+  {
+    "question": "Why might entropy and Gini impurity produce different trees?",
+    "answer": "Gini impurity tends to isolate the most frequent class in its own branch, while entropy tends to produce slightly more balanced trees."
+  }
+]

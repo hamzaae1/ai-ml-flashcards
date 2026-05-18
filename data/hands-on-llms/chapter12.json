@@ -1,0 +1,166 @@
+[
+  {
+    "question": "What are the three common steps in creating a high-quality LLM?",
+    "answer": "1. Language modeling (pretraining on massive text datasets using next-token prediction), 2. Supervised fine-tuning (SFT) to follow instructions, and 3. Preference tuning to align with human preferences and AI safety."
+  },
+  {
+    "question": "What is the difference between a base model and an instruction-tuned model in terms of behavior?",
+    "answer": "A base model will attempt to complete input phrases or generate new questions rather than follow instructions. An instruction-tuned model responds appropriately to user requests and follows instructions as expected."
+  },
+  {
+    "question": "What is supervised fine-tuning (SFT) and what does it achieve?",
+    "answer": "SFT adapts a base model to follow instructions by training it on labeled instruction-response pairs using next-token prediction. It transforms a base generative model into an instruction (or chat) generative model."
+  },
+  {
+    "question": "What is the main difference between full fine-tuning and parameter-efficient fine-tuning (PEFT)?",
+    "answer": "Full fine-tuning updates all parameters of the model, while PEFT only updates a small subset of parameters. PEFT is more computationally efficient, faster, and requires less storage than full fine-tuning."
+  },
+  {
+    "question": "What are adapters in the context of PEFT?",
+    "answer": "Adapters are additional modular components inserted into Transformer blocks that can be fine-tuned for specific tasks without updating all model weights. They're placed after attention layers and feedforward networks in each block."
+  },
+  {
+    "question": "What performance did adapters achieve compared to full fine-tuning in the original paper?",
+    "answer": "Fine-tuning only 3.6% of BERT's parameters using adapters achieved performance within 0.4% of full fine-tuning on the GLUE benchmark, demonstrating their effectiveness."
+  },
+  {
+    "question": "What is Low-Rank Adaptation (LoRA) and how does it work?",
+    "answer": "LoRA creates a small subset of the base model to fine-tune by approximating large weight matrices with smaller matrices. It decomposes matrices into low-rank representations, significantly reducing the number of trainable parameters."
+  },
+  {
+    "question": "What is the efficiency gain of LoRA using the 10×10 matrix example?",
+    "answer": "Instead of using 100 weights (10×10), LoRA uses only 20 weights (two 10×1 matrices), reducing parameters by 80% while maintaining much of the original model's capability."
+  },
+  {
+    "question": "What does 'intrinsic dimensionality' mean in the context of language models?",
+    "answer": "Language models have very low intrinsic dimension, meaning large weight matrices can be approximated with much smaller rank matrices without significant performance loss, which justifies the effectiveness of LoRA."
+  },
+  {
+    "question": "What is quantization and why is it useful for fine-tuning?",
+    "answer": "Quantization reduces the number of bits used to represent model weights (e.g., from 32-bit to 4-bit), significantly reducing memory requirements while maintaining most of the original precision."
+  },
+  {
+    "question": "What is QLoRA and what problem does it solve?",
+    "answer": "QLoRA combines quantization with LoRA, using 4-bit quantized weights with blockwise quantization to maintain accuracy while dramatically reducing memory requirements for fine-tuning large models."
+  },
+  {
+    "question": "What are the key parameters in LoRA configuration?",
+    "answer": "Key parameters include: r (rank of compressed matrices, typically 4-64), lora_alpha (controls amount of change added to original weights, often 2×r), and target_modules (which layers to target for adaptation)."
+  },
+  {
+    "question": "What is a chat template and why is it important for instruction tuning?",
+    "answer": "A chat template differentiates between user input and model responses using special tokens like <|user|> and <|assistant|>. It's essential for training models to understand conversational structure and respond appropriately."
+  },
+  {
+    "question": "What are the main categories of metrics for evaluating generative models?",
+    "answer": "Word-level metrics (perplexity, ROUGE, BLEU, BERTScore), benchmarks (MMLU, GLUE, TruthfulQA, GSM8k), automated evaluation (LLM-as-a-judge), and human evaluation."
+  },
+  {
+    "question": "What is perplexity and what does it measure?",
+    "answer": "Perplexity measures how well a language model predicts text by evaluating the probability it assigns to the next token. Lower perplexity indicates the model is less 'perplexed' and performs better at prediction."
+  },
+  {
+    "question": "What are the limitations of word-level metrics like perplexity?",
+    "answer": "They don't account for consistency, fluency, creativity, or correctness of generated text. They only measure token-level prediction confidence, not overall quality or usefulness."
+  },
+  {
+    "question": "What is the Chatbot Arena and how does it work?",
+    "answer": "Chatbot Arena presents users with two anonymous LLMs, allows them to interact and compare responses, then vote on preference. It uses over 800,000+ human votes to calculate relative skill levels using an Elo rating system."
+  },
+  {
+    "question": "What is Goodhart's Law and how does it apply to LLM evaluation?",
+    "answer": "'When a measure becomes a target, it ceases to be a good measure.' In LLMs, optimizing purely for specific benchmarks can lead to models that excel at those metrics but lose other useful capabilities."
+  },
+  {
+    "question": "What is preference tuning and why is it needed after instruction tuning?",
+    "answer": "Preference tuning aligns model behavior with human preferences by training on data showing which responses are preferred over others. It improves response quality beyond basic instruction following."
+  },
+  {
+    "question": "What is a reward model and what does it do?",
+    "answer": "A reward model is created by taking an instruction-tuned model and replacing its language modeling head with a quality classification head. It takes a prompt and generation as input and outputs a single quality score."
+  },
+  {
+    "question": "How is a reward model trained?",
+    "answer": "It's trained on preference datasets containing prompts with accepted and rejected generations. The training objective ensures the reward model assigns higher scores to accepted generations than rejected ones."
+  },
+  {
+    "question": "What is the typical structure of preference training data?",
+    "answer": "Each training example contains a prompt with one accepted generation and one rejected generation. The data can be generated by having models create multiple responses and asking human labelers which they prefer."
+  },
+  {
+    "question": "What is Proximal Policy Optimization (PPO) in the context of LLM training?",
+    "answer": "PPO is a reinforcement learning technique used to fine-tune LLMs with reward models. It optimizes the model while ensuring it doesn't deviate too much from expected rewards. It was used to train the original ChatGPT."
+  },
+  {
+    "question": "What is Direct Preference Optimization (DPO) and how does it differ from PPO?",
+    "answer": "DPO eliminates the need for a separate reward model by using the LLM itself as the reward model. It compares a frozen reference model with the trainable model to optimize preference directly, making it simpler and more stable than PPO."
+  },
+  {
+    "question": "How does DPO calculate preference scores?",
+    "answer": "DPO extracts log probabilities of accepted and rejected generations from both reference and trainable models at the token level, then calculates the shift between models to optimize preference for accepted generations."
+  },
+  {
+    "question": "What are the advantages of DPO over PPO?",
+    "answer": "DPO is more stable during training, more accurate, and doesn't require training a separate reward model. It simplifies the preference tuning process while maintaining effectiveness."
+  },
+  {
+    "question": "What is the purpose of the warmup_ratio parameter in training?",
+    "answer": "Warmup_ratio gradually increases the learning rate from 0 to the set value during the first portion of training (e.g., 10% of steps), allowing the model to adjust to data before applying larger learning rates and avoiding harmful divergence."
+  },
+  {
+    "question": "What is ORPO and what advantage does it offer?",
+    "answer": "Odds Ratio Preference Optimization (ORPO) combines supervised fine-tuning and preference optimization into a single training process, eliminating the need for separate SFT and DPO training loops while still allowing QLoRA usage."
+  },
+  {
+    "question": "What is blockwise quantization and why is it better than direct quantization?",
+    "answer": "Blockwise quantization groups similar weights into blocks before quantizing, preventing multiple high-precision values from mapping to the same low-precision value. This maintains better accuracy compared to direct quantization."
+  },
+  {
+    "question": "How much memory reduction did quantization achieve in the TinyLlama example?",
+    "answer": "Quantization reduced VRAM usage from ~4 GB to ~1 GB for loading the model, though additional VRAM is still needed during fine-tuning."
+  },
+  {
+    "question": "What is the UltraChat dataset used in the chapter?",
+    "answer": "UltraChat is a filtered dataset containing almost 200k conversations between users and LLMs, used for instruction tuning. The chapter uses a subset of 3,000 examples to reduce training time."
+  },
+  {
+    "question": "What are the three stages of preference tuning?",
+    "answer": "1. Collect preference data (prompts with accepted/rejected generations), 2. Train a reward model to score generation quality, 3. Use the reward model to fine-tune the LLM to prefer better generations."
+  },
+  {
+    "question": "How can multiple reward models be used together?",
+    "answer": "Multiple reward models can evaluate different aspects of generation quality. For example, Llama 2 uses two reward models: one for helpfulness and another for safety, providing more comprehensive evaluation."
+  },
+  {
+    "question": "What is the significance of normal distribution in neural network quantization?",
+    "answer": "Neural network weights are typically normally distributed between -1 and 1, allowing efficient binning of weights based on their relative density rather than uniform distribution, which improves quantization accuracy and reduces outlier issues."
+  },
+  {
+    "question": "What is double quantization mentioned in the context of QLoRA?",
+    "answer": "Double quantization is an additional optimization technique in QLoRA that further compresses the quantization overhead, along with paged optimizers, to achieve even greater memory efficiency during training."
+  },
+  {
+    "question": "How do you merge LoRA adapters with the base model?",
+    "answer": "After training, LoRA weights must be combined with the original model weights. The process involves reloading the model in higher precision (16-bit instead of 4-bit) and using merge_and_unload() to combine the adapter with the base model."
+  },
+  {
+    "question": "What is the difference between language modeling and supervised fine-tuning in terms of data?",
+    "answer": "Language modeling uses large unlabeled datasets for self-supervised next-token prediction, while supervised fine-tuning uses smaller labeled datasets with instruction-response pairs to teach specific behaviors."
+  },
+  {
+    "question": "Why is human evaluation considered the gold standard for LLM assessment?",
+    "answer": "Human evaluation captures preferences, domain-specific performance, and real-world usefulness that benchmarks may miss. It remains the ultimate test of whether an LLM works for its intended use case, despite being more expensive and time-consuming."
+  },
+  {
+    "question": "What are the key components that make up a complete fine-tuned LLM pipeline?",
+    "answer": "The complete pipeline includes: 1) Pretraining (language modeling), 2) Supervised fine-tuning for instruction following, 3) Preference tuning for alignment, with optional techniques like LoRA and quantization for efficiency."
+  },
+  {
+    "question": "What practical advice do the authors give about LLM evaluation?",
+    "answer": "Evaluate based on intended use case, be your own best evaluator through direct testing, and consider asking questions in different languages. No single metric is perfect - use multiple evaluation methods for comprehensive assessment."
+  },
+  {
+    "question": "What is the trade-off between efficiency and performance in PEFT methods?",
+    "answer": "PEFT methods like LoRA and adapters reduce computational costs, training time, and storage requirements, but may have slightly lower performance compared to full fine-tuning. The trade-off is usually worthwhile for practical applications."
+  }
+]

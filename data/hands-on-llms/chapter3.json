@@ -1,0 +1,174 @@
+[
+{
+"question": "What is the high-level function of a Transformer LLM?",
+"answer": "A Transformer LLM takes in text as input and generates text in response. Once trained on a large enough high-quality dataset, it becomes able to generate impressive and useful outputs."
+},
+{
+"question": "How does a Transformer LLM generate text?",
+"answer": "The model does not generate text all in one operation; it generates one token at a time. Each token generation step is one forward pass through the model."
+},
+{
+"question": "What happens after each token is generated?",
+"answer": "After each token generation, the output token is appended to the end of the input prompt, and this new text is presented to the model again for another forward pass to generate the next token."
+},
+{
+"question": "What are autoregressive models?",
+"answer": "Autoregressive models are those that consume their earlier predictions to make later predictions. Text generation LLMs are called autoregressive models because the model's first generated token is used to generate the second token."
+},
+{
+"question": "What are the three key internal components of a Transformer LLM?",
+"answer": "The three key components are: 1) the tokenizer, 2) a stack of Transformer blocks that do all the processing, and 3) the language modeling head (LM head) which translates the output into probability scores for the next token."
+},
+{
+"question": "What does the tokenizer contain and how does it relate to the model?",
+"answer": "The tokenizer contains a table of tokens (the vocabulary). The model has a vector representation (token embeddings) associated with each of these tokens in the vocabulary."
+},
+{
+"question": "What is the flow of computation in a Transformer LLM?",
+"answer": "For each generated token, the process flows once through each of the Transformer blocks in the stack in order, then to the LM head, which outputs the probability distribution for the next token."
+},
+{
+"question": "What is a decoding strategy?",
+"answer": "A decoding strategy is the method of choosing a single token from the probability distribution output by the model. It determines which token is selected as the output."
+},
+{
+"question": "What is greedy decoding?",
+"answer": "Greedy decoding is choosing the highest scoring token every time. It's what happens if you set the temperature parameter to zero in an LLM, but it doesn't tend to lead to the best outputs for most use cases."
+},
+{
+"question": "Why is sampling from the probability distribution better than greedy decoding?",
+"answer": "A better approach is to add some randomness and sometimes choose the second or third highest probability token. This means sampling from the probability distribution based on the probability score, giving all tokens a chance of being picked according to their scores."
+},
+{
+"question": "How do Transformers enable parallel processing?",
+"answer": "Each input token flows through its own computation path or stream. This parallel processing is one of the most compelling features of Transformers compared to previous neural network architectures in language processing."
+},
+{
+"question": "What is a model's context length?",
+"answer": "Context length is the limit for how many tokens a Transformer model can process at once. A model with 4K context length can only process 4K tokens and would only have 4K processing streams."
+},
+{
+"question": "What happens to the output vectors from each processing stream?",
+"answer": "Each processing stream takes a vector as input and produces a final resulting vector. For text generation, only the output result of the last stream is used to predict the next token and goes into the LM head."
+},
+{
+"question": "Why calculate all token streams if only the last one is used for output?",
+"answer": "The calculations of the previous streams are required and used in calculating the final stream. While their final output vectors aren't used, their earlier outputs in each Transformer block are used in the attention mechanism."
+},
+{
+"question": "What is the keys and values (kv) cache?",
+"answer": "The kv cache is an optimization technique that caches the results of previous calculations, especially vectors in the attention mechanism, so we don't need to repeat calculations of previous streams when generating subsequent tokens."
+},
+{
+"question": "How significant is the speedup from using cache?",
+"answer": "The chapter shows a dramatic difference: generating 100 tokens took 4.5 seconds with cache enabled versus 21.8 seconds with cache disabled on a Colab T4 GPU."
+},
+{
+"question": "What are the two successive components of a Transformer block?",
+"answer": "A Transformer block is made up of: 1) The attention layer, which incorporates relevant information from other input tokens and positions, and 2) The feedforward layer, which houses the majority of the model's processing capacity."
+},
+{
+"question": "What is the role of the feedforward neural network in a Transformer block?",
+"answer": "The feedforward neural network is the source of the model's memorization and interpolation capabilities. It stores information and behaviors learned during training that enable the model to succeed at language tasks."
+},
+{
+"question": "How does the feedforward network enable both memorization and generalization?",
+"answer": "The model needs to memorize information, but it's not simply a database. It uses the same machinery to interpolate between data points and recognize complex patterns to generalize to inputs it hadn't seen during training."
+},
+{
+"question": "Why is context important for language modeling?",
+"answer": "Context is vital for properly modeling language because simple memorization and interpolation based on the previous token can only take us so far. For example, to predict what comes after 'it', the model needs to know what 'it' refers to."
+},
+{
+"question": "What does the attention mechanism do?",
+"answer": "Attention is a mechanism that helps the model incorporate context as it processes a specific token. It adds information from the context into the representation of the current token being processed."
+},
+{
+"question": "What are the two main steps involved in the attention mechanism?",
+"answer": "1) A way to score how relevant each of the previous input tokens are to the current token being processed, and 2) Using those scores to combine information from various positions into a single output vector."
+},
+{
+"question": "What are attention heads?",
+"answer": "To give the Transformer more extensive attention capability, the attention mechanism is duplicated and executed multiple times in parallel. Each parallel application of attention is conducted in an attention head."
+},
+{
+"question": "What are the three projection matrices used in attention calculation?",
+"answer": "The training process produces three projection matrices: 1) A query projection matrix, 2) A key projection matrix, and 3) A value projection matrix."
+},
+{
+"question": "What are queries, keys, and values matrices?",
+"answer": "These matrices are created by multiplying the inputs by the projection matrices. They contain the information of input tokens projected to three different spaces that help carry out relevance scoring and combining information."
+},
+{
+"question": "How is relevance scoring conducted in self-attention?",
+"answer": "Relevance scoring is conducted by multiplying the query vector of the current position with the keys matrix. This produces a score stating how relevant each previous token is, which is then normalized using softmax."
+},
+{
+"question": "How is information combined in self-attention?",
+"answer": "After getting relevance scores, the value vector associated with each token is multiplied by that token's score. Summing up those resulting vectors produces the output of the attention step."
+},
+{
+"question": "What is sparse attention?",
+"answer": "Sparse attention limits the context of previous tokens that the model can attend to, rather than attending to all previous tokens. This improves efficiency of the attention calculation."
+},
+{
+"question": "How does GPT-3 use sparse attention?",
+"answer": "GPT-3 doesn't use sparse attention for all Transformer blocks, as this would degrade generation quality. Instead, it interweaves full-attention and efficient-attention blocks, alternating between them."
+},
+{
+"question": "What is multi-query attention?",
+"answer": "Multi-query attention optimizes attention by sharing the keys and values matrices between all attention heads. Only the queries matrices remain unique for each head, reducing the size of matrices involved."
+},
+{
+"question": "What is grouped-query attention?",
+"answer": "Grouped-query attention allows using more keys and values matrices than multi-query attention (but less than multi-head attention). Groups of attention heads share keys and values matrices, balancing efficiency and quality."
+},
+{
+"question": "What is Flash Attention?",
+"answer": "Flash Attention is a method that provides significant speedups for training and inference by optimizing what values are loaded and moved between a GPU's shared memory (SRAM) and high bandwidth memory (HBM)."
+},
+{
+"question": "What additional components are found in a detailed view of a Transformer block?",
+"answer": "Beyond attention and feedforward layers, a Transformer block includes residual connections and layer normalization operations."
+},
+{
+"question": "How do modern Transformer blocks differ from the original?",
+"answer": "Modern blocks use pre-normalization (normalization before attention/feedforward layers), RMSNorm instead of LayerNorm, and activation functions like SwiGLU instead of ReLU."
+},
+{
+"question": "What are positional embeddings and why are they important?",
+"answer": "Positional embeddings enable the model to keep track of the order of tokens in a sequence, which is indispensable information in language. They mark token positions in the input."
+},
+{
+"question": "What is document packing in training?",
+"answer": "Document packing is the process of efficiently organizing short training documents into the context by grouping multiple documents in a single context while minimizing padding, since many documents are shorter than the full context length."
+},
+{
+"question": "What are rotary positional embeddings (RoPE)?",
+"answer": "RoPE is a method to encode positional information that captures both absolute and relative token position information. It's based on rotating vectors in their embeddings space and is applied during the attention step."
+},
+{
+"question": "How do rotary embeddings differ from traditional positional embeddings?",
+"answer": "Unlike static absolute embeddings added at the beginning of the forward pass, rotary embeddings are applied in the attention step, specifically mixed into the queries and keys matrices before relevance scoring."
+},
+{
+"question": "What are some domains beyond LLMs where Transformer architectures are applied?",
+"answer": "Transformer architectures are adapted to computer vision, robotics, and time series analysis, with ongoing research in these areas."
+},
+{
+"question": "What is the autoregressive nature of decoder Transformer blocks?",
+"answer": "Decoder Transformer blocks (which make up most text generation models) can only pay attention to previous tokens, unlike BERT which can pay attention to both sides (bidirectional)."
+},
+{
+"question": "Why do LLM APIs stream output tokens?",
+"answer": "Even with optimizations like caching, generation time can be long from a user experience standpoint. APIs stream tokens as they're generated instead of waiting for complete generation to improve user experience."
+},
+{
+"question": "What determines how many Transformer blocks are in a model?",
+"answer": "Transformer LLMs can have anywhere from six blocks (as in the original Transformer paper) to over a hundred in many large LLMs. Each block processes inputs and passes results to the next block."
+},
+{
+"question": "How does the model output probability scores in the final step?",
+"answer": "The LM head takes the output vector from the last processing stream and translates it into probability scores for each token in the vocabulary, determining what the most likely next token is."
+}
+]

@@ -1,0 +1,158 @@
+[
+  {
+    "question": "What is the curse of dimensionality and why is it a problem in machine learning?",
+    "answer": "The curse of dimensionality refers to the problems that arise when dealing with thousands or millions of features. It makes training extremely slow and harder to find good solutions. High-dimensional datasets are at risk of being very sparse - most training instances are likely to be far away from each other, making predictions less reliable since they're based on larger extrapolations."
+  },
+  {
+    "question": "What happens to the probability of a random point being near the border as dimensions increase?",
+    "answer": "In a unit square (2D), a random point has only about 0.4% chance of being within 0.001 of a border. But in a 10,000-dimensional unit hypercube, this probability is greater than 99.999999%. Most points in high-dimensional space are very close to the border."
+  },
+  {
+    "question": "How does distance between random points change with dimensionality?",
+    "answer": "In a unit square, the average distance between two random points is roughly 0.52. In a 3D unit cube, it's roughly 0.66. But in a 1,000,000-dimensional unit hypercube, the average distance is about 408.25 (roughly √1,000,000/6). This counterintuitive result shows there's plenty of space in high dimensions."
+  },
+  {
+    "question": "What are the two main approaches to dimensionality reduction?",
+    "answer": "The two main approaches are: 1) Projection - projecting training instances onto a lower-dimensional subspace, and 2) Manifold learning - modeling the manifold on which training instances lie, which can handle twisted and curved subspaces that simple projection cannot."
+  },
+  {
+    "question": "What is the manifold assumption (manifold hypothesis)?",
+    "answer": "The manifold assumption holds that most real-world high-dimensional datasets lie close to a much lower-dimensional manifold. This assumption is often empirically observed and is accompanied by the assumption that tasks will be simpler when expressed in the lower-dimensional space of the manifold."
+  },
+  {
+    "question": "What is Principal Component Analysis (PCA) and how does it work?",
+    "answer": "PCA is the most popular dimensionality reduction algorithm. It identifies the hyperplane that lies closest to the data, then projects the data onto it. It works by finding axes that account for the largest amounts of variance in the training set, called principal components."
+  },
+  {
+    "question": "How does PCA determine principal components?",
+    "answer": "PCA uses singular value decomposition (SVD) to decompose the training set matrix X into U Σ V^T, where V contains the unit vectors that define all principal components. The first principal component accounts for the largest variance, the second for the largest remaining variance, and so on."
+  },
+  {
+    "question": "What is the explained variance ratio in PCA?",
+    "answer": "The explained variance ratio indicates the proportion of the dataset's variance that lies along each principal component. It's available via the explained_variance_ratio_ attribute and helps determine how many components to keep - typically you want to preserve 95% of the variance."
+  },
+  {
+    "question": "How can you choose the right number of dimensions for PCA?",
+    "answer": "Instead of arbitrarily choosing dimensions, you can: 1) Set n_components to a float between 0.0 and 1.0 (e.g., 0.95 for 95% variance), 2) Plot explained variance vs. dimensions and look for an elbow, or 3) Use hyperparameter tuning to find the optimal number for your specific task."
+  },
+  {
+    "question": "What is the difference between regular PCA, randomized PCA, and incremental PCA?",
+    "answer": "Regular PCA uses full SVD with O(m × n²) + O(n³) complexity. Randomized PCA uses a stochastic algorithm with O(m × d²) + O(d³) complexity, much faster when d << n. Incremental PCA processes data in mini-batches, useful for large datasets that don't fit in memory."
+  },
+  {
+    "question": "How does PCA compression work and what is reconstruction error?",
+    "answer": "After reducing dimensions, you can decompress using inverse_transform(). This won't give back original data since some information is lost (in the dropped variance), but will be close. The mean squared distance between original and reconstructed data is called the reconstruction error."
+  },
+  {
+    "question": "What is random projection and when is it useful?",
+    "answer": "Random projection projects data to lower-dimensional space using a random linear projection. It's useful for very high-dimensional datasets (tens of thousands of features) where PCA becomes too slow. It preserves distances fairly well according to the Johnson-Lindenstrauss lemma."
+  },
+  {
+    "question": "What is the Johnson-Lindenstrauss lemma and its practical application?",
+    "answer": "The lemma provides an equation to determine minimum dimensions needed to preserve distances within a tolerance ε: d ≥ 4 log(m) / (½ ε² - ⅓ ε³). For example, with m=5,000 instances and ε=10%, you need at least 7,300 dimensions. Scikit-learn implements this in johnson_lindenstrauss_min_dim()."
+  },
+  {
+    "question": "What are the advantages of SparseRandomProjection over GaussianRandomProjection?",
+    "answer": "SparseRandomProjection uses much less memory (about 25 MB vs 1.2 GB in examples), is faster to generate and transform (~50% faster), keeps sparse input sparse, but maintains the same distance-preserving properties and comparable quality. It's usually preferable for large or sparse datasets."
+  },
+  {
+    "question": "What is Locally Linear Embedding (LLE) and how does it work?",
+    "answer": "LLE is a nonlinear dimensionality reduction technique that works by: 1) Measuring how each instance linearly relates to its k-nearest neighbors, 2) Finding weights that reconstruct each instance from its neighbors, then 3) Finding a low-dimensional representation that preserves these local relationships."
+  },
+  {
+    "question": "What are the two optimization steps in LLE?",
+    "answer": "Step 1: Find weights w_i,j that minimize the squared distance between each instance x^(i) and its linear reconstruction from k-nearest neighbors, with constraints that weights sum to 1 and are 0 for non-neighbors. Step 2: Find low-dimensional positions z^(i) that minimize reconstruction error using the fixed weights from step 1."
+  },
+  {
+    "question": "What is the computational complexity of LLE?",
+    "answer": "LLE has complexity O(m log(m)n log(k)) for finding k-nearest neighbors, O(mnk³) for optimizing weights, and O(dm²) for constructing low-dimensional representations. The m² term makes it scale poorly to very large datasets."
+  },
+  {
+    "question": "What are the key differences between projection techniques and manifold learning?",
+    "answer": "Projection techniques like PCA work by finding linear subspaces and projecting data onto them. Manifold learning techniques like LLE can handle nonlinear, twisted manifolds by preserving local relationships rather than global linear structure. This makes manifold learning better for complex curved data structures."
+  },
+  {
+    "question": "What is Multidimensional Scaling (MDS)?",
+    "answer": "MDS reduces dimensionality while trying to preserve the distances between instances. It works well for low-dimensional data but doesn't work as well as random projection for high-dimensional data. It can preserve global structure better than some other techniques."
+  },
+  {
+    "question": "What is Isomap and how does it differ from other techniques?",
+    "answer": "Isomap creates a graph by connecting each instance to its nearest neighbors, then reduces dimensionality while trying to preserve geodesic distances (shortest path distances through the graph). This allows it to better handle curved manifolds than linear techniques."
+  },
+  {
+    "question": "What is t-SNE and what is it primarily used for?",
+    "answer": "t-distributed Stochastic Neighbor Embedding (t-SNE) reduces dimensionality while trying to keep similar instances close and dissimilar instances apart. It's mostly used for visualization, particularly to visualize clusters of instances in high-dimensional space."
+  },
+  {
+    "question": "What is Linear Discriminant Analysis (LDA) in the context of dimensionality reduction?",
+    "answer": "LDA is a linear classification algorithm that learns the most discriminative axes between classes during training. These axes define a hyperplane for projection that keeps classes as far apart as possible. It's good for reducing dimensionality before running another classification algorithm."
+  },
+  {
+    "question": "When should you use dimensionality reduction as preprocessing?",
+    "answer": "You should first try training with original data before using dimensionality reduction. Use it when: 1) Training is extremely slow due to high dimensions, 2) You need data visualization (reduce to 2-3D), 3) Storage/memory is limited, or 4) You're dealing with the curse of dimensionality (sparse, noisy high-dimensional data)."
+  },
+  {
+    "question": "What are the main benefits and drawbacks of dimensionality reduction?",
+    "answer": "Benefits: Speeds up training, enables data visualization, reduces storage space, can filter noise. Drawbacks: Causes information loss, adds pipeline complexity, makes systems harder to maintain, may slightly reduce performance, and can lose interpretability of original features."
+  },
+  {
+    "question": "How do you evaluate dimensionality reduction performance?",
+    "answer": "You can: 1) Use reconstruction error for techniques like PCA, 2) Measure performance of downstream tasks (classification/regression) on reduced data, 3) Use cross-validation to tune the number of components, 4) Visualize results for 2D/3D reductions, or 5) Measure preservation of distances/relationships."
+  },
+  {
+    "question": "Why might the manifold assumption not always hold?",
+    "answer": "Sometimes the decision boundary may be simpler in the original high-dimensional space than in the reduced manifold space. For example, a decision boundary that's a simple vertical plane in 3D might become a complex collection of line segments when the Swiss roll is unrolled to 2D."
+  },
+  {
+    "question": "What practical considerations should you keep in mind when using PCA?",
+    "answer": "PCA assumes data is centered around the origin (Scikit-learn handles this automatically). The direction of principal component vectors is not stable - they may flip with slight data changes. For very high-dimensional data, even randomized PCA can be slow, so consider random projection instead."
+  },
+  {
+    "question": "How does incremental PCA handle large datasets?",
+    "answer": "Incremental PCA splits the training set into mini-batches and processes them one at a time using partial_fit(). You can also use NumPy's memmap to manipulate large arrays stored on disk as if they were in memory, loading only needed data chunks."
+  },
+  {
+    "question": "What determines when Scikit-learn automatically uses randomized PCA?",
+    "answer": "By default, Scikit-learn uses randomized PCA when max(m,n) > 500 and n_components is an integer smaller than 80% of min(m,n). Otherwise it uses full SVD. You can force full SVD by setting svd_solver='full' or randomized by setting svd_solver='randomized'."
+  },
+  {
+    "question": "How do you create and use a random projection matrix?",
+    "answer": "Generate a random matrix P of shape [d, n] where each item is sampled from a Gaussian distribution with mean 0 and variance 1/d. Then project data using X_reduced = X @ P.T. Scikit-learn's GaussianRandomProjection automates this process."
+  },
+  {
+    "question": "What is the density parameter in SparseRandomProjection?",
+    "answer": "Density is the ratio of nonzero items in the sparse random matrix, defaulting to 1/√n. Each cell has probability r of being nonzero, and nonzero values are either -v or +v (equally likely), where v = 1/√(dr). With 20,000 features, only about 1 in 141 cells are nonzero."
+  },
+  {
+    "question": "How do you perform inverse transformation with random projection?",
+    "answer": "First compute the pseudo-inverse of the components matrix using SciPy's pinv() function, then multiply the reduced data by the transpose of the pseudo-inverse: X_recovered = X_reduced @ components_pinv.T. Note that computing pseudo-inverse can be very time-consuming for large matrices."
+  },
+  {
+    "question": "Why is LLE particularly good for certain types of data?",
+    "answer": "LLE is particularly good at unrolling twisted manifolds like the Swiss roll because it preserves local linear relationships rather than trying to find global linear projections. This makes it effective when there's not too much noise and the data has a clear underlying manifold structure."
+  },
+  {
+    "question": "What is the relationship between the number of training instances needed and dimensionality?",
+    "answer": "The number of training instances required to reach a given density grows exponentially with dimensions. With just 100 features ranging 0-1, you'd need more training instances than atoms in the observable universe for instances to be within 0.1 of each other on average."
+  },
+  {
+    "question": "How does the Swiss roll example illustrate the difference between projection and manifold learning?",
+    "answer": "Simple projection (like dropping the x3 coordinate) squashes different layers together and loses the intrinsic 2D structure. Manifold learning techniques like LLE can 'unroll' the Swiss roll, preserving the natural 2D structure while mapping it to a flat 2D space."
+  },
+  {
+    "question": "What practical advice does the chapter give about using dimensionality reduction?",
+    "answer": "Try training with original data first before considering dimensionality reduction. It will speed up training but may make your system perform slightly worse and make pipelines more complex. Only use it when the benefits (speed, visualization, storage) outweigh the costs (complexity, information loss)."
+  },
+  {
+    "question": "How can you combine PCA with other machine learning algorithms effectively?",
+    "answer": "Create pipelines that first apply PCA, then your main algorithm (like RandomForestClassifier). Use hyperparameter tuning to find optimal n_components along with other hyperparameters. The optimal number of components depends on your model - powerful models like random forests may need fewer components than linear models."
+  },
+  {
+    "question": "What makes random projection particularly suitable for certain applications?",
+    "answer": "Random projection is simple, fast, memory-efficient, requires no training (only needs dataset shape), and surprisingly powerful. It's especially good for very high-dimensional datasets where PCA becomes too slow. It's also used in applications like locality sensitive hashing for document similarity."
+  },
+  {
+    "question": "Does the order of applying different dimensionality reduction techniques matter?",
+    "answer": "Yes, it can make sense to chain different techniques. For example, you might use random projection first to quickly reduce very high dimensions, then apply PCA or LLE for further reduction. The order and combination depend on your data characteristics and computational constraints."
+  }
+]

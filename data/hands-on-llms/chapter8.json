@@ -1,0 +1,162 @@
+[
+{
+"question": "What major impact did BERT have on search systems after its 2018 release?",
+"answer": "Google announced it was using BERT to power Google Search, calling it 'one of the biggest leaps forward in the history of Search.' Microsoft Bing also stated it delivered the largest quality improvements to customers in the past year by using large transformer models."
+},
+{
+"question": "What is semantic search and how does it differ from traditional search?",
+"answer": "Semantic search enables searching by meaning rather than simply keyword matching. It allows search systems to understand the intent and context of queries, not just match exact words."
+},
+{
+"question": "What problem led to the development of RAG systems?",
+"answer": "The fast adoption of text generation models led users to ask them questions expecting factual answers. While models answered fluently and confidently, their answers were not always correct or up-to-date, leading to 'hallucinations.'"
+},
+{
+"question": "What are the three broad categories of language model applications in search?",
+"answer": "1. Dense retrieval - uses embeddings to find nearest neighbors of search queries, 2. Reranking - scores relevance of search results against queries to reorder them, 3. RAG - incorporates search capabilities to reduce hallucinations and increase factuality in text generation."
+},
+{
+"question": "How does dense retrieval work conceptually?",
+"answer": "Dense retrieval converts both search queries and documents into embeddings (vectors in space). Documents with embeddings closest to the query embedding in vector space are considered most similar and returned as search results."
+},
+{
+"question": "What is the key difference between dense retrieval and reranking systems?",
+"answer": "Dense retrieval takes only a search query as input and retrieves relevant documents. Reranking takes both a search query AND a set of existing search results as input, then reorders those results by relevance."
+},
+{
+"question": "What makes RAG systems different from basic search systems?",
+"answer": "RAG systems include a text generation model that creates an answer in response to a query, rather than just returning documents. They incorporate search capabilities to ground the generation model on specific datasets and reduce hallucinations."
+},
+{
+"question": "In the dense retrieval example with Interstellar, what query was used and what was the top result?",
+"answer": "Query: 'how precise was the science'. Top result: 'It has also received praise from many astronomers for its scientific accuracy and portrayal of theoretical astrophysics' - which perfectly answered the question despite not sharing the same keywords."
+},
+{
+"question": "How did keyword search (BM25) perform compared to dense retrieval on the same query?",
+"answer": "Keyword search's top result was 'Interstellar is a 2014 epic science fiction film...' which didn't really answer the question about scientific precision, despite sharing the word 'science' with the query. Dense retrieval found the more relevant answer."
+},
+{
+"question": "What are two major caveats of dense retrieval systems?",
+"answer": "1. They still return results even when texts don't contain the answer, potentially misleading users. 2. They find it challenging to work in domains different from what they were trained on (e.g., a model trained on internet data won't work as well on legal texts)."
+},
+{
+"question": "Why is text chunking necessary in dense retrieval systems?",
+"answer": "Transformer language models are limited in context sizes and cannot process very long texts that exceed the number of tokens the model supports. Chunking allows long documents to be broken into manageable pieces."
+},
+{
+"question": "What are two approaches for handling long documents in embeddings?",
+"answer": "1. One vector per document - embed only representative parts or aggregate chunk embeddings into a single vector. 2. Multiple vectors per document - chunk documents into smaller pieces and embed each chunk separately."
+},
+{
+"question": "Why is the multiple vectors per document approach generally better for chunking?",
+"answer": "It has full coverage of the text and the vectors tend to capture individual concepts inside the text, leading to a more expressive search index. It allows specific pieces of information to have their own vectors."
+},
+{
+"question": "What are some strategies for incorporating context when chunking documents?",
+"answer": "1. Adding the title of the document to each chunk. 2. Adding some text before and after each chunk so chunks overlap and include surrounding context. 3. Using overlapping chunks to prevent loss of context at boundaries."
+},
+{
+"question": "When should you use approximate nearest neighbor search libraries like FAISS instead of basic NumPy calculations?",
+"answer": "When scaling beyond thousands to millions of vectors. These libraries allow retrieval from massive indexes in milliseconds and can improve performance by utilizing GPUs and scaling to clusters of machines."
+},
+{
+"question": "How does fine-tuning improve embedding models for dense retrieval?",
+"answer": "Fine-tuning uses training data composed of queries and relevant results to make embeddings of relevant queries closer to result documents and irrelevant queries farther away. This improves the model's ability to distinguish relevant from irrelevant content."
+},
+{
+"question": "How do reranking models typically work architecturally?",
+"answer": "Rerankers often use a cross-encoder approach where the query and each candidate result are presented to the model simultaneously, allowing it to view both texts before assigning a relevance score. This is sometimes called monoBERT."
+},
+{
+"question": "In the reranking example, what were the relevance scores for the top 3 results for 'how precise was the science'?",
+"answer": "1st result: 0.1698185 - 'It has also received praise from many astronomers for its scientific accuracy...', 2nd result: 0.07004896 - about worldwide gross, 3rd result: 0.0043994132 - about Kip Thorne's involvement. The reranker was much more confident about the first result."
+},
+{
+"question": "What improvement did adding a reranker show on the MIRACL benchmark?",
+"answer": "On the multilingual MIRACL benchmark, a reranker boosted performance from 36.5 to 62.8 as measured by nDCG@10, demonstrating significant improvements in search quality."
+},
+{
+"question": "What are the three major components needed to evaluate search systems?",
+"answer": "1. A text archive (collection of documents), 2. A set of queries, 3. Relevance judgments indicating which documents are relevant for each query."
+},
+{
+"question": "How does mean average precision (MAP) handle the case where one system puts a relevant result first and another puts it third?",
+"answer": "MAP assigns higher scores to systems that place relevant results in higher positions. A relevant result in position 1 gets a precision score of 1.0, while the same result in position 3 gets a precision score of 0.33 (1/3), rewarding better ranking."
+},
+{
+"question": "How is average precision calculated for a single query with multiple relevant documents?",
+"answer": "Calculate the precision at each position where a relevant document appears, then take the average of these precision scores. For example, if relevant docs are at positions 1 and 3, average precision = (1.0 + 0.67)/2 = 0.83."
+},
+{
+"question": "What is mean average precision and how is it calculated?",
+"answer": "MAP takes the average precision score for each query in the test suite and averages them together to produce a single metric that can be used to compare different search systems across all queries."
+},
+{
+"question": "What is normalized discounted cumulative gain (nDCG) and how does it differ from MAP?",
+"answer": "nDCG is more nuanced than MAP because relevance of documents is not binary (relevant vs not relevant). One document can be labeled as more relevant than another, allowing for graded relevance judgments in the test suite."
+},
+{
+"question": "What was the original motivation behind RAG according to the 2020 paper?",
+"answer": "RAG was described in 'Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks' (2020) as a method to remedy the behavior where LLMs confidently answer questions incorrectly by incorporating search capabilities to improve factuality."
+},
+{
+"question": "What are two ways RAG systems improve existing systems?",
+"answer": "1. They improve generation systems by reducing hallucinations and improving factuality. 2. They extend search systems by adding LLMs to summarize results or answer questions, as seen in Perplexity, Microsoft Bing AI, and Google Gemini."
+},
+{
+"question": "What is 'grounded generation' in the context of RAG systems?",
+"answer": "Grounded generation is the step where retrieved relevant information is provided to the LLM to establish context that grounds the LLM in the specific domain of interest, helping it generate more accurate and contextually appropriate responses."
+},
+{
+"question": "In the RAG example with 'income generated' query, what was the model's response and what citation information was provided?",
+"answer": "Response: 'The film generated a worldwide gross of over $677 million, or $773 million with subsequent re-releases.' The model provided citations showing which parts came from which documents, with specific character positions in the response."
+},
+{
+"question": "What is query rewriting in RAG systems and why is it needed?",
+"answer": "Query rewriting uses an LLM to reformulate verbose or conversational queries into focused search queries. For example, a rambling question about writing essays on animals ending with 'Where do they live?' would be rewritten as 'Where do dolphins live?'"
+},
+{
+"question": "How does multi-query RAG improve on basic RAG?",
+"answer": "Multi-query RAG extends query rewriting to search multiple queries when needed to answer complex questions. For example, 'Compare Nvidia's 2020 vs 2023 financial results' becomes two queries: 'Nvidia 2020 financial results' and 'Nvidia 2023 financial results.'"
+},
+{
+"question": "What is multi-hop RAG and how does it work?",
+"answer": "Multi-hop RAG handles questions requiring sequential queries. For 'Who are the largest car manufacturers and do they make EVs?', it first searches for largest manufacturers, then uses those results to generate follow-up queries about each manufacturer's electric vehicles."
+},
+{
+"question": "What is query routing in advanced RAG systems?",
+"answer": "Query routing gives the model ability to search multiple data sources based on question content. For example, HR questions route to the company's HR system (like Notion), while customer questions route to the CRM system (like Salesforce)."
+},
+{
+"question": "How does agentic RAG extend beyond traditional RAG capabilities?",
+"answer": "Agentic RAG delegates more responsibility to the LLM to solve complex problems using multiple tools and data sources. The LLM becomes more like an agent that can not only search different systems but also take actions like posting to Notion."
+},
+{
+"question": "What are the four axes used to evaluate RAG systems according to the 2023 paper on generative search engines?",
+"answer": "1. Fluency - whether generated text is fluent and cohesive, 2. Perceived utility - whether the answer is helpful and informative, 3. Citation recall - proportion of statements supported by citations, 4. Citation precision - proportion of citations that support their statements."
+},
+{
+"question": "What additional metrics does the Ragas library provide for RAG evaluation?",
+"answer": "Ragas adds metrics like Faithfulness (whether the answer is consistent with provided context) and Answer relevance (how relevant the answer is to the question), using LLM-as-a-judge to automate evaluations."
+},
+{
+"question": "What are the three main types of semantic search systems covered in this chapter?",
+"answer": "1. Dense retrieval - relies on similarity of text embeddings to retrieve nearest neighbors, 2. Rerankers - score relevance of candidate results to improve ranking, 3. RAG - includes generative LLM to formulate answers based on retrieved documents while citing sources."
+},
+{
+"question": "Why does the chapter recommend hybrid search over dense retrieval alone?",
+"answer": "Dense retrieval struggles with exact phrase matching, which is perfect for keyword matching. Hybrid search combines both semantic search and keyword search to leverage the strengths of both approaches."
+},
+{
+"question": "What limitation of current LLMs affects advanced RAG capabilities?",
+"answer": "At the time of writing, only the largest managed models may be able to attempt advanced RAG behaviors like multi-hop reasoning and agentic capabilities. Smaller local models lack these sophisticated reasoning abilities."
+},
+{
+"question": "What is the key insight about embeddings that enables dense retrieval?",
+"answer": "Embeddings turn text into numeric representations that can be thought of as points in space. Texts with similar meaning are close to each other in this space, so finding documents nearest to a query embedding identifies the most relevant results."
+},
+{
+"question": "How did the chapter demonstrate the superiority of semantic search over keyword search?",
+"answer": "The query 'how precise was the science' found a perfect answer about astronomical praise for scientific accuracy through semantic search, but keyword search returned irrelevant results just because they contained the word 'science', showing semantic understanding vs. word matching."
+}
+]

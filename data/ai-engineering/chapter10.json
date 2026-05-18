@@ -1,0 +1,190 @@
+[
+{
+"question": "What is the main structure approach this chapter takes to building AI application architecture?",
+"answer": "The chapter takes a gradual approach, starting with the simplest architecture for a foundation model application, highlighting its challenges, and progressively adding components to address them."
+},
+{
+"question": "What does the simplest AI application architecture consist of?",
+"answer": "The application receives a query, sends it to the model, the model generates a response, and returns it to the user. There is no context augmentation, no guardrails, and no optimization."
+},
+{
+"question": "What are the 5 main steps in building a complete AI application architecture?",
+"answer": "1. Enhance context input by giving the model access to external data sources and tools, 2. Put in guardrails to protect your system and users, 3. Add model router and gateway for complex pipelines and security, 4. Optimize for latency and costs with caching, 5. Add complex logic and write actions to maximize capabilities."
+},
+{
+"question": "What is context construction and why is it important?",
+"answer": "Context construction is like feature engineering for foundation models - it gives the model the necessary information to produce an output. Due to its central role in a system's output quality, it is almost universally supported by model API providers."
+},
+{
+"question": "What are the two main categories of guardrails?",
+"answer": "Input guardrails (protect against leaking private information to external APIs and executing bad prompts that compromise your system) and output guardrails (catch output failures and specify policies to handle different failure modes)."
+},
+{
+"question": "What are the two main types of risks that input guardrails protect against?",
+"answer": "1. Leaking private information to external APIs, and 2. Executing bad prompts that compromise your system through prompt attacks."
+},
+{
+"question": "What are some common types of sensitive data that input guardrails should detect?",
+"answer": "Personal information (ID numbers, phone numbers, bank accounts), human faces, and specific keywords and phrases associated with the company's intellectual property or privileged information."
+},
+{
+"question": "How does the PII masking and unmasking process work?",
+"answer": "Sensitive information is masked with placeholders (e.g., [PHONE NUMBER]) before sending to external APIs. If the generated response contains this placeholder, a PII reverse dictionary maps it back to the original information to unmask it."
+},
+{
+"question": "What are the two main functions of output guardrails?",
+"answer": "1. Catch output failures, and 2. Specify the policy to handle different failure modes."
+},
+{
+"question": "What are some examples of quality failures that output guardrails should catch?",
+"answer": "Malformatted responses that don't follow expected output format (like invalid JSON), factually inconsistent responses hallucinated by the model, and generally bad responses."
+},
+{
+"question": "What are some examples of security failures that output guardrails should catch?",
+"answer": "Toxic responses containing racist/sexual content or illegal activities, responses with private/sensitive information, responses triggering remote tool/code execution, and brand-risk responses that mischaracterize your company or competitors."
+},
+{
+"question": "How can retry logic help mitigate AI model failures?",
+"answer": "Since AI models are probabilistic, trying a query again might yield a different response. You can retry X times until getting a non-empty or correctly formatted response. To reduce latency, you can make parallel calls and pick the better response."
+},
+{
+"question": "What is the reliability versus latency trade-off with guardrails?",
+"answer": "While guardrails are important for safety, some teams prioritize latency and choose not to implement them because they can significantly increase application latency."
+},
+{
+"question": "What is a model router and what are its main benefits?",
+"answer": "A router uses different solutions for different types of queries, consisting of an intent classifier that predicts user intent. Benefits include: 1. Allows specialized models that perform better for specific queries, 2. Saves costs by routing simpler queries to cheaper models."
+},
+{
+"question": "What is an intent classifier and how does it help an AI system?",
+"answer": "An intent classifier predicts what the user is trying to do and routes queries to appropriate solutions. It can prevent out-of-scope conversations, detect ambiguous queries to ask for clarification, and help decide next actions."
+},
+{
+"question": "What is a model gateway and what is its most basic functionality?",
+"answer": "A model gateway is an intermediate layer that allows your organization to interface with different models in a unified and secure manner. Its most basic functionality is providing a unified interface to different models, including self-hosted models and commercial APIs."
+},
+{
+"question": "What are the main benefits of using a model gateway?",
+"answer": "Unified interface maintenance (only update gateway when APIs change), access control and cost management (centralized controlled access instead of sharing tokens), fallback policies for rate limits/failures, and additional functionalities like load balancing, logging, and analytics."
+},
+{
+"question": "What are the two major system caching mechanisms discussed?",
+"answer": "1. Exact caching - cached items are used only when these exact items are requested, 2. Semantic caching - cached items are used even if they are only semantically similar to the incoming query."
+},
+{
+"question": "How does exact caching work in AI applications?",
+"answer": "If a user asks to summarize a product, the system checks if a summary of this exact product exists in cache. If yes, fetch it; if not, summarize the product and cache the result. It's especially appealing for multi-step queries and time-consuming actions."
+},
+{
+"question": "What is the potential security risk with caching?",
+"answer": "Caching can cause data leaks when not properly handled. For example, if a system retrieves user-specific information for a seemingly generic query and caches it, later users asking the same question might receive the cached result containing another user's private information."
+},
+{
+"question": "How does semantic caching work and what are its challenges?",
+"answer": "It reuses cached results for semantically similar (not identical) queries using embedding similarity and vector search. Challenges include relying on high-quality embeddings, functional vector search, reliable similarity metrics, and setting appropriate similarity thresholds."
+},
+{
+"question": "What are agentic patterns and how do they make applications more complex?",
+"answer": "Agentic patterns allow application flows with loops, parallel execution, and conditional branching. For example, after generating output, the system might determine it needs more information, perform another retrieval, and pass the response with new context back into the model, creating a loop."
+},
+{
+"question": "What are write actions and what risks do they introduce?",
+"answer": "Write actions allow a system to make changes to its environment directly (composing emails, placing orders, bank transfers). They make systems vastly more capable but expose them to significantly more risks and should be implemented with utmost care."
+},
+{
+"question": "What are the three key metrics for evaluating system observability quality?",
+"answer": "MTTD (mean time to detection) - how long to detect something bad, MTTR (mean time to response) - how long to resolve after detection, and CFR (change failure rate) - percentage of changes/deployments resulting in failures requiring fixes or rollbacks."
+},
+{
+"question": "What is the difference between monitoring and observability?",
+"answer": "Monitoring makes no assumption about the relationship between internal state and outputs - you monitor external outputs to figure out when something goes wrong. Observability assumes a system's internal states can be inferred from external outputs, allowing you to figure out what went wrong by looking at logs and metrics."
+},
+{
+"question": "What should you consider when designing metrics for AI applications?",
+"answer": "Before listing metrics to track, understand what failure modes you want to catch and design metrics around these failures. Metrics design requires analytical thinking, statistical knowledge, and creativity, and should be highly application-specific."
+},
+{
+"question": "What are some examples of conversational signals that can be used as metrics?",
+"answer": "How often users stop generation halfway, average turns per conversation, average tokens per input/output, model's output token distribution over time, and how these metrics correlate to business north star metrics like DAU or session duration."
+},
+{
+"question": "What are the common latency metrics to track?",
+"answer": "Time to first token (TTFT) - time for first token generation, Time per output token (TPOT) - time to generate each output token, and Total latency - total time to complete a response."
+},
+{
+"question": "What is the relationship between metrics and logs in debugging?",
+"answer": "A typical debugging process: 1. Metrics tell you something went wrong but not what happened, 2. You look at logs around that time to figure out what happened, 3. Correlate errors in logs to metrics to identify the right issue."
+},
+{
+"question": "What is a trace in AI applications?",
+"answer": "A trace is the detailed recording of a request's execution path through various system components, showing the entire process from user query to final response, including actions taken, documents retrieved, final prompt sent to model, time for each step, and associated costs."
+},
+{
+"question": "What are the main types of changes that can cause drift in AI applications?",
+"answer": "System prompt changes (from template updates, typo fixes, etc.), user behavior changes (users adapting to get better results), and underlying model changes (API providers updating models without disclosure)."
+},
+{
+"question": "What are the two main steps in AI pipeline orchestration?",
+"answer": "1. Components definition - tell the orchestrator what components your system uses (models, data sources, tools, evaluation/monitoring tools), 2. Chaining - combine different functions together, specifying steps from receiving user query to completing the task."
+},
+{
+"question": "Why might you want to start building an AI application without an orchestration tool initially?",
+"answer": "Any external tool brings additional complexity. An orchestrator can abstract away critical details of how your system works, making it hard to understand and debug your system. It's better to understand your needs first before adding orchestration complexity."
+},
+{
+"question": "Why is user feedback more important for AI applications than traditional software?",
+"answer": "User feedback serves traditional roles (evaluating performance, informing development) plus an even more significant role as proprietary data for competitive advantage. It can be used to personalize models, train future iterations, and create the data flywheel as data becomes increasingly scarce."
+},
+{
+"question": "What is the difference between explicit and implicit feedback in AI applications?",
+"answer": "Explicit feedback is information users provide in response to explicit requests (thumbs up/down, star ratings, yes/no answers). Implicit feedback is inferred from user actions and is highly application-dependent, with conversational interfaces enabling new genres of implicit feedback."
+},
+{
+"question": "What are some examples of natural language feedback signals?",
+"answer": "Early termination (stopping response generation, exiting app, leaving agent hanging), error correction (starting follow-ups with 'No...' or 'I meant...'), explicit confirmation requests ('Are you sure?', 'Check again'), and complaints about wrong/irrelevant/toxic responses."
+},
+{
+"question": "What does rephrasing attempts as feedback indicate?",
+"answer": "When users rephrase their requests after a model response, it typically indicates the model misunderstood the original intent. This can be detected using heuristics or ML models and is a strong signal that the initial response was off the mark."
+},
+{
+"question": "How can user edits serve as preference data?",
+"answer": "When users edit model responses (like correcting generated code), each edit creates a preference example with the original response as the 'losing response' and the edited version as the 'winning response', which can be used for preference finetuning."
+},
+{
+"question": "What are some examples of other conversational feedback beyond natural language?",
+"answer": "Regeneration (requesting another response, though this might indicate dissatisfaction or desire for comparison), conversation organization (delete, rename, share, bookmark), conversation length, and dialogue diversity (measured by distinct token or topic count)."
+},
+{
+"question": "When are the key times to collect user feedback?",
+"answer": "In the beginning (for calibration, though should be optional to reduce friction), when something bad happens (hallucinations, blocks, compromising content), and when the model has low confidence (can show multiple options for user to choose)."
+},
+{
+"question": "What is the benefit of showing partial responses versus full responses in comparative evaluation?",
+"answer": "Full responses give users more information to make decisions but may not incentivize feedback once read. Partial responses (showing only beginnings) require users to click to expand their preferred choice, providing feedback about which response seems more promising, though it's unclear which approach gives more reliable feedback."
+},
+{
+"question": "How should feedback collection integrate into user workflow?",
+"answer": "Feedback should be seamless, easy to provide without extra work, not disrupt user experience, be easy to ignore, and include incentives for giving good feedback. The collection should be nonintrusive and not interfere with user workflow."
+},
+{
+"question": "What are some examples of feedback biases to watch out for?",
+"answer": "Leniency bias (rating more positively to avoid conflict or extra work), randomness (users providing random feedback due to lack of motivation), position bias (users more likely to click first suggestions), and preference bias (favoring longer responses or recency bias)."
+},
+{
+"question": "What is a degenerate feedback loop and why is it problematic?",
+"answer": "It occurs when predictions influence feedback, which influences the next model iteration, amplifying initial biases. For example, slightly higher-ranked content gets more exposure and clicks, reinforcing the system's belief it's better, creating popularity bias and filter bubbles that prevent new content from breaking through."
+},
+{
+"question": "How can user feedback potentially make conversational agents less accurate?",
+"answer": "Multiple studies show that training models on user feedback can teach them to give users what they think users want, even if it isn't most accurate or beneficial. This can lead to sycophancy, where AI models are more likely to present responses matching the user's existing views rather than providing objective information."
+},
+{
+"question": "What is the main architectural principle for managing AI application complexity?",
+"answer": "Each additional component can make your system more capable, safer, or faster, but also increases complexity and exposes it to new failure modes. Components should be modular and maintainable, though separation is fluid with many ways components can overlap in functionalities."
+},
+{
+"question": "How does AI engineering differ from traditional ML engineering regarding product involvement?",
+"answer": "AI engineering is moving closer to product due to the increasing importance of data flywheel and product experience as competitive advantages. User feedback design, traditionally seen as product responsibility, now involves more AI engineers to ensure they receive the data needed for continuous model improvement."
+}
+]
